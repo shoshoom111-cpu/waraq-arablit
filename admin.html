@@ -545,10 +545,10 @@ async function loadSettings(){
   if(s.social){sv('s-ig',s.social.ig);sv('s-tt',s.social.tt);sv('s-store',s.social.store);if(s.social.wa)sv('s-wa',s.social.wa);if(s.social.email)sv('s-email',s.social.email);if(s.social.brevo)sv('s-brevo',s.social.brevo);}
   if(s.side_items&&Array.isArray(s.side_items)&&s.side_items.length){
     const el=document.getElementById('side-list');
-    if(el)el.innerHTML=s.side_items.map(i=>`<div class="irow"><div class="iinfo"><input type="text" value="${i.title||''}" style="margin-bottom:5px;"><input type="text" value="${i.meta||''}"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button></div>`).join('');
+    if(el){el.innerHTML='';s.side_items.forEach(function(i){var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" value="'+( i.title||'').replace(/"/g,'&quot;')+'" style="margin-bottom:5px;"><input type="text" value="'+(i.meta||'').replace(/"/g,'&quot;')+'"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);});}
   }
     const el=document.getElementById('tick-list');
-    el.innerHTML=s.ticker.map(t=>`<div class="irow" style="flex-wrap:nowrap;"><div style="flex:1;"><input type="text" value="${t.replace(/"/g,'&quot;')}" style="width:100%;"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button></div>`).join('');
+    el.innerHTML='';s.ticker.forEach(function(t){var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" value="'+t.replace(/"/g,'&quot;')+'" style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);});
     se('lpv-ticker',s.ticker.map(t=>'◄ '+t).join('   '));
   }
 }
@@ -581,7 +581,7 @@ function renderArtRows(arts,cid,isAdmin){
   if(!arts.length){el.innerHTML='<div class="empty">لا توجد مقالات</div>';return;}
   const sl={pending:'قيد المراجعة',published:'منشورة',rejected:'مرفوضة',draft:'مسودة'};
   const sc={pending:'sp-pend',published:'sp-pub',rejected:'sp-rej',draft:'sp-draft'};
-  el.innerHTML=arts.map(a=>`<div class="irow"><span class="spill ${sc[a.status]||''}">${sl[a.status]||a.status}</span><div class="iinfo"><div class="ititle">${a.title}</div><div class="imeta">${a.author_name||'—'} · ${a.category||''} · ${new Date(a.created_at).toLocaleDateString('ar-SA')}</div></div><div class="iacts"><button class="bsm g" onclick="previewArt('${a.id}')">معاينة</button>${a.status==='pending'?`<button class="bsm t" onclick="pubArt('${a.id}')">نشر</button><button class="bsm r" onclick="rejectArt('${a.id}')">رفض</button>`:''}<button class="bsm r" onclick="delArt('${a.id}')">حذف</button></div></div>`).join('');
+  el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='irow';var pend=a.status==='pending'?'<button class="bsm t" onclick="pubArt(\''+a.id+'\')">نشر</button><button class="bsm r" onclick="rejectArt(\''+a.id+'\')">رفض</button>':'';d.innerHTML='<span class="spill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="iinfo"><div class="ititle">'+a.title+'</div><div class="imeta">'+(a.author_name||'—')+' · '+(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div></div><div class="iacts"><button class="bsm g" onclick="previewArt(\''+a.id+'\')">معاينة</button>'+pend+'<button class="bsm r" onclick="delArt(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
 }
 
 async function addArticle(){
@@ -601,10 +601,10 @@ async function delArt(id){if(!confirm('حذف هذه المقالة نهائيا
 async function previewArt(id){
   const {data:a}=await sb.from('articles').select('*').eq('id',id).single();if(!a)return;
   se('m-title',a.title);
-  document.getElementById('m-meta').textContent=`${a.author_name||'—'} · ${a.category||''} · ${new Date(a.created_at).toLocaleDateString('ar-SA')}`;
+  document.getElementById('m-meta').textContent=(a.author_name||'—')+' · '+(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA');
   document.getElementById('m-body').textContent=a.body||'';
   const f=document.getElementById('m-foot');
-  f.innerHTML=a.status==='pending'?`<button class="btn p" onclick="pubArt('${a.id}');closeModal()">نشر</button><button class="btn danger" onclick="rejectArt('${a.id}');closeModal()">رفض</button><button class="btn o" onclick="closeModal()">إغلاق</button>`:`<button class="btn o" onclick="closeModal()">إغلاق</button>`;
+  f.innerHTML=a.status==='pending'?'<button class="btn p" onclick="pubArt(\''+a.id+'\');closeModal()">نشر</button><button class="btn danger" onclick="rejectArt(\''+a.id+'\');closeModal()">رفض</button><button class="btn o" onclick="closeModal()">إغلاق</button>':'<button class="btn o" onclick="closeModal()">إغلاق</button>';
   document.getElementById('modal-bg').classList.add('on');
 }
 function closeModal(){document.getElementById('modal-bg').classList.remove('on');}
@@ -614,7 +614,7 @@ async function loadBooks(){
   const {data}=await sb.from('books').select('*').order('created_at',{ascending:false});
   const el=document.getElementById('books-list');
   if(!data?.length){el.innerHTML='<div class="empty">لا توجد كتب — أضيفي كتاباً</div>';return;}
-  el.innerHTML=data.map(b=>`<div class="irow"><div class="icolor" style="background:${b.color||'#1A7A7A'};">${(b.genre||'').slice(0,4)}</div><div class="iinfo"><div class="ititle">${b.title}</div><div class="imeta">${b.author||''} · ${b.genre||''} · ${b.stars||''}</div></div><div class="iacts"><button class="bsm r" onclick="delBook('${b.id}')">حذف</button></div></div>`).join('');
+  el.innerHTML='';data.forEach(function(b){var d=document.createElement('div');d.className='irow';d.innerHTML='<div class="icolor" style="background:'+(b.color||'#1A7A7A')+';">'+(b.genre||'').slice(0,4)+'</div><div class="iinfo"><div class="ititle">'+b.title+'</div><div class="imeta">'+(b.author||'')+' · '+(b.genre||'')+' · '+(b.stars||'')+'</div></div><div class="iacts"><button class="bsm r" onclick="delBook(\''+b.id+'\')">'+'حذف</button></div>';el.appendChild(d);});
 }
 async function addBook(){
   const t=v('nb-t').trim();if(!t){toast('أدخلي عنوان الكتاب');return;}
@@ -633,7 +633,7 @@ async function loadArchive(){
 function renderArchiveList(items){
   const el=document.getElementById('arch-list');
   if(!items.length){el.innerHTML='<div class="empty">لا توجد أعداد — أضيفي أول عدد</div>';return;}
-  el.innerHTML=items.map((i,idx)=>`<div class="irow"><div class="icolor" style="background:${i.color||'#1A7A7A'};">وَرَق</div><div class="iinfo"><div class="ititle">العدد ${i.num}</div><div class="imeta">${i.date||''} ${i.pdf?'· PDF متاح ✓':'· لا يوجد PDF'}</div></div><div class="iacts">${i.pdf?`<button class="bsm t" onclick="window.open('${i.pdf}','_blank')">فتح PDF</button>`:''}  <button class="bsm r" onclick="delArchive(${idx})">حذف</button></div></div>`).join('');
+  el.innerHTML='';items.forEach(function(i,idx){var d=document.createElement('div');d.className='irow';var pdfBtn=i.pdf?'<button class="bsm t" onclick="window.open(\''+i.pdf+'\',\'_blank\')">فتح PDF</button>':'';d.innerHTML='<div class="icolor" style="background:'+(i.color||'#1A7A7A')+'">وَرَق</div><div class="iinfo"><div class="ititle">العدد '+i.num+'</div><div class="imeta">'+(i.date||'')+' '+(i.pdf?'· PDF متاح ✓':'· لا يوجد PDF')+'</div></div><div class="iacts">'+pdfBtn+'<button class="bsm r" onclick="delArchive('+idx+')">حذف</button></div>';el.appendChild(d);});
 }
 async function addArchive(){
   const num=v('ar-num'),date=v('ar-date');
@@ -659,7 +659,7 @@ async function loadUsers(){
   const el=document.getElementById('users-list');
   if(!data?.length){el.innerHTML='<div class="empty">لا يوجد مستخدمون</div>';return;}
   const colors=['#1A7A7A','#C94B1E','#412402','#26215C','#633806','#085041'];
-  el.innerHTML=data.map((u,i)=>`<div class="urow"><div class="uavatar" style="background:${colors[i%colors.length]};">${(u.name||u.email||'?')[0]}</div><div class="uinfo"><div class="uname">${u.name||'—'}</div><div class="uemail">${u.email||''}</div></div><span class="rpill ${u.role==='admin'?'rp-admin':'rp-writer'}">${u.role==='admin'?'مدير':'كاتب'}</span><div style="display:flex;gap:5px;">${u.id!==me.id?`<button class="bsm g" onclick="toggleRole('${u.id}','${u.role}')">تبديل الصلاحية</button><button class="bsm r" onclick="delUser('${u.id}')">حذف</button>`:'<span style="font-size:11px;color:var(--mid);">أنتِ</span>'}</div></div>`).join('');
+  el.innerHTML='';data.forEach(function(u,i){var d=document.createElement('div');d.className='urow';var btns=u.id!==me.id?'<button class="bsm g" onclick="toggleRole(\''+u.id+'\',\''+u.role+'\')">'+'تبديل الصلاحية</button><button class="bsm r" onclick="delUser(\''+u.id+'\')">'+'حذف</button>':'<span style="font-size:11px;color:var(--mid);">أنتِ</span>';d.innerHTML='<div class="uavatar" style="background:'+colors[i%colors.length]+';">'+(u.name||u.email||'?')[0]+'</div><div class="uinfo"><div class="uname">'+(u.name||'—')+'</div><div class="uemail">'+(u.email||'')+'</div></div><span class="rpill '+(u.role==='admin'?'rp-admin':'rp-writer')+'">'+(u.role==='admin'?'مدير':'كاتب')+'</span><div style="display:flex;gap:5px;">'+btns+'</div>';el.appendChild(d);});
 }
 async function createUser(){
   const email=v('nu-e'),pass=v('nu-p'),name=v('nu-n'),role=v('nu-r');
@@ -730,8 +730,8 @@ function applyTheme(t,o,g){
 
 // ── HELPERS ──
 function toggleIF(id){document.getElementById(id).classList.toggle('on');}
-function addSideItem(){const el=document.getElementById('side-list');const r=document.createElement('div');r.className='irow';r.innerHTML=`<div class="iinfo"><input type="text" placeholder="اسم الكتاب" style="margin-bottom:5px;"><input type="text" placeholder="الكاتب · التصنيف"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button>`;el.appendChild(r);}
-function addTick(){const el=document.getElementById('tick-list');const r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML=`<div style="flex:1;"><input type="text" placeholder="نص الخبر..." style="width:100%;"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button>`;el.appendChild(r);}
+function addSideItem(){var el=document.getElementById('side-list');var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" placeholder="اسم الكتاب" style="margin-bottom:5px;"><input type="text" placeholder="الكاتب · التصنيف"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);}
+function addTick(){var el=document.getElementById('tick-list');var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" placeholder="نص الخبر..." style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);}
 function v(id){const e=document.getElementById(id);return e?e.value:'';}
 function sv(id,val){if(val){const e=document.getElementById(id);if(e)e.value=val;}}
 function se(id,txt){if(txt!==undefined&&txt!==null){const e=document.getElementById(id);if(e)e.textContent=txt;}}
