@@ -201,7 +201,7 @@ function renderList(arts,id){
   if(!arts.length){el.innerHTML='<div class="empty">لا توجد مقالات</div>';return;}
   const sl={pending:'قيد المراجعة',published:'منشورة',rejected:'مرفوضة',draft:'مسودة'};
   const sc={pending:'s-pending',published:'s-published',rejected:'s-rejected',draft:'s-draft'};
-  el.innerHTML=arts.map(a=>`<div class="art-row"><span class="status-pill ${sc[a.status]||''}">${sl[a.status]||a.status}</span><div class="art-info"><div class="art-name">${a.title}</div><div class="art-sub">${a.author_name||''} · ${new Date(a.created_at).toLocaleDateString('ar-SA')}</div>${a.status==='rejected'&&a.reject_reason?`<div class="art-reject">سبب الرفض: ${a.reject_reason}</div>`:''}</div><div class="art-btns">${a.status!=='published'?`<button class="btn-sm t" onclick="edit('${a.id}')">تعديل</button>`:''}<button class="btn-sm r" onclick="del('${a.id}')">حذف</button></div></div>`).join('');
+  el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='art-row';var rejHTML=a.status==='rejected'&&a.reject_reason?'<div class="art-reject">سبب الرفض: '+a.reject_reason+'</div>':'';var editBtn=a.status!=='published'?'<button class="btn-sm t" onclick="edit(\''+a.id+'\')">تعديل</button>':'';d.innerHTML='<span class="status-pill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="art-info"><div class="art-name">'+a.title+'</div><div class="art-sub">'+(a.author_name||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div>'+rejHTML+'</div><div class="art-btns">'+editBtn+'<button class="btn-sm r" onclick="del(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
 }
 async function submit(){
   const title=document.getElementById('a-title').value.trim();
