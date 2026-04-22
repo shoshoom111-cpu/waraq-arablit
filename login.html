@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وَرَق | الدخول</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&family=Felfel&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Cairo',sans-serif;background:#F0EFEB;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;direction:rtl;padding:20px;}
+.logo-wrap{text-align:center;margin-bottom:32px;}
+.logo{font-family:'Felfel',serif;font-size:56px;color:#0E0E0E;line-height:1;}
+.logo-sub{font-size:11px;color:#888;margin-top:5px;letter-spacing:.1em;}
+.card{background:#fff;border-radius:14px;border:1px solid #E2DFD8;padding:32px;width:100%;max-width:390px;box-shadow:0 4px 24px rgba(0,0,0,.06);}
+.card-title{font-size:17px;font-weight:600;margin-bottom:24px;color:#0E0E0E;}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+label{font-size:11px;color:#6B6860;font-weight:600;letter-spacing:.02em;}
+input{font-family:'Cairo',sans-serif;font-size:14px;padding:11px 14px;border:1px solid #E2DFD8;border-radius:8px;background:#FAF9F7;color:#0E0E0E;width:100%;transition:all .2s;direction:rtl;}
+input:focus{outline:none;border-color:#1A7A7A;box-shadow:0 0 0 3px rgba(26,122,122,.1);}
+.btn{width:100%;background:#1A7A7A;color:#fff;border:none;padding:12px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px;transition:background .2s;}
+.btn:hover{background:#0f5555;}
+.btn:disabled{background:#aaa;cursor:not-allowed;}
+.error{background:#FDF0EC;border:1px solid #C94B1E;border-radius:8px;padding:10px 14px;font-size:12px;color:#712B13;margin-bottom:14px;display:none;}
+.divider{height:.5px;background:#E2DFD8;margin:20px 0;}
+.footer-link{text-align:center;font-size:12px;color:#888;}
+.footer-link a{color:#1A7A7A;text-decoration:none;font-weight:500;}
+.footer-link a:hover{color:#C94B1E;}
+.spinner{display:none;text-align:center;font-size:12px;color:#888;margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="logo-wrap">
+  <div class="logo">وَرَق</div>
+  <div class="logo-sub">نظام إدارة مركز الأدب العربي</div>
+</div>
+<div class="card">
+  <div class="card-title">تسجيل الدخول</div>
+  <div class="error" id="err"></div>
+  <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="email" placeholder="example@email.com" autocomplete="email"></div>
+  <div class="fg"><label>كلمة المرور</label><input type="password" id="pass" placeholder="••••••••" autocomplete="current-password"></div>
+  <button class="btn" id="btn" onclick="doLogin()">دخول</button>
+  <div class="spinner" id="spin">جاري التحقق...</div>
+  <div class="divider"></div>
+  <div class="footer-link"><a href="index.html">← العودة للموقع</a></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+sb.auth.getSession().then(({data:{session}})=>{if(session)redirect(session.user);});
+async function doLogin(){
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('pass').value;
+  const btn=document.getElementById('btn');
+  const err=document.getElementById('err');
+  const spin=document.getElementById('spin');
+  err.style.display='none';
+  if(!email||!pass){showErr('يرجى إدخال البريد وكلمة المرور');return;}
+  btn.disabled=true;spin.style.display='block';
+  const {data,error}=await sb.auth.signInWithPassword({email,password:pass});
+  btn.disabled=false;spin.style.display='none';
+  if(error){showErr('بيانات الدخول غير صحيحة');return;}
+  redirect(data.user);
+}
+async function redirect(user){
+  const {data}=await sb.from('profiles').select('role').eq('id',user.id).single();
+  window.location.href=(data?.role==='admin')?'admin.html':'writer.html';
+}
+function showErr(msg){const e=document.getElementById('err');e.textContent=msg;e.style.display='block';}
+document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+</script>
+</body>
+</html>
