@@ -598,9 +598,9 @@ async function init(){
   if(!session){location.href='login.html';return;}
   me=session.user;
   var {data:p}=await sb.from('profiles').select('*').eq('id',me.id).single();
-  if(p?.role!=='admin'){location.href='writer.html';return;}
-  document.getElementById('admin-name').textContent=p?.name||me.email;
-  document.getElementById('aa-author').value=p?.name||'';
+  if((!p || p.role!=='admin')){location.href='writer.html';return;}
+  document.getElementById('admin-name').textContent=(p && p.name ? p.name : me.email);
+  document.getElementById('aa-author').value=(p && p.name ? p.name : '');
   loadDash();loadBooks();loadArchive();loadUsers();loadSettings();
 }
 init();
@@ -715,7 +715,7 @@ function closeModal(){document.getElementById('modal-bg').classList.remove('on')
 async function loadBooks(){
   var {data}=await sb.from('books').select('*').order('created_at',{ascending:false});
   var el=document.getElementById('books-list');
-  if(!data?.length){el.innerHTML='<div class="empty">لا توجد كتب — أضيفي كتاباً</div>';return;}
+  if(!(data && data.length)){el.innerHTML='<div class="empty">لا توجد كتب — أضيفي كتاباً</div>';return;}
   el.innerHTML='';data.forEach(function(b){var d=document.createElement('div');d.className='irow';d.innerHTML='<div class="icolor" style="background:'+(b.color||'#1A7A7A')+';">'+(b.genre||'').slice(0,4)+'</div><div class="iinfo"><div class="ititle">'+b.title+'</div><div class="imeta">'+(b.author||'')+' · '+(b.genre||'')+' · '+(b.stars||'')+'</div></div><div class="iacts"><button class="bsm r" onclick="delBook(\''+b.id+'\')">'+'حذف</button></div>';el.appendChild(d);});
 }
 async function addBook(){
@@ -729,7 +729,7 @@ async function delBook(id){if(!confirm('حذف هذا الكتاب؟'))return;aw
 // ── ARCHIVE ──
 async function loadArchive(){
   var {data}=await sb.from('settings').select('value').eq('key','archive').single();
-  var items=data?.value||[];
+  var items=(data && data.value)||[];
   renderArchiveList(items);
 }
 function renderArchiveList(items){
@@ -741,7 +741,7 @@ async function addArchive(){
   var num=v('ar-num'),date=v('ar-date');
   if(!num||!date){toast('أدخلي رقم العدد والتاريخ');return;}
   var {data}=await sb.from('settings').select('value').eq('key','archive').single();
-  var items=data?.value||[];
+  var items=(data && data.value)||[];
   items.unshift({num,date,pdf:v('ar-pdf')||null,color:v('ar-color')});
   await sb.from('settings').upsert({key:'archive',value:items});
   toast('تمت الإضافة!');loadArchive();toggleIF('add-arch');
@@ -750,7 +750,7 @@ async function addArchive(){
 async function delArchive(idx){
   if(!confirm('حذف هذا العدد من الأرشيف؟'))return;
   var {data}=await sb.from('settings').select('value').eq('key','archive').single();
-  var items=data?.value||[];items.splice(idx,1);
+  var items=(data && data.value)||[];items.splice(idx,1);
   await sb.from('settings').upsert({key:'archive',value:items});
   toast('تم الحذف');loadArchive();
 }
@@ -759,7 +759,7 @@ async function delArchive(idx){
 async function loadUsers(){
   var {data}=await sb.from('profiles').select('*').order('created_at',{ascending:false});
   var el=document.getElementById('users-list');
-  if(!data?.length){el.innerHTML='<div class="empty">لا يوجد مستخدمون</div>';return;}
+  if(!(data && data.length)){el.innerHTML='<div class="empty">لا يوجد مستخدمون</div>';return;}
   var colors=['#1A7A7A','#C94B1E','#412402','#26215C','#633806','#085041'];
   el.innerHTML='';data.forEach(function(u,i){var d=document.createElement('div');d.className='urow';var btns=u.id!==me.id?'<button class="bsm g" onclick="toggleRole(\''+u.id+'\',\''+u.role+'\')">'+'تبديل الصلاحية</button><button class="bsm r" onclick="delUser(\''+u.id+'\')">'+'حذف</button>':'<span style="font-size:11px;color:var(--mid);">أنتِ</span>';d.innerHTML='<div class="uavatar" style="background:'+colors[i%colors.length]+';">'+(u.name||u.email||'?')[0]+'</div><div class="uinfo"><div class="uname">'+(u.name||'—')+'</div><div class="uemail">'+(u.email||'')+'</div></div><span class="rpill '+(u.role==='admin'?'rp-admin':'rp-writer')+'">'+(u.role==='admin'?'مدير':'كاتب')+'</span><div style="display:flex;gap:5px;">'+btns+'</div>';el.appendChild(d);});
 }
@@ -769,7 +769,7 @@ async function createUser(){
   if(pass.length<6){toast('كلمة المرور يجب أن تكون ٦ أحرف على الأقل');return;}
   var {data:sd,error}=await sb.auth.signUp({email,password:pass});
   if(error){toast('خطأ: '+error.message);return;}
-  if(sd?.user)await sb.from('profiles').upsert({id:sd.user.id,email,name,role});
+  if((sd && sd.user))await sb.from('profiles').upsert({id:sd.user.id,email,name,role});
   toast('تم إنشاء الحساب بنجاح!');loadUsers();toggleIF('add-user');
   ['nu-n','nu-e','nu-p'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
 }
@@ -790,7 +790,7 @@ async function saveSideItems(){
   var rows=document.querySelectorAll('#side-list .irow');
   var items=Array.from(rows).map(r=>{
     var inputs=r.querySelectorAll('input[type=text]');
-    return {title:inputs[0]?.value||'',meta:inputs[1]?.value||''};
+    return {title:(inputs[0]?inputs[0].value:'')||'',meta:(inputs[1]?inputs[1].value:'')||''};
   }).filter(i=>i.title.trim());
   await sb.from('settings').upsert({key:'side_items',value:items});
   toast('تم حفظ الشريط الجانبي!');
@@ -816,7 +816,7 @@ async function saveTicker(){
 }
 async function getCurSettings(key){
   var {data}=await sb.from('settings').select('value').eq('key',key).single();
-  return data?.value||{};
+  return (data && data.value)||{};
 }
 
 // ── DESIGN ──
