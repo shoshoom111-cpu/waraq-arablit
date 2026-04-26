@@ -163,11 +163,19 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 
 @media(max-width:900px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}.stats{grid-template-columns:1fr 1fr;}.two,.three{grid-template-columns:1fr;}}
 @media(max-width:600px){.stats{grid-template-columns:1fr;}.lp-masthead{grid-template-columns:1fr;}.lp-meta{display:none;}}
+
+.loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,.85);z-index:9000;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
+.loading-overlay.on{display:flex;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:13px;color:var(--mid);}
+.btn:disabled{opacity:.6;cursor:not-allowed;}
 </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
+<div class="loading-overlay" id="loading-overlay"><div class="spinner"></div><div class="loading-text">جاري التحميل...</div></div>
 <div class="topbar">
   <div class="tb-left">
     <a class="tb-logo" href="index.html" target="_blank">وَرَق</a>
@@ -591,17 +599,25 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 <script src="config.js"></script>
 <script>
 var sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+var _cache = {};
+function showLoad(){var o=document.getElementById('loading-overlay');if(o)o.classList.add('on');}
+function hideLoad(){var o=document.getElementById('loading-overlay');if(o)o.classList.remove('on');}
+async function cachedFetch(key, fn){if(_cache[key])return _cache[key];var result=await fn();_cache[key]=result;return result;}
+function invalidateCache(){_cache={};}
+
 var me=null;
 
 async function init(){
+  showLoad();
   var {data:{session}}=await sb.auth.getSession();
   if(!session){location.href='login.html';return;}
   me=session.user;
   var {data:p}=await sb.from('profiles').select('*').eq('id',me.id).single();
-  if((!p || p.role!=='admin')){location.href='writer.html';return;}
+  if(!p || p.role!=='admin'){location.href='writer.html';return;}
   document.getElementById('admin-name').textContent=(p && p.name ? p.name : me.email);
   document.getElementById('aa-author').value=(p && p.name ? p.name : '');
-  loadDash();loadBooks();loadArchive();loadUsers();loadSettings();
+  loadDash();loadBooks();loadArchive();loadUsers();loadSettings();hideLoad();
 }
 init();
 
@@ -769,7 +785,7 @@ async function createUser(){
   if(pass.length<6){toast('كلمة المرور يجب أن تكون ٦ أحرف على الأقل');return;}
   var {data:sd,error}=await sb.auth.signUp({email,password:pass});
   if(error){toast('خطأ: '+error.message);return;}
-  if((sd && sd.user))await sb.from('profiles').upsert({id:sd.user.id,email,name,role});
+  if(sd && sd.user)await sb.from('profiles').upsert({id:sd.user.id,email,name,role});
   toast('تم إنشاء الحساب بنجاح!');loadUsers();toggleIF('add-user');
   ['nu-n','nu-e','nu-p'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
 }
