@@ -250,12 +250,40 @@ button,a{cursor:pointer;}
   .books-grid,.books-page-grid{grid-template-columns:1fr;}
   .arch-row{grid-template-columns:repeat(2,1fr);}
 }
+
+/* BANNER */
+.site-banner{width:100%;overflow:hidden;cursor:pointer;display:none;}
+.site-banner img{width:100%;max-height:400px;object-fit:cover;display:block;}
+/* LOGO IN HEADER */
+.header-logo-img{height:40px;width:auto;object-fit:contain;}
+.header-logo-wrap{display:flex;align-items:center;gap:10px;}
+/* MONTH PICK */
+.month-pick{background:var(--ink);color:#fff;padding:28px 24px;margin-top:32px;}
+.mp-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;}
+.mp-label{font-size:10px;letter-spacing:.12em;color:var(--gold);margin-bottom:8px;font-weight:600;}
+.mp-title{font-family:'Noto Serif Arabic',serif;font-size:26px;color:#fff;line-height:1.4;margin-bottom:6px;}
+.mp-author{font-size:13px;color:#888;margin-bottom:12px;}
+.mp-desc{font-size:13px;color:#666;line-height:1.8;}
+.mp-btn{display:inline-block;margin-top:14px;padding:9px 22px;border:1px solid var(--gold);color:var(--gold);border-radius:5px;font-size:12px;font-family:'Cairo',sans-serif;cursor:pointer;text-decoration:none;}
+.mp-btn:hover{background:var(--gold);color:var(--gd);}
+.mp-cover{aspect-ratio:2/3;max-width:180px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:16px;margin:0 auto;}
+.mp-cover span{font-family:'Noto Serif Arabic',serif;font-size:20px;color:#fff;text-align:center;}
+.mp-cover img{width:100%;height:100%;object-fit:cover;border-radius:8px;}
+@media(max-width:768px){.mp-in{grid-template-columns:1fr;}.mp-cover{display:none;}}
 </style>
 </head>
 <body>
 <div class="topbar"><div class="topbar-in"><span class="topbar-text" id="tb-txt">مركز الأدب العربي للنشر والتوزيع</span><div class="tb-links"><a id="ig-lnk" href="https://www.instagram.com/servicesbook1" target="_blank">Instagram</a><a id="tt-lnk" href="https://www.tiktok.com/@adab_book" target="_blank">TikTok</a><a id="store-lnk" href="https://adab-book.com/" target="_blank">المتجر</a></div></div></div>
+
+<!-- BANNER -->
+<div class="site-banner" id="site-banner">
+  <img id="banner-img" src="" alt="إعلان">
+</div>
 <header class="site-header"><div class="header-in">
-  <a class="header-logo" id="logo-home">وَرَق</a>
+  <a class="header-logo header-logo-wrap" id="logo-home">
+  <img id="header-logo-img" src="" alt="وَرَق" class="header-logo-img" style="display:none;">
+  <span id="header-logo-text">وَرَق</span>
+</a>
   <nav class="header-nav">
     <a class="nav-a on" id="nav-home">الرئيسية</a>
     <a class="nav-a" id="nav-issue">العدد الحالي</a>
@@ -334,6 +362,24 @@ button,a{cursor:pointer;}
     <div class="arch-mini"><div class="arch-mini-cover" style="background:#633806;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الخامس</div></div><div class="arch-mini-info"><div class="arch-mini-date">أغسطس ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
   </div>
 </div></div>
+
+<!-- MONTH PICK -->
+<div class="month-pick" id="month-pick" style="display:none;">
+  <div class="mp-in">
+    <div>
+      <div class="mp-label">توصية الشهر</div>
+      <div class="mp-title" id="mp-title">جحيم العابرين</div>
+      <div class="mp-author" id="mp-author">مركز الأدب العربي</div>
+      <div class="mp-desc" id="mp-desc">رواية استثنائية تجمع بين الإثارة والعمق الفلسفي في رحلة لا تُنسى.</div>
+      <a class="mp-btn" id="mp-btn">احصل على الكتاب</a>
+    </div>
+    <div style="text-align:center;">
+      <div class="mp-cover" id="mp-cover" style="background:#412402;">
+        <span id="mp-cover-t">جحيم العابرين</span>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="newsletter" id="newsletter" style="background:linear-gradient(135deg,var(--teal),var(--td));">
   <div class="nl-logo">وَرَق</div>
   <div class="nl-title" id="nl-title">اشترك في وَرَق مجاناً</div>
@@ -604,6 +650,48 @@ function applySettings(rows) {
   if (s.social) { if (s.social.ig) { document.getElementById('ig-lnk').href = s.social.ig; document.getElementById('ft-ig').href = s.social.ig; } if (s.social.tt) { document.getElementById('tt-lnk').href = s.social.tt; document.getElementById('ft-tt').href = s.social.tt; } if (s.social.store) { document.getElementById('store-lnk').href = s.social.store; document.getElementById('ft-store').href = s.social.store; } if (s.social.brevo) window._brevoUrl = s.social.brevo; }
   if (s.ticker && s.ticker.length) { var t = document.getElementById('ticker-track'); if (t) t.innerHTML = s.ticker.concat(s.ticker).map(function(x) { return '<span>' + x + '</span>'; }).join(''); }
   if (s.side_items && s.side_items.length) { var si = document.getElementById('side-items'); if (si) si.innerHTML = s.side_items.map(function(i) { return '<div class="side-item"><div class="si-badge"></div><div class="si-title">' + (i.title||'') + '</div><div class="si-meta">' + (i.meta||'') + '</div></div>'; }).join(''); }
+  // BANNER
+  if (s.banner && s.banner.url) {
+    var bn = document.getElementById('site-banner');
+    var bi = document.getElementById('banner-img');
+    if (bn && bi) { bi.src = s.banner.url; bn.style.display = 'block';
+      if (s.banner.link) bn.onclick = function() { window.open(s.banner.link,'_blank'); };
+    }
+  }
+  // LOGO
+  if (s.general && s.general.logo_url) {
+    var li = document.getElementById('header-logo-img');
+    var lt = document.getElementById('header-logo-text');
+    if (li) { li.src = s.general.logo_url; li.style.display = 'block'; }
+    if (lt) lt.style.display = 'none';
+  }
+  // MONTH PICK
+  if (s.month_pick && s.month_pick.title) {
+    var mp = document.getElementById('month-pick');
+    if (mp) mp.style.display = 'block';
+    se('mp-title', s.month_pick.title);
+    se('mp-author', s.month_pick.author);
+    se('mp-desc', s.month_pick.desc);
+    var mpbtn = document.getElementById('mp-btn');
+    if (mpbtn && s.month_pick.url) mpbtn.href = s.month_pick.url;
+    var mpc = document.getElementById('mp-cover');
+    var mpct = document.getElementById('mp-cover-t');
+    if (mpc) mpc.style.background = s.month_pick.color || '#412402';
+    if (mpct) mpct.textContent = s.month_pick.title;
+    if (mpc && s.month_pick.image) {
+      mpc.innerHTML = '<img src="' + s.month_pick.image + '" alt="' + s.month_pick.title + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">';
+    }
+  }
+  // SECTIONS ORDER
+  if (s.sections_order && Array.isArray(s.sections_order)) {
+    var home = document.getElementById('v-home');
+    var secIds = {'books':'home-books-wrap','articles':'home-arts-wrap','archive':'arch-strip','newsletter':'newsletter'};
+    // sections reordering handled by CSS order property
+    s.sections_order.forEach(function(sec, idx) {
+      var el = document.getElementById(sec + '-section');
+      if (el) el.style.order = idx;
+    });
+  }
   if (s.archive && s.archive.length) {
     renderArchive(s.archive);
     var latest = s.archive[0];
