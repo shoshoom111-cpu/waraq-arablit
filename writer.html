@@ -71,6 +71,10 @@ textarea{resize:vertical;min-height:200px;line-height:1.75;}
 .toast{position:fixed;bottom:20px;left:20px;background:var(--black);color:#fff;font-size:12px;padding:9px 16px;border-radius:6px;transform:translateY(60px);transition:transform .25s;z-index:999;border-right:3px solid var(--teal);}
 .toast.show{transform:translateY(0);}
 @media(max-width:700px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}.stats{grid-template-columns:1fr 1fr;}.two{grid-template-columns:1fr;}}
+
+.edit-banner{background:var(--gold);color:var(--gd);padding:10px 16px;border-radius:6px;margin-bottom:14px;font-size:13px;display:none;align-items:center;justify-content:space-between;}
+.edit-banner.on{display:flex;}
+.edit-banner button{border:none;background:transparent;color:var(--gd);font-size:12px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:500;}
 </style>
 </head>
 <body>
@@ -168,24 +172,25 @@ async function init(){
   if(!session){location.href='login.html';return;}
   me=session.user;
   const {data:p}=await sb.from('profiles').select('*').eq('id',me.id).single();
-  if(p?.role==='admin'){location.href='admin.html';return;}
-  document.getElementById('tb-name').textContent=p?.name||me.email;
-  document.getElementById('greeting').textContent='أهلاً '+(p?.name||'')+' !';
+  if(p && p.role==='admin'){location.href='admin.html';return;}
+  document.getElementById('tb-name').textContent=(p && p.name ? p.name : null)||me.email;
+  document.getElementById('greeting').textContent='أهلاً '+((p && p.name ? p.name : null)||'')+' !';
   document.getElementById('p-email').value=me.email;
-  document.getElementById('p-name').value=p?.name||'';
-  document.getElementById('p-pen').value=p?.pen_name||'';
-  document.getElementById('p-bio').value=p?.bio||'';
-  document.getElementById('a-author').value=p?.pen_name||p?.name||'';
+  document.getElementById('p-name').value=(p && p.name ? p.name : null)||'';
+  document.getElementById('p-pen').value=(p && p.pen_name ? p.pen_name : null)||'';
+  document.getElementById('p-bio').value=(p && p.bio ? p.bio : '')||'';
+  document.getElementById('a-author').value=(p && p.pen_name ? p.pen_name : null)||(p && p.name ? p.name : null)||'';
   loadMine();
 }
 init();
 function navEl(i){return document.querySelectorAll('.nav-item')[i];}
 function go(n,el){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-item').forEach(function(x){x.classList.remove('active');});
   document.getElementById('p-'+n).classList.add('active');
   if(el)el.classList.add('active');
   if(n==='mine')loadMine();
+  if(n==='new'&&!editingId)clearForm();
 }
 async function loadMine(){
   const {data}=await sb.from('articles').select('*').eq('author_id',me.id).order('created_at',{ascending:false});
@@ -204,49 +209,79 @@ function renderList(arts,id){
   el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='art-row';var rejHTML=a.status==='rejected'&&a.reject_reason?'<div class="art-reject">سبب الرفض: '+a.reject_reason+'</div>':'';var editBtn=a.status!=='published'?'<button class="btn-sm t" onclick="edit(\''+a.id+'\')">تعديل</button>':'';d.innerHTML='<span class="status-pill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="art-info"><div class="art-name">'+a.title+'</div><div class="art-sub">'+(a.author_name||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div>'+rejHTML+'</div><div class="art-btns">'+editBtn+'<button class="btn-sm r" onclick="del(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
 }
 async function submit(){
-  const title=document.getElementById('a-title').value.trim();
-  const body=document.getElementById('a-body').value.trim();
+  var title=document.getElementById('a-title').value.trim();
+  var body=document.getElementById('a-body').value.trim();
   if(!title||!body){toast('يرجى إدخال العنوان والمحتوى');return;}
-  const {error}=await sb.from('articles').insert({title,body,excerpt:document.getElementById('a-excerpt').value,category:document.getElementById('a-cat').value,author_name:document.getElementById('a-author').value,author_id:me.id,status:'pending'});
-  if(error){toast('خطأ: '+error.message);return;}
-  toast('تم الإرسال للمراجعة!');
-  ['a-title','a-body','a-excerpt'].forEach(i=>document.getElementById(i).value='');
-  go('mine',navEl(2));
+  var res;
+  if(editingId){
+    res=await sb.from('articles').update({title:title,body:body,excerpt:document.getElementById('a-excerpt').value,category:document.getElementById('a-cat').value,author_name:document.getElementById('a-author').value,status:'pending'}).eq('id',editingId).eq('author_id',me.id);
+    if(res.error){toast('خطأ في التعديل: '+res.error.message);return;}
+    toast('تم تحديث المقالة وإرسالها للمراجعة! ✓');
+  } else {
+    res=await sb.from('articles').insert({title:title,body:body,excerpt:document.getElementById('a-excerpt').value,category:document.getElementById('a-cat').value,author_name:document.getElementById('a-author').value,author_id:me.id,status:'pending'});
+    if(res.error){toast('خطأ: '+res.error.message);return;}
+    toast('تم الإرسال للمراجعة! ✓');
+  }
+  clearForm();go('mine',navEl(2));loadStats();
 }
 async function draft(){
-  const title=document.getElementById('a-title').value.trim();
+  var title=document.getElementById('a-title').value.trim();
   if(!title){toast('أدخلي عنواناً');return;}
-  await sb.from('articles').insert({title,body:document.getElementById('a-body').value,excerpt:document.getElementById('a-excerpt').value,category:document.getElementById('a-cat').value,author_name:document.getElementById('a-author').value,author_id:me.id,status:'draft'});
-  toast('تم حفظ المسودة!');
+  var res=await sb.from('articles').insert({title:title,body:document.getElementById('a-body').value,excerpt:document.getElementById('a-excerpt').value,category:document.getElementById('a-cat').value,author_name:document.getElementById('a-author').value,author_id:me.id,status:'draft'});
+  if(res.error){toast('خطأ في الحفظ: '+res.error.message);return;}
+  toast('تم حفظ المسودة! ✓');clearForm();loadMine();
 }
 async function del(id){
-  if(!confirm('حذف هذه المقالة؟'))return;
-  await sb.from('articles').delete().eq('id',id).eq('author_id',me.id);
-  loadMine();toast('تم الحذف');
+  if(!confirm('حذف هذه المقالة نهائياً؟'))return;
+  var res=await sb.from('articles').delete().eq('id',id).eq('author_id',me.id);
+  if(res.error){toast('خطأ في الحذف: '+res.error.message);return;}
+  toast('تم الحذف ✓');loadMine();
 }
+var editingId=null;
 async function edit(id){
-  const {data:a}=await sb.from('articles').select('*').eq('id',id).single();
-  if(!a)return;
+  var {data:a}=await sb.from('articles').select('*').eq('id',id).eq('author_id',me.id).single();
+  if(!a){toast('لا يمكن تعديل هذه المقالة');return;}
   document.getElementById('a-title').value=a.title;
   document.getElementById('a-body').value=a.body||'';
   document.getElementById('a-excerpt').value=a.excerpt||'';
   document.getElementById('a-author').value=a.author_name||'';
+  editingId=id;
   go('new',navEl(1));
-  toast('عدّلي المقالة وأعيدي الإرسال');
-  await sb.from('articles').delete().eq('id',id);
+  var eb=document.getElementById('edit-banner');
+  if(eb)eb.classList.add('on');
 }
 async function saveProfile(){
   await sb.from('profiles').upsert({id:me.id,name:document.getElementById('p-name').value,pen_name:document.getElementById('p-pen').value,bio:document.getElementById('p-bio').value,role:'writer'});
   toast('تم حفظ الملف الشخصي!');
 }
 async function changePass(){
-  const p=document.getElementById('p-pass').value;
-  if(p.length<6){toast('كلمة المرور قصيرة جداً');return;}
-  await sb.auth.updateUser({password:p});
-  document.getElementById('p-pass').value='';
-  toast('تم تغيير كلمة المرور!');
+  var p=document.getElementById('p-pass').value;
+  if(!p||p.length<6){toast('كلمة المرور قصيرة جداً — ٦ أحرف على الأقل');return;}
+  try{
+    var res=await sb.auth.updateUser({password:p});
+    if(res.error){toast('خطأ: '+res.error.message);return;}
+    document.getElementById('p-pass').value='';
+    toast('تم تغيير كلمة المرور! ✓');
+  }catch(e){toast('خطأ في تغيير كلمة المرور');}
 }
 function fmt(b,a){const ta=document.getElementById('a-body');const s=ta.selectionStart,e=ta.selectionEnd;const sel=ta.value.substring(s,e);ta.value=ta.value.substring(0,s)+b+sel+a+ta.value.substring(e);ta.focus();}
+async function loadStats(){
+  var {data:arts}=await sb.from('articles').select('id,status').eq('author_id',me.id);
+  if(!arts)return;
+  var total=arts.length;
+  var pub=arts.filter(function(a){return a.status==='published';}).length;
+  var pend=arts.filter(function(a){return a.status==='pending';}).length;
+  var draft=arts.filter(function(a){return a.status==='draft';}).length;
+  se('st-total',total);se('st-pub',pub);se('st-pend',pend);se('st-draft',draft);
+}
+function clearForm(){
+  ['a-title','a-body','a-excerpt'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+  var cat=document.getElementById('a-cat');if(cat)cat.value='نقد أدبي';
+  var stat=document.getElementById('a-status');if(stat)stat.value='pending';
+  editingId=null;
+  var editBanner=document.getElementById('edit-banner');
+  if(editBanner)editBanner.style.display='none';
+}
 async function logout(){await sb.auth.signOut();location.href='login.html';}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 </script>
