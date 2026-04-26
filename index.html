@@ -507,9 +507,10 @@ function goBack() { goView(prevView); }
 function scrollTo2(id) { setTimeout(function() { var e = document.getElementById(id); if (e) e.scrollIntoView({behavior:'smooth'}); }, 60); }
 function toggleMob() {
   var m = document.getElementById('mob-menu'), h = document.getElementById('ham');
-  var isOpen = m.style.display === 'flex';
+  var isOpen = m.getAttribute('data-open') === '1';
   m.style.display = isOpen ? 'none' : 'flex';
   m.style.flexDirection = 'column';
+  m.setAttribute('data-open', isOpen ? '0' : '1');
   h.classList.toggle('open', !isOpen);
 }
 function closeMob() { document.getElementById('mob-menu').style.display = 'none'; document.getElementById('ham').classList.remove('open'); }
@@ -526,7 +527,7 @@ function openArt(id) {
   se('sa-author', a.author_name || '');
   se('sa-date', a.date || '');
   se('sa-cat', a.category || '');
-  document.getElementById('sa-body').innerHTML = a.body || '';
+  document.getElementById('sa-body').innerHTML = (a.body && a.body.trim()) ? a.body : '<p>لا يوجد محتوى</p>';
   var rel = document.getElementById('rel-arts');
   rel.innerHTML = '';
   var all = [];
@@ -554,10 +555,10 @@ function openBook(id) {
   se('sb-stars', b.stars || '★★★★★');
   se('sb-desc', b.desc || b.description || '');
   document.getElementById('sb-quote').textContent = '"' + (b.quote || '') + '"';
-  var pills = b.pills || [];
+  var pills = b.pills ? (typeof b.pills==='string' ? JSON.parse(b.pills) : b.pills) : [];
   document.getElementById('sb-pills').innerHTML = pills.map(function(p) { return '<span class="sb-pill">' + p + '</span>'; }).join('');
   var buyBtn = document.getElementById('sb-buy');
-  var bUrl = b.url || 'https://adab-book.com/';
+  var bUrl = (b.url && b.url.trim()) ? b.url : 'https://adab-book.com/';
   buyBtn.onclick = function() { window.open(bUrl, '_blank'); };
   var rel = document.getElementById('rel-books');
   rel.innerHTML = '';
@@ -589,7 +590,7 @@ function renderBooks(books) {
   var pg = document.getElementById('books-pg');
   var si = document.getElementById('side-items');
   function bookCardHTML(b) {
-    var imgHTML = b.image ? '<img style="width:100%;height:180px;object-fit:cover;display:block;" src="' + b.image + '" alt="' + b.title + '" loading="lazy">' : '<div class="book-card-strip" style="background:' + (b.color||'#1A7A7A') + ';"></div>';
+    var imgHTML = (b.image&&b.image.trim()) ? '<img style="width:100%;height:180px;object-fit:cover;display:block;" src="' + b.image + '" alt="' + b.title + '" loading="lazy">' : '<div class="book-card-strip" style="background:' + (b.color||'#1A7A7A') + ';"></div>';
     return '<div class="book-card" data-bid="' + b.id + '">' + imgHTML + '<div class="book-card-body"><div class="book-genre">' + (b.genre||'') + '</div><div class="book-title">' + b.title + '</div><div class="book-author">' + (b.author||'') + '</div><div class="book-stars">' + (b.stars||'★★★★★') + '</div><div class="book-desc">' + (b.description||'') + '</div><div class="book-cta">اقرأ المزيد</div></div></div>';
   }
   if (hg) { hg.innerHTML = books.slice(0,4).map(bookCardHTML).join(''); hg.querySelectorAll('.book-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); }); }
@@ -628,7 +629,7 @@ function renderArts(arts) {
   if (pg) {
     pg.innerHTML = arts.map(function(a) {
       var imgHTML = a.image ? '<img class="apg-img" src="' + a.image + '" alt="' + a.title + '" loading="lazy">' : '';
-      return '<div class="apg-card" data-aid="' + a.id + '">' + imgHTML + '<span class="apg-badge" style="background:var(--teal);">' + (a.category||'') + '</span><div class="apg-title">' + a.title + '</div><div class="apg-excerpt">' + (a.excerpt||'') + '</div><div class="apg-footer"><span class="apg-author">' + (a.author_name||'') + '</span><span class="apg-date">' + (a.published_at ? new Date(a.published_at).toLocaleDateString('ar-SA') : '') + '</span></div></div>';
+      return '<div class="apg-card" data-aid="' + a.id + '">' + imgHTML + '<span class="apg-badge" style="background:var(--teal);">' + (a.category||'') + '</span><div class="apg-title">' + a.title + '</div><div class="apg-excerpt">' + (a.excerpt||'') + '</div><div class="apg-footer"><span class="apg-author">' + (a.author_name||'') + '</span><span class="apg-date">' + (a.published_at && !isNaN(new Date(a.published_at)) ? new Date(a.published_at).toLocaleDateString('ar-SA') : '') + '</span></div></div>';
     }).join('');
     pg.querySelectorAll('.apg-card').forEach(function(c) { var aid = c.getAttribute('data-aid'); c.addEventListener('click', function() { openArt(aid); }); });
   }
@@ -641,9 +642,10 @@ function renderArchive(items) {
   if (pg) pg.innerHTML = items.map(function(i) { return '<div class="arch-pg-card"><div class="arch-pg-cover" style="background:' + (i.color||'#1A7A7A') + ';"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد ' + i.num + '</div></div><div class="arch-pg-info"><span class="arch-pg-date">' + (i.date||'') + '</span>' + (i.pdf ? '<a class="arch-pg-dl" href="' + i.pdf + '" target="_blank">تحميل PDF</a>' : '<span style="font-size:12px;color:var(--light);">قريباً</span>') + '</div></div>'; }).join('');
 }
 
+function parseVal(v){try{return(typeof v==='string')?JSON.parse(v):v;}catch(e){return v;}}
 function applySettings(rows) {
   var s = {};
-  rows.forEach(function(r) { s[r.key] = r.value; });
+  rows.forEach(function(r) { s[r.key] = parseVal(r.value); });
   if (s.design) { var R = document.documentElement.style; if (s.design.teal) R.setProperty('--teal', s.design.teal); if (s.design.orange) R.setProperty('--orange', s.design.orange); if (s.design.gold) R.setProperty('--gold', s.design.gold); }
   if (s.issue) { se('hero-title', s.issue.hero_title); se('hero-body', s.issue.hero_body); se('hero-by', s.issue.hero_by); if (s.issue.hero_badge) { var hb = document.getElementById('hero-badge'); if (hb) hb.textContent = s.issue.hero_badge; } if (s.issue.quote) { var qt = document.getElementById('quote-t'); if (qt) qt.textContent = '"' + s.issue.quote + '"'; } if (s.issue.num && s.issue.date) { var ml = document.getElementById('mh-left'); if (ml) ml.innerHTML = 'العدد ' + s.issue.num + '<br>' + s.issue.date + '<br>مجانية'; } }
   if (s.general) { se('mh-tag', s.general.tagline); se('tb-txt', s.general.topbar); se('ft-tag', s.general.footer_tag); se('ft-copy', s.general.copyright); se('nl-title', s.general.nl_title); se('nl-sub', s.general.nl_desc); }
@@ -698,7 +700,9 @@ function applySettings(rows) {
     if (latest && latest.pdf) {
       var pdfUrl = latest.pdf;
       var match = pdfUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      var matchOpen = pdfUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
       if (match) pdfUrl = 'https://drive.google.com/file/d/' + match[1] + '/preview';
+      else if (matchOpen) pdfUrl = 'https://drive.google.com/file/d/' + matchOpen[1] + '/preview';
       var frame = document.getElementById('pdf-frame');
       if (frame) frame.src = pdfUrl;
       var fw = document.getElementById('pdf-frame-wrap'); if (fw) fw.style.display = 'block';
