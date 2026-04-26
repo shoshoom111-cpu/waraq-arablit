@@ -512,8 +512,17 @@ function toggleMob() {
   m.style.flexDirection = 'column';
   m.setAttribute('data-open', isOpen ? '0' : '1');
   h.classList.toggle('open', !isOpen);
+  h.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  h.setAttribute('aria-label', isOpen ? 'فتح القائمة' : 'إغلاق القائمة');
 }
-function closeMob() { document.getElementById('mob-menu').style.display = 'none'; document.getElementById('ham').classList.remove('open'); }
+function closeMob() {
+  var m = document.getElementById('mob-menu'), h = document.getElementById('ham');
+  m.style.display = 'none';
+  m.setAttribute('data-open', '0');
+  h.classList.remove('open');
+  h.setAttribute('aria-expanded', 'false');
+  h.setAttribute('aria-label', 'فتح القائمة');
+}
 function se(id, txt) { if (txt !== undefined && txt !== null) { var e = document.getElementById(id); if (e) e.textContent = txt; } }
 
 function openArt(id) {
@@ -530,14 +539,15 @@ function openArt(id) {
   document.getElementById('sa-body').innerHTML = (a.body && a.body.trim()) ? a.body : '<p>لا يوجد محتوى</p>';
   var rel = document.getElementById('rel-arts');
   rel.innerHTML = '';
-  var all = [];
-  Object.keys(SA).forEach(function(k) { if (k !== id) all.push([k, SA[k]]); });
-  Object.keys(lA).forEach(function(k) { if (k !== id && !SA[k]) all.push([k, lA[k]]); });
-  all.slice(0,3).forEach(function(pair) {
+  // Build pool from both live and static data
+  var allArts = [];
+  Object.keys(lA).forEach(function(k) { if (k !== id) allArts.push([k, lA[k]]); });
+  Object.keys(SA).forEach(function(k) { if (k !== id && !lA[k]) allArts.push([k, SA[k]]); });
+  allArts.slice(0,3).forEach(function(pair) {
     var c = document.createElement('div');
     c.className = 'rel-card';
+    c.setAttribute('data-aid', pair[0]);
     c.innerHTML = '<div class="rel-title">' + pair[1].title + '</div><div class="rel-meta">' + (pair[1].author_name || '') + '</div>';
-    (function(k) { c.addEventListener('click', function() { openArt(k); }); })(pair[0]);
     rel.appendChild(c);
   });
   goView('art-single');
@@ -562,14 +572,15 @@ function openBook(id) {
   buyBtn.onclick = function() { window.open(bUrl, '_blank'); };
   var rel = document.getElementById('rel-books');
   rel.innerHTML = '';
-  var all = [];
-  Object.keys(SB).forEach(function(k) { if (k !== id) all.push([k, SB[k]]); });
-  Object.keys(lB).forEach(function(k) { if (k !== id && !SB[k]) all.push([k, lB[k]]); });
-  all.slice(0,3).forEach(function(pair) {
+  // Build pool from both live and static data
+  var allBooks = [];
+  Object.keys(lB).forEach(function(k) { if (k !== id) allBooks.push([k, lB[k]]); });
+  Object.keys(SB).forEach(function(k) { if (k !== id && !lB[k]) allBooks.push([k, SB[k]]); });
+  allBooks.slice(0,3).forEach(function(pair) {
     var c = document.createElement('div');
     c.className = 'rel-card';
+    c.setAttribute('data-bid', pair[0]);
     c.innerHTML = '<div style="height:40px;background:' + (pair[1].color||'#1A7A7A') + ';border-radius:5px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;"><span style="font-size:12px;color:#fff;">' + pair[1].title + '</span></div><div class="rel-title">' + pair[1].title + '</div><div class="rel-meta">' + (pair[1].author || '') + '</div>';
-    (function(k) { c.addEventListener('click', function() { openBook(k); }); })(pair[0]);
     rel.appendChild(c);
   });
   goView('book-single');
@@ -675,7 +686,10 @@ function applySettings(rows) {
     se('mp-author', s.month_pick.author);
     se('mp-desc', s.month_pick.desc);
     var mpbtn = document.getElementById('mp-btn');
-    if (mpbtn && s.month_pick.url) mpbtn.href = s.month_pick.url;
+    if (mpbtn) {
+      mpbtn.href = (s.month_pick.url && s.month_pick.url.trim()) ? s.month_pick.url : 'https://adab-book.com/';
+      mpbtn.target = '_blank';
+    }
     var mpc = document.getElementById('mp-cover');
     var mpct = document.getElementById('mp-cover-t');
     if (mpc) mpc.style.background = s.month_pick.color || '#412402';
@@ -684,15 +698,25 @@ function applySettings(rows) {
       mpc.innerHTML = '<img src="' + s.month_pick.image + '" alt="' + s.month_pick.title + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">';
     }
   }
-  // SECTIONS ORDER
+  // SECTIONS ORDER — wrap sections in ordered containers
   if (s.sections_order && Array.isArray(s.sections_order)) {
-    var home = document.getElementById('v-home');
-    var secIds = {'books':'home-books-wrap','articles':'home-arts-wrap','archive':'arch-strip','newsletter':'newsletter'};
-    // sections reordering handled by CSS order property
-    s.sections_order.forEach(function(sec, idx) {
-      var el = document.getElementById(sec + '-section');
-      if (el) el.style.order = idx;
-    });
+    var vHome = document.getElementById('v-home');
+    if (vHome) {
+      var secMap = {
+        'books': vHome.querySelector('.sec-row:has(#home-books)') || document.getElementById('home-books') && document.getElementById('home-books').closest('.sec-row'),
+        'articles': vHome.querySelector('.arts-grid') && vHome.querySelector('.arts-grid').closest('.sec-row'),
+        'archive': vHome.querySelector('.arch-strip'),
+        'monthpick': document.getElementById('month-pick'),
+        'newsletter': document.getElementById('newsletter')
+      };
+      s.sections_order.forEach(function(sec, idx) {
+        var el = secMap[sec];
+        if (el) el.style.order = String(idx + 1);
+      });
+      // Make v-home a flex column to respect order
+      vHome.style.display = 'flex';
+      vHome.style.flexDirection = 'column';
+    }
   }
   if (s.archive && s.archive.length) {
     renderArchive(s.archive);
@@ -773,8 +797,11 @@ function initNav() {
 
 document.addEventListener('DOMContentLoaded', function() {
   initNav();
+  setupEventDelegation();
+
+  // Try loading from Supabase with error handling
   try {
-    if (SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
+    if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
       Promise.all([
         sb.from('articles').select('*').eq('status','published').order('published_at',{ascending:false}),
         sb.from('books').select('*').order('created_at',{ascending:false}),
@@ -784,10 +811,68 @@ document.addEventListener('DOMContentLoaded', function() {
         if (ar.data && ar.data.length) { ar.data.forEach(function(a) { lA[a.id] = a; }); renderArts(ar.data); }
         if (bk.data && bk.data.length) { bk.data.forEach(function(b) { lB[b.id] = b; }); renderBooks(bk.data); }
         if (st.data) applySettings(st.data);
+      }).catch(function(err) {
+        // Silently keep static content — user still sees placeholder data
+        console.warn('Supabase load failed, using static content');
       });
     }
-  } catch(e) { console.log('Supabase error:', e); }
+  } catch(e) {
+    // config.js missing or malformed — static content still shows
+    console.warn('Config error, using static content');
+  }
 });
+
+// ── EVENT DELEGATION ──
+// Handles clicks on dynamically rendered elements
+function setupEventDelegation() {
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', function(e) {
+    var mob = document.getElementById('mob-menu');
+    var ham = document.getElementById('ham');
+    if (mob && mob.getAttribute('data-open') === '1') {
+      if (!mob.contains(e.target) && e.target !== ham && !ham.contains(e.target)) {
+        closeMob();
+      }
+    }
+  });
+
+  // Delegate clicks for dynamic article cards
+  document.addEventListener('click', function(e) {
+    var artItem = e.target.closest('[data-aid]');
+    if (artItem) { openArt(artItem.getAttribute('data-aid')); return; }
+
+    var bookItem = e.target.closest('[data-bid]');
+    if (bookItem) { openBook(bookItem.getAttribute('data-bid')); return; }
+
+    // Archive mini cards
+    var archMini = e.target.closest('.arch-mini');
+    if (archMini) {
+      var dl = archMini.querySelector('.arch-mini-dl[href]');
+      if (!dl) goView('issue');
+      return;
+    }
+
+    // Arch page cards
+    var archPg = e.target.closest('.arch-pg-card');
+    if (archPg) {
+      var pdl = archPg.querySelector('.arch-pg-dl[href]');
+      if (!pdl) goView('issue');
+      return;
+    }
+  });
+
+  // Fix iframe title for PDF accessibility
+  var iframe = document.getElementById('pdf-frame');
+  if (iframe) iframe.setAttribute('title', 'عارض PDF لعدد الجريدة الحالي');
+
+  // Fix hamburger accessibility
+  var ham = document.getElementById('ham');
+  if (ham) {
+    ham.setAttribute('aria-label', 'فتح القائمة');
+    ham.setAttribute('aria-expanded', 'false');
+  }
+}
+
 </script>
 </body>
 </html>
