@@ -184,6 +184,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 <div class="nav-tabs">
   <div class="ntab on" id="nt-dash" onclick="goSec('dash',this)">الرئيسية</div>
   <div class="ntab" id="nt-site" onclick="goSec('site',this)">تحرير الموقع</div>
+  <div class="ntab" id="nt-homepage" onclick="goSec('homepage',this)">الصفحة الرئيسية</div>
   <div class="ntab" id="nt-add-art" onclick="goSec('add-art',this)">إضافة مقالة</div>
   <div class="ntab" id="nt-arts" onclick="goSec('arts',this)">المقالات <span class="badge" id="pcount">0</span></div>
   <div class="ntab" id="nt-books" onclick="goSec('books',this)">الكتب</div>
@@ -197,6 +198,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
     <div class="sb-sep">عام</div>
     <div class="sb-item on" onclick="goSec('dash',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>الرئيسية</div>
     <div class="sb-item" onclick="goSec('site',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M11 2l3 3-8 8H3v-3l8-8z"/></svg>تحرير الموقع</div>
+    <div class="sb-item" onclick="goSec('homepage',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="4" rx="1"/><rect x="1" y="7" width="6" height="8" rx="1"/><rect x="9" y="7" width="6" height="4" rx="1"/></svg>الصفحة الرئيسية</div>
     <div class="sb-sep">المحتوى</div>
     <div class="sb-item" onclick="goSec('add-art',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12"/></svg>إضافة مقالة</div>
     <div class="sb-item" onclick="goSec('arts',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M2 2h12v12H2zM5 6h6M5 9h4"/></svg>المقالات</div>
@@ -469,6 +471,106 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         <div id="users-list"><div class="empty">جاري التحميل...</div></div>
       </div>
 
+
+      <!-- ══ HOMEPAGE ══ -->
+      <div class="sec" id="sec-homepage">
+        <div class="pg-title">تخصيص الصفحة الرئيسية</div>
+
+        <!-- LOGO -->
+        <div class="card">
+          <div class="card-hd"><span class="card-title">اللوقو والهوية</span><button class="btn p sm" onclick="saveLogo()">حفظ</button></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:16px;background:var(--bg);border-radius:8px;">
+              <div id="logo-preview" style="width:80px;height:50px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                <span style="font-family:Felfel,serif;font-size:24px;color:#fff;" id="logo-prev-text">وَرَق</span>
+              </div>
+              <div style="font-size:12px;color:var(--mid);">معاينة اللوقو في الهيدر</div>
+            </div>
+            <div class="fg"><label>رابط صورة اللوقو (اختياري — يستبدل اسم الجريدة)</label><input type="url" id="s-logo-url" placeholder="https://i.imgur.com/logo.png" oninput="prevLogo()"></div>
+            <div class="two">
+              <div class="fg"><label>اسم الجريدة (يظهر بدون لوقو)</label><input type="text" id="s-sitename" value="وَرَق"></div>
+              <div class="fg"><label>وصف الجريدة تحت الاسم</label><input type="text" id="s-sitetag" value="جريدة مركز الأدب العربي الشهرية"></div>
+            </div>
+            <div class="fg"><label>لون خلفية الهيدر (اتركي فارغاً للون الافتراضي)</label><input type="text" id="s-headerbg" placeholder="#FFFFFF"></div>
+          </div>
+        </div>
+
+        <!-- BANNER -->
+        <div class="card">
+          <div class="card-hd"><span class="card-title">البانر الإعلاني</span><button class="btn p sm" onclick="saveBanner()">حفظ</button></div>
+          <div class="card-body">
+            <div id="banner-preview-wrap" style="display:none;margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid var(--border);">
+              <img id="banner-preview-img" src="" style="width:100%;max-height:200px;object-fit:cover;display:block;">
+            </div>
+            <div class="fg"><label>رابط صورة البانر</label><input type="url" id="s-banner-url" placeholder="https://i.imgur.com/banner.jpg" oninput="prevBanner()"></div>
+            <div class="fg"><label>رابط البانر (يفتح عند الضغط)</label><input type="url" id="s-banner-link" placeholder="https://adab-book.com/"></div>
+            <div style="font-size:11px;color:var(--mid);">يظهر البانر أسفل شريط الأخبار — مناسب للإعلان عن إصدارات جديدة</div>
+          </div>
+        </div>
+
+        <!-- MONTH PICK -->
+        <div class="card">
+          <div class="card-hd"><span class="card-title">توصية الشهر (كتاب مميز)</span><button class="btn p sm" onclick="saveMonthPick()">حفظ</button></div>
+          <div class="card-body">
+            <div style="background:var(--ink);border-radius:8px;padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:14px;">
+              <div id="mp-prev-cover" style="width:60px;height:90px;border-radius:5px;background:#412402;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:10px;color:#fff;text-align:center;" id="mp-prev-title">الكتاب</span></div>
+              <div><div style="font-size:9px;color:var(--gold);letter-spacing:.1em;margin-bottom:4px;">توصية الشهر</div><div style="font-size:14px;color:#fff;font-family:Noto Serif Arabic,serif;" id="mp-prev-t">جحيم العابرين</div><div style="font-size:11px;color:#666;" id="mp-prev-a">مركز الأدب العربي</div></div>
+            </div>
+            <div class="two">
+              <div class="fg"><label>عنوان الكتاب *</label><input type="text" id="mp-title" placeholder="جحيم العابرين" oninput="syncMpPreview()"></div>
+              <div class="fg"><label>اسم الكاتب</label><input type="text" id="mp-author" placeholder="مركز الأدب العربي" oninput="syncMpPreview()"></div>
+              <div class="fg"><label>لون غلاف الكتاب</label><select id="mp-color" onchange="syncMpPreview()"><option value="#412402">بني</option><option value="#1A7A7A">فيروزي</option><option value="#C94B1E">برتقالي</option><option value="#26215C">بنفسجي</option><option value="#633806">ذهبي</option><option value="#0E0E0E">أسود</option></select></div>
+              <div class="fg"><label>رابط الشراء</label><input type="url" id="mp-url" value="https://adab-book.com/"></div>
+            </div>
+            <div class="fg"><label>وصف مختصر</label><textarea id="mp-desc" rows="2" placeholder="وصف مختصر للكتاب..."></textarea></div>
+            <div class="fg"><label>صورة غلاف الكتاب (اختياري)</label><input type="url" id="mp-img" placeholder="https://i.imgur.com/..."></div>
+            <div style="display:flex;gap:8px;margin-top:4px;"><button class="btn p" onclick="saveMonthPick()">حفظ التوصية</button><button class="btn o" onclick="clearMonthPick()">إخفاء القسم</button></div>
+          </div>
+        </div>
+
+        <!-- SECTIONS ORDER -->
+        <div class="card">
+          <div class="card-hd"><span class="card-title">ترتيب أقسام الصفحة الرئيسية</span><button class="btn p sm" onclick="saveSectionsOrder()">حفظ</button></div>
+          <div class="card-body">
+            <div style="font-size:12px;color:var(--mid);margin-bottom:14px;">اسحبي الأقسام لإعادة ترتيبها في الصفحة الرئيسية</div>
+            <div id="sections-list" style="display:flex;flex-direction:column;gap:8px;">
+              <div class="irow" draggable="true" data-sec="hero" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">الخبر الرئيسي + جديد المركز</div></div><span style="font-size:11px;color:var(--mid);">ثابت دائماً في الأعلى</span></div>
+              <div class="irow sec-order-item" draggable="true" data-sec="books" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">إصدارات المركز (الكتب)</div></div></div>
+              <div class="irow sec-order-item" draggable="true" data-sec="articles" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">مقالات أدبية</div></div></div>
+              <div class="irow sec-order-item" draggable="true" data-sec="archive" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">أرشيف الأعداد</div></div></div>
+              <div class="irow sec-order-item" draggable="true" data-sec="monthpick" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">توصية الشهر</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FONTS -->
+        <div class="card">
+          <div class="card-hd"><span class="card-title">الخطوط والألوان</span><button class="btn p sm" onclick="saveDesign()">حفظ</button></div>
+          <div class="card-body">
+            <div class="fg"><label>خط العناوين</label>
+              <select id="s-font-title">
+                <option value="Noto Serif Arabic">Noto Serif Arabic (الافتراضي)</option>
+                <option value="Cairo">Cairo</option>
+                <option value="Amiri">Amiri</option>
+              </select>
+            </div>
+            <div class="three">
+              <div class="fg"><label>اللون الرئيسي</label><div style="display:flex;gap:8px;"><input type="color" id="c-teal" value="#1A7A7A" oninput="pvc('teal',this.value);document.getElementById('ct-teal').value=this.value"><input type="text" id="ct-teal" value="#1A7A7A" style="flex:1;" oninput="pvc('teal',this.value);document.getElementById('c-teal').value=this.value"></div></div>
+              <div class="fg"><label>لون التمييز</label><div style="display:flex;gap:8px;"><input type="color" id="c-orange" value="#C94B1E" oninput="pvc('orange',this.value);document.getElementById('ct-orange').value=this.value"><input type="text" id="ct-orange" value="#C94B1E" style="flex:1;" oninput="pvc('orange',this.value);document.getElementById('c-orange').value=this.value"></div></div>
+              <div class="fg"><label>اللون الذهبي</label><div style="display:flex;gap:8px;"><input type="color" id="c-gold" value="#D4A843" oninput="pvc('gold',this.value);document.getElementById('ct-gold').value=this.value"><input type="text" id="ct-gold" value="#D4A843" style="flex:1;" oninput="pvc('gold',this.value);document.getElementById('c-gold').value=this.value"></div></div>
+            </div>
+            <div class="fg"><label>ثيمات جاهزة</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
+              <div style="width:26px;height:26px;border-radius:5px;background:#1A7A7A;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#1A7A7A','#C94B1E','#D4A843')" title="الكلاسيكي"></div>
+              <div style="width:26px;height:26px;border-radius:5px;background:#26215C;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#26215C','#7F77DD','#D4A843')" title="بنفسجي"></div>
+              <div style="width:26px;height:26px;border-radius:5px;background:#0E0E0E;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#0E0E0E','#C94B1E','#D4A843')" title="أسود"></div>
+              <div style="width:26px;height:26px;border-radius:5px;background:#412402;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#412402','#C94B1E','#D4A843')" title="بني"></div>
+              <div style="width:26px;height:26px;border-radius:5px;background:#0F6E56;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#0F6E56','#C94B1E','#D4A843')" title="أخضر"></div>
+              <div style="width:26px;height:26px;border-radius:5px;background:#7B2D8B;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#7B2D8B','#C94B1E','#D4A843')" title="أرجواني"></div>
+            </div></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -504,7 +606,7 @@ async function init(){
 init();
 
 // ── NAVIGATION ──
-function goSec(name,el){
+function goSec(name,el){ if(name==='homepage')loadHomepageSettings();
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
   document.getElementById('sec-'+name).classList.add('on');
@@ -737,6 +839,127 @@ function sv(id,val){if(val){const e=document.getElementById(id);if(e)e.value=val
 function se(id,txt){if(txt!==undefined&&txt!==null){const e=document.getElementById(id);if(e)e.textContent=txt;}}
 async function logout(){await sb.auth.signOut();location.href='login.html';}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3000);}
+
+// ── HOMEPAGE FUNCTIONS ──
+
+function prevLogo() {
+  var url = v('s-logo-url');
+  var wrap = document.getElementById('logo-preview');
+  var pt = document.getElementById('logo-prev-text');
+  if (url) {
+    wrap.innerHTML = '<img src="'+url+'" style="max-width:100%;max-height:100%;object-fit:contain;">';
+  } else {
+    wrap.innerHTML = '<span style="font-family:Felfel,serif;font-size:24px;color:#fff;" id="logo-prev-text">وَرَق</span>';
+  }
+}
+
+function prevBanner() {
+  var url = v('s-banner-url');
+  var wrap = document.getElementById('banner-preview-wrap');
+  var img = document.getElementById('banner-preview-img');
+  if (url && wrap && img) { img.src = url; wrap.style.display = 'block'; }
+  else if (wrap) wrap.style.display = 'none';
+}
+
+function syncMpPreview() {
+  var t = v('mp-title') || 'الكتاب';
+  var a = v('mp-author') || '';
+  var c = v('mp-color') || '#412402';
+  se('mp-prev-t', t); se('mp-prev-a', a); se('mp-prev-title', t);
+  var cov = document.getElementById('mp-prev-cover');
+  if (cov) cov.style.background = c;
+}
+
+async function saveLogo() {
+  var cur = await getCurSettings('general') || {};
+  cur.logo_url = v('s-logo-url') || null;
+  cur.name = v('s-sitename');
+  cur.tagline = v('s-sitetag');
+  cur.header_bg = v('s-headerbg') || null;
+  await sb.from('settings').upsert({key:'general', value:cur});
+  toast('تم حفظ اللوقو!');
+}
+
+async function saveBanner() {
+  var url = v('s-banner-url');
+  var link = v('s-banner-link');
+  await sb.from('settings').upsert({key:'banner', value:{url:url||null, link:link||null}});
+  toast('تم حفظ البانر!');
+}
+
+async function saveMonthPick() {
+  var title = v('mp-title');
+  if (!title) { toast('أدخلي عنوان الكتاب'); return; }
+  await sb.from('settings').upsert({key:'month_pick', value:{title:title, author:v('mp-author'), desc:v('mp-desc'), color:v('mp-color'), url:v('mp-url'), image:v('mp-img')||null}});
+  toast('تم حفظ توصية الشهر!');
+}
+
+async function clearMonthPick() {
+  await sb.from('settings').upsert({key:'month_pick', value:{title:''}});
+  toast('تم إخفاء قسم التوصية');
+}
+
+async function saveSectionsOrder() {
+  var items = document.querySelectorAll('.sec-order-item');
+  var order = [];
+  items.forEach(function(el) { order.push(el.getAttribute('data-sec')); });
+  await sb.from('settings').upsert({key:'sections_order', value:order});
+  toast('تم حفظ الترتيب!');
+}
+
+// Drag and drop for sections
+(function() {
+  var dragged = null;
+  document.addEventListener('dragstart', function(e) {
+    if (e.target.classList.contains('sec-order-item')) { dragged = e.target; e.target.style.opacity = '.5'; }
+  });
+  document.addEventListener('dragend', function(e) {
+    if (e.target.classList.contains('sec-order-item')) e.target.style.opacity = '1';
+  });
+  document.addEventListener('dragover', function(e) { e.preventDefault(); });
+  document.addEventListener('drop', function(e) {
+    e.preventDefault();
+    if (dragged && e.target.closest && e.target.closest('.sec-order-item') && e.target.closest('.sec-order-item') !== dragged) {
+      var target = e.target.closest('.sec-order-item');
+      var list = document.getElementById('sections-list');
+      list.insertBefore(dragged, target);
+    }
+  });
+})();
+
+// Load homepage settings
+async function loadHomepageSettings() {
+  var {data} = await sb.from('settings').select('*');
+  if (!data) return;
+  var s = {};
+  data.forEach(function(r) { s[r.key] = r.value; });
+  if (s.general) {
+    sv('s-logo-url', s.general.logo_url || '');
+    sv('s-sitename', s.general.name || 'وَرَق');
+    sv('s-sitetag', s.general.tagline || '');
+    sv('s-headerbg', s.general.header_bg || '');
+    if (s.general.logo_url) prevLogo();
+  }
+  if (s.banner) {
+    sv('s-banner-url', s.banner.url || '');
+    sv('s-banner-link', s.banner.link || '');
+    if (s.banner.url) prevBanner();
+  }
+  if (s.month_pick && s.month_pick.title) {
+    sv('mp-title', s.month_pick.title);
+    sv('mp-author', s.month_pick.author || '');
+    sv('mp-desc', s.month_pick.desc || '');
+    sv('mp-color', s.month_pick.color || '#412402');
+    sv('mp-url', s.month_pick.url || 'https://adab-book.com/');
+    sv('mp-img', s.month_pick.image || '');
+    syncMpPreview();
+  }
+  if (s.design) {
+    if (s.design.teal) { pvc('teal',s.design.teal); sv('c-teal',s.design.teal); sv('ct-teal',s.design.teal); }
+    if (s.design.orange) { pvc('orange',s.design.orange); sv('c-orange',s.design.orange); sv('ct-orange',s.design.orange); }
+    if (s.design.gold) { pvc('gold',s.design.gold); sv('c-gold',s.design.gold); sv('ct-gold',s.design.gold); }
+  }
+}
 </script>
 </body>
 </html>
