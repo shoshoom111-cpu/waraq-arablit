@@ -436,10 +436,10 @@ body.dark .search-bar{background:#111;}
   <div class="sec-header" style="margin-top:0;"><div class="sec-title">أرشيف الأعداد</div><div class="sec-more" id="more-arch">عرض الكل ←</div></div>
   <div class="arch-row" id="home-arch">
     <div class="arch-mini" id="am1" data-goissue="1"><div class="arch-mini-cover" style="background:#1A7A7A;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الأول</div></div><div class="arch-mini-info"><div class="arch-mini-date">أبريل ٢٠٢٥</div><div class="arch-mini-dl">تصفح ←</div></div></div>
-    <div class="arch-mini"><div class="arch-mini-cover" style="background:#C94B1E;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الثاني</div></div><div class="arch-mini-info"><div class="arch-mini-date">مايو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
-    <div class="arch-mini"><div class="arch-mini-cover" style="background:#412402;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الثالث</div></div><div class="arch-mini-info"><div class="arch-mini-date">يونيو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
-    <div class="arch-mini"><div class="arch-mini-cover" style="background:#26215C;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الرابع</div></div><div class="arch-mini-info"><div class="arch-mini-date">يوليو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
-    <div class="arch-mini"><div class="arch-mini-cover" style="background:#633806;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الخامس</div></div><div class="arch-mini-info"><div class="arch-mini-date">أغسطس ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
+    <div class="arch-mini" data-goissue="2"><div class="arch-mini-cover" style="background:#C94B1E;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الثاني</div></div><div class="arch-mini-info"><div class="arch-mini-date">مايو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
+    <div class="arch-mini" data-goissue="3"><div class="arch-mini-cover" style="background:#412402;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الثالث</div></div><div class="arch-mini-info"><div class="arch-mini-date">يونيو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
+    <div class="arch-mini" data-goissue="4"><div class="arch-mini-cover" style="background:#26215C;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الرابع</div></div><div class="arch-mini-info"><div class="arch-mini-date">يوليو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
+    <div class="arch-mini" data-goissue="5"><div class="arch-mini-cover" style="background:#633806;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الخامس</div></div><div class="arch-mini-info"><div class="arch-mini-date">أغسطس ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
   </div>
 </div></div>
 
@@ -582,8 +582,15 @@ function goView(name) {
   var nav = document.getElementById('nav-' + name);
   if (nav) nav.classList.add('on');
   window.scrollTo(0, 0);
-  if (name !== 'art-single' && name !== 'book-single') prevView = name;
+  if (name !== 'art-single' && name !== 'book-single') {
+    prevView = name;
+    try { history.pushState({view:name}, '', '#' + name); } catch(e) {}
+  }
 }
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.view) goView(e.state.view);
+  else goView('home');
+});
 function goBack() { goView(prevView); }
 function scrollTo2(id) { setTimeout(function() { var e = document.getElementById(id); if (e) e.scrollIntoView({behavior:'smooth'}); }, 60); }
 function toggleMob() {
@@ -850,6 +857,10 @@ function initNav() {
 document.addEventListener('DOMContentLoaded', function() {
   initNav();
   setupEventDelegation();
+  // Handle direct URL with hash
+  var hash = window.location.hash.replace('#', '');
+  var validViews = ['home','issue','books','articles','archive'];
+  if (hash && validViews.indexOf(hash) > -1) goView(hash);
 
   // Try loading from Supabase with error handling
   try {
