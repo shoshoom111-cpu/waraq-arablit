@@ -11,7 +11,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{font-family:'Cairo',sans-serif;background:var(--paper);color:var(--ink);direction:rtl;line-height:1.6;overflow-x:hidden;}
 button,a{cursor:pointer;}
-.view{display:none;} .view.active{display:block;} /* sections order via flex only when sections_order active */
+.view{display:none;} .view.active{display:block;} 
 .topbar{background:var(--ink);padding:6px 0;}
 .topbar-in{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
 .topbar-text{font-size:11px;color:#888;}
@@ -412,7 +412,7 @@ body.dark .search-bar{background:#111;}
     <div class="quote-card"><div class="quote-text" id="quote-t">"لا تقرأ لتنهي الكتاب، بل لتبدأ حياة جديدة"</div><div class="quote-attr">— اقتباس الشهر</div></div>
   </div>
 </div></div>
-<div class="wrap" data-section="books" style="order:1;">
+<div class="wrap" data-section="books">
   <div class="sec-header"><div class="sec-title">إصدارات المركز</div><div class="sec-more" id="more-books">الكتب كلها ←</div></div>
   <div class="books-grid" id="home-books">
     <div class="book-card" id="hb1" data-bid="sb1"><div class="book-card-strip" style="background:#1A7A7A;"></div><div class="book-card-body"><div class="book-genre">رعب</div><div class="book-title">خوف</div><div class="book-author">أسامة المسلم</div><div class="book-stars">★★★★★</div><div class="book-desc">رواية رعب عربية تأخذك لعوالم مظلمة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
@@ -432,7 +432,7 @@ body.dark .search-bar{background:#111;}
     </div>
   </div>
 </div>
-<div class="arch-strip" data-section="archive" style="order:3;"><div style="max-width:1200px;margin:0 auto;">
+<div class="arch-strip" data-section="archive"><div style="max-width:1200px;margin:0 auto;">
   <div class="sec-header" style="margin-top:0;"><div class="sec-title">أرشيف الأعداد</div><div class="sec-more" id="more-arch">عرض الكل ←</div></div>
   <div class="arch-row" id="home-arch">
     <div class="arch-mini" id="am1" data-goissue="1"><div class="arch-mini-cover" style="background:#1A7A7A;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الأول</div></div><div class="arch-mini-info"><div class="arch-mini-date">أبريل ٢٠٢٥</div><div class="arch-mini-dl">تصفح ←</div></div></div>
@@ -444,7 +444,7 @@ body.dark .search-bar{background:#111;}
 </div></div>
 
 <!-- MONTH PICK -->
-<div class="month-pick" id="month-pick" data-section="monthpick" style="display:none;order:4;">
+<div class="month-pick" id="month-pick" data-section="monthpick" style="display:none;">
   <div class="mp-in">
     <div>
       <div class="mp-label">توصية الشهر</div>
@@ -460,13 +460,13 @@ body.dark .search-bar{background:#111;}
     </div>
   </div>
 </div>
-<div class="newsletter" id="newsletter" data-section="newsletter" style="order:5;background:linear-gradient(135deg,var(--teal),var(--td));">
+<div class="newsletter" id="newsletter" data-section="newsletter" style="background:linear-gradient(135deg,var(--teal),var(--td));">
   <div class="nl-logo">وَرَق</div>
   <div class="nl-title" id="nl-title">اشترك في وَرَق مجاناً</div>
   <div class="nl-sub" style="color:rgba(255,255,255,.75);" id="nl-sub">احصل على كل عدد جديد في بريدك الإلكتروني</div>
   <div class="nl-form"><input class="nl-input" type="email" placeholder="بريدك الإلكتروني" id="nl-input"><button class="nl-btn" id="nl-btn" style="background:var(--gold);color:var(--gd);">اشترك الآن</button></div>
 </div>
-<footer class="footer" data-section="footer" style="order:99;"><div class="ft">
+<footer class="footer" data-section="footer"><div class="ft">
   <div><div class="ft-logo" id="ft-logo">وَرَق</div><div class="ft-tag" id="ft-tag">جريدة مركز الأدب العربي<br>شهرية · رقمية · مجانية</div></div>
   <div class="ft-col"><h4>أقسام الموقع</h4><a id="fl-home">الرئيسية</a><a id="fl-issue">العدد الحالي</a><a id="fl-books">الكتب</a><a id="fl-arts">مقالات</a><a id="fl-arch">الأرشيف</a></div>
   <div class="ft-col"><h4>تواصل معنا</h4><a id="ft-ig" href="https://www.instagram.com/servicesbook1" target="_blank">Instagram</a><a id="ft-tt" href="https://www.tiktok.com/@adab_book" target="_blank">TikTok</a><a id="ft-store" href="https://adab-book.com/" target="_blank">المتجر</a></div>
@@ -786,15 +786,8 @@ function applySettings(rows) {
       mpc.innerHTML = '<img src="' + s.month_pick.image + '" alt="' + s.month_pick.title + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">';
     }
   }
-  // SECTIONS ORDER
-  if (s.sections_order && Array.isArray(s.sections_order)) {
-    var vh = document.getElementById('v-home');
-    if (vh) { vh.style.display = 'flex'; vh.style.flexDirection = 'column'; vh.style.alignItems = 'stretch'; }
-    s.sections_order.forEach(function(sec, idx) {
-      var el = document.querySelector('[data-section="' + sec + '"]');
-      if (el) el.style.order = String(idx + 1);
-    });
-  }
+  // SECTIONS ORDER — disabled (causes layout issues with flex)
+  // if (s.sections_order ...) { ... }
   if (s.archive && s.archive.length) {
     renderArchive(s.archive);
     var latest = s.archive[0];
@@ -901,18 +894,20 @@ function setupEventDelegation() {
 
   // Delegate clicks for dynamic article cards
   document.addEventListener('click', function(e) {
-    // Skip if clicking on nav elements
-    if (e.target.closest('.header-nav') || e.target.closest('.mob-menu') || e.target.closest('.site-header')) return;
-
+    // Only handle dynamic elements — static nav handled by initNav listeners
     var artItem = e.target.closest('[data-aid]');
-    if (artItem) { openArt(artItem.getAttribute('data-aid')); return; }
+    if (artItem && !artItem.closest('.site-header') && !artItem.closest('.mob-menu')) {
+      openArt(artItem.getAttribute('data-aid')); return;
+    }
 
     var bookItem = e.target.closest('[data-bid]');
-    if (bookItem) { openBook(bookItem.getAttribute('data-bid')); return; }
+    if (bookItem && !bookItem.closest('.site-header') && !bookItem.closest('.mob-menu')) {
+      openBook(bookItem.getAttribute('data-bid')); return;
+    }
 
     // Archive cards with goissue flag
     var archCard = e.target.closest('[data-goissue]');
-    if (archCard) { goView('issue'); return; }
+    if (archCard && !archCard.closest('.site-header')) { goView('issue'); return; }
   });
 
   // Close search on result click (one global listener)
@@ -1076,7 +1071,7 @@ function doSearch(q) {
 // ── OVERRIDE goView to update progress bar ──
 var _origGoView = goView;
 goView = function(name) {
-  _origGoView(name);
+  try { _origGoView(name); } catch(e) { console.warn('goView error:', e); }
   // Reset progress bar
   var prog = document.getElementById('read-progress');
   if (prog) prog.style.display = (name === 'art-single') ? 'block' : 'none';
