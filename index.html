@@ -11,7 +11,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{font-family:'Cairo',sans-serif;background:var(--paper);color:var(--ink);direction:rtl;line-height:1.6;overflow-x:hidden;}
 button,a{cursor:pointer;}
-.view{display:none;} .view.active{display:block;}
+.view{display:none;} .view.active{display:block;} /* sections order via flex only when sections_order active */
 .topbar{background:var(--ink);padding:6px 0;}
 .topbar-in{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
 .topbar-text{font-size:11px;color:#888;}
@@ -270,6 +270,75 @@ button,a{cursor:pointer;}
 .mp-cover span{font-family:'Noto Serif Arabic',serif;font-size:20px;color:#fff;text-align:center;}
 .mp-cover img{width:100%;height:100%;object-fit:cover;border-radius:8px;}
 @media(max-width:768px){.mp-in{grid-template-columns:1fr;}.mp-cover{display:none;}}
+
+/* SKELETON LOADER */
+.skeleton{background:linear-gradient(90deg,var(--cream) 25%,var(--border) 50%,var(--cream) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:4px;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.sk-title{height:24px;margin-bottom:10px;width:80%;}
+.sk-text{height:14px;margin-bottom:7px;width:100%;}
+.sk-text.w60{width:60%;}
+.sk-cover{height:180px;margin-bottom:10px;}
+/* READING PROGRESS */
+.read-progress{position:fixed;top:0;right:0;left:0;height:3px;background:var(--border);z-index:9000;display:none;}
+.read-progress-bar{height:100%;background:var(--teal);width:0%;transition:width .1s;}
+/* BACK TO TOP */
+.back-top{position:fixed;bottom:24px;left:24px;width:42px;height:42px;border-radius:50%;background:var(--teal);color:#fff;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:18px;z-index:900;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:all .2s;}
+.back-top.show{display:flex;}
+.back-top:hover{background:var(--td);transform:translateY(-2px);}
+/* DARK MODE */
+.dark-toggle{font-size:16px;cursor:pointer;border:none;background:none;padding:4px 8px;border-radius:6px;transition:background .2s;}
+.dark-toggle:hover{background:var(--cream);}
+body.dark{--paper:#0E0E0E;--ink:#F0EFEB;--cream:#1a1a1a;--mid:#999;--border:#2a2a2a;--tl:#0f2a2a;}
+body.dark .site-header{background:#111;}
+body.dark .header-nav .nav-a{color:#aaa;}
+body.dark .header-nav .nav-a.on{color:var(--teal);background:rgba(26,122,122,.2);}
+body.dark .book-card{background:#111;}
+body.dark .book-title,body.dark .ai-title,body.dark .asi-title,body.dark .bpg-title,body.dark .apg-title{color:#F0EFEB;}
+body.dark .art-item,body.dark .art-side-item{border-color:#2a2a2a;}
+body.dark .apg-card,body.dark .bpg-card{background:#111;border-color:#2a2a2a;}
+body.dark .rel-card{background:#111;border-color:#2a2a2a;}
+body.dark .masthead{background:#0E0E0E;}
+body.dark .sa-body{color:#ddd;}
+body.dark .sa-body h2{color:#F0EFEB;}
+body.dark .quote-card{background:#1a1500;}
+body.dark .arch-mini-info,body.dark .arch-pg-info{background:#111;border-color:#2a2a2a;}
+body.dark .arch-strip{background:#111;}
+body.dark .hero-title{color:#F0EFEB;}
+body.dark .hero-body{color:#aaa;}
+body.dark .single-art-wrap,.dark .single-book-wrap{background:#0E0E0E;}
+body.dark .sa-meta{border-color:#2a2a2a;}
+body.dark .bpg-card:hover,body.dark .apg-card:hover{border-color:var(--teal);}
+body.dark .mh-name{color:#F0EFEB;}
+body.dark .sec-header{border-color:#F0EFEB;}
+body.dark .sec-title{color:#F0EFEB;}
+body.dark .search-results{background:#111;border-color:#2a2a2a;}
+body.dark .sr-item{border-color:#2a2a2a;color:#ddd;}
+body.dark .sr-item:hover{background:rgba(26,122,122,.2);}
+body.dark .font-btn{background:#1a1a1a;border-color:#2a2a2a;color:#ddd;}
+body.dark .read-progress{background:#2a2a2a;}
+body.dark .search-input{background:#111;border-color:#2a2a2a;color:#ddd;}
+body.dark .search-bar{background:#111;}
+/* READ TIME */
+.read-time{font-size:11px;color:var(--mid);display:flex;align-items:center;gap:4px;}
+/* FONT SIZE */
+.font-controls{display:flex;align-items:center;gap:4px;margin-top:12px;}
+.font-btn{font-size:12px;padding:4px 10px;border:1px solid var(--border);border-radius:5px;cursor:pointer;background:var(--cream);font-family:'Cairo',sans-serif;}
+.font-btn:hover{border-color:var(--teal);color:var(--teal);}
+/* SEARCH */
+.search-bar{display:none;padding:12px 24px;background:var(--paper);border-bottom:1px solid var(--border);position:relative;z-index:201;}
+.search-bar.show{display:block;}
+.search-in{max-width:600px;margin:0 auto;position:relative;}
+.search-input{width:100%;padding:10px 40px 10px 14px;border:1px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:13px;direction:rtl;background:var(--paper);color:var(--ink);}
+.search-input:focus{outline:none;border-color:var(--teal);}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mid);font-size:16px;}
+.search-results{position:absolute;top:calc(100% + 4px);right:0;left:0;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:100;max-height:320px;overflow-y:auto;display:none;}
+.search-results.show{display:block;}
+.sr-item{padding:12px 16px;cursor:pointer;border-bottom:.5px solid var(--border);transition:background .15s;}
+.sr-item:hover{background:var(--tl);}
+.sr-item:last-child{border:none;}
+.sr-cat{font-size:9px;color:var(--teal);letter-spacing:.06em;margin-bottom:3px;font-weight:600;}
+.sr-title{font-size:13px;font-weight:500;}
+.sr-empty{padding:20px;text-align:center;color:var(--mid);font-size:13px;}
 </style>
 </head>
 <body>
@@ -292,12 +361,23 @@ button,a{cursor:pointer;}
     <a class="nav-a" id="nav-archive">الأرشيف</a>
   </nav>
   <div class="header-actions">
+    <button class="dark-toggle" id="dark-toggle" title="وضع ليلي" aria-label="تبديل الوضع الليلي">🌙</button>
+    <button class="dark-toggle" id="search-toggle" title="بحث" aria-label="بحث">🔍</button>
     <a class="btn-ghost" href="login.html">دخول المحررين</a>
     <button class="btn-primary" id="sub-btn">اشترك مجاناً</button>
   </div>
   <button class="ham-btn" id="ham"><span></span><span></span><span></span></button>
 </div></header>
-<div class="mob-menu" id="mob-menu" style="display:none;flex-direction:column;">
+<div class="read-progress" id="read-progress"><div class="read-progress-bar" id="read-bar"></div></div>
+<button class="back-top" id="back-top" aria-label="العودة للأعلى">↑</button>
+<div class="search-bar" id="search-bar">
+  <div class="search-in">
+    <input class="search-input" id="search-input" type="text" placeholder="ابحثي في المقالات والكتب..." aria-label="بحث">
+    <span class="search-icon">🔍</span>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
+<div class="mob-menu" id="mob-menu"  style="display:none;flex-direction:column;">
   <a id="mob-home">الرئيسية</a><a id="mob-issue">العدد الحالي</a><a id="mob-books">الكتب</a><a id="mob-articles">مقالات</a><a id="mob-archive">الأرشيف</a>
   <div class="mob-actions"><a class="btn-ghost" href="login.html">دخول المحررين</a><button class="btn-primary" id="mob-sub">اشترك</button></div>
 </div>
@@ -325,37 +405,37 @@ button,a{cursor:pointer;}
   <div class="hero-side">
     <div class="side-hd">جديد المركز</div>
     <div id="side-items">
-      <div class="side-item" id="si1"><div class="si-badge">فانتازيا</div><div class="si-title">التنين الأسود</div><div class="si-meta">فاطمة النجار</div></div>
-      <div class="side-item" id="si2"><div class="si-badge">رواية</div><div class="si-title">جحيم العابرين</div><div class="si-meta">إصدار هذا الشهر</div></div>
-      <div class="side-item" id="si3"><div class="si-badge">شعر</div><div class="si-title">ديوان الظل</div><div class="si-meta">شعراء المركز</div></div>
+      <div class="side-item" id="si1" data-bid="sb2"><div class="si-badge">فانتازيا</div><div class="si-title">التنين الأسود</div><div class="si-meta">فاطمة النجار</div></div>
+      <div class="side-item" id="si2" data-bid="sb3"><div class="si-badge">رواية</div><div class="si-title">جحيم العابرين</div><div class="si-meta">إصدار هذا الشهر</div></div>
+      <div class="side-item" id="si3" data-bid="sb4"><div class="si-badge">شعر</div><div class="si-title">ديوان الظل</div><div class="si-meta">شعراء المركز</div></div>
     </div>
     <div class="quote-card"><div class="quote-text" id="quote-t">"لا تقرأ لتنهي الكتاب، بل لتبدأ حياة جديدة"</div><div class="quote-attr">— اقتباس الشهر</div></div>
   </div>
 </div></div>
-<div class="wrap">
+<div class="wrap" data-section="books" style="order:1;">
   <div class="sec-header"><div class="sec-title">إصدارات المركز</div><div class="sec-more" id="more-books">الكتب كلها ←</div></div>
   <div class="books-grid" id="home-books">
-    <div class="book-card" id="hb1"><div class="book-card-strip" style="background:#1A7A7A;"></div><div class="book-card-body"><div class="book-genre">رعب</div><div class="book-title">خوف</div><div class="book-author">أسامة المسلم</div><div class="book-stars">★★★★★</div><div class="book-desc">رواية رعب عربية تأخذك لعوالم مظلمة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
-    <div class="book-card" id="hb2"><div class="book-card-strip" style="background:#C94B1E;"></div><div class="book-card-body"><div class="book-genre">فانتازيا</div><div class="book-title">التنين الأسود</div><div class="book-author">فاطمة النجار</div><div class="book-stars">★★★★☆</div><div class="book-desc">ملحمة فانتازيا عربية فريدة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
-    <div class="book-card" id="hb3"><div class="book-card-strip" style="background:#412402;"></div><div class="book-card-body"><div class="book-genre">رواية</div><div class="book-title">جحيم العابرين</div><div class="book-author">مركز الأدب العربي</div><div class="book-stars">★★★★★</div><div class="book-desc">رواية بين الإثارة والعمق.</div><div class="book-cta">اقرأ المزيد</div></div></div>
-    <div class="book-card" id="hb4"><div class="book-card-strip" style="background:#26215C;"></div><div class="book-card-body"><div class="book-genre">شعر</div><div class="book-title">ديوان الظل</div><div class="book-author">شعراء المركز</div><div class="book-stars">★★★★★</div><div class="book-desc">تجربة شعرية فريدة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
+    <div class="book-card" id="hb1" data-bid="sb1"><div class="book-card-strip" style="background:#1A7A7A;"></div><div class="book-card-body"><div class="book-genre">رعب</div><div class="book-title">خوف</div><div class="book-author">أسامة المسلم</div><div class="book-stars">★★★★★</div><div class="book-desc">رواية رعب عربية تأخذك لعوالم مظلمة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
+    <div class="book-card" id="hb2" data-bid="sb2"><div class="book-card-strip" style="background:#C94B1E;"></div><div class="book-card-body"><div class="book-genre">فانتازيا</div><div class="book-title">التنين الأسود</div><div class="book-author">فاطمة النجار</div><div class="book-stars">★★★★☆</div><div class="book-desc">ملحمة فانتازيا عربية فريدة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
+    <div class="book-card" id="hb3" data-bid="sb3"><div class="book-card-strip" style="background:#412402;"></div><div class="book-card-body"><div class="book-genre">رواية</div><div class="book-title">جحيم العابرين</div><div class="book-author">مركز الأدب العربي</div><div class="book-stars">★★★★★</div><div class="book-desc">رواية بين الإثارة والعمق.</div><div class="book-cta">اقرأ المزيد</div></div></div>
+    <div class="book-card" id="hb4" data-bid="sb4"><div class="book-card-strip" style="background:#26215C;"></div><div class="book-card-body"><div class="book-genre">شعر</div><div class="book-title">ديوان الظل</div><div class="book-author">شعراء المركز</div><div class="book-stars">★★★★★</div><div class="book-desc">تجربة شعرية فريدة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
   </div>
   <div class="sec-header"><div class="sec-title">مقالات أدبية</div><div class="sec-more" id="more-arts">كل المقالات ←</div></div>
   <div class="arts-grid">
     <div id="home-arts">
-      <div class="art-item" id="ha1"><div class="art-num">١</div><div><div class="ai-badge">نقد أدبي</div><div class="ai-title">رواية "خوف": حين يجرؤ الأدب العربي على الظلام</div><div class="ai-excerpt">في روايته يأخذنا أسامة المسلم إلى عوالم مظلمة...</div><div class="ai-meta">فريق التحرير · أبريل ٢٠٢٥</div></div></div>
-      <div class="art-item" id="ha2"><div class="art-num">٢</div><div><div class="ai-badge">مقالة أدبية</div><div class="ai-title">الرواية العربية والخيال العلمي</div><div class="ai-excerpt">موجة جديدة من الكتاب العرب تكسر التصور السائد...</div><div class="ai-meta">د. سارة الأحمد · أبريل ٢٠٢٥</div></div></div>
+      <div class="art-item" id="ha1" data-aid="s1"><div class="art-num">١</div><div><div class="ai-badge">نقد أدبي</div><div class="ai-title">رواية "خوف": حين يجرؤ الأدب العربي على الظلام</div><div class="ai-excerpt">في روايته يأخذنا أسامة المسلم إلى عوالم مظلمة...</div><div class="ai-meta">فريق التحرير · أبريل ٢٠٢٥</div></div></div>
+      <div class="art-item" id="ha2" data-aid="s2"><div class="art-num">٢</div><div><div class="ai-badge">مقالة أدبية</div><div class="ai-title">الرواية العربية والخيال العلمي</div><div class="ai-excerpt">موجة جديدة من الكتاب العرب تكسر التصور السائد...</div><div class="ai-meta">د. سارة الأحمد · أبريل ٢٠٢٥</div></div></div>
     </div>
     <div id="home-arts-side">
-      <div class="art-side-item" id="has1"><div class="asi-badge">حوار</div><div class="asi-title">حوار مع فاطمة النجار</div><div class="asi-meta">ليلى المنصور · أبريل ٢٠٢٥</div></div>
-      <div class="art-side-item" id="has2"><div class="asi-badge">ثقافة</div><div class="asi-title">مستقبل النشر الرقمي العربي</div><div class="asi-meta">أحمد الكاتب · أبريل ٢٠٢٥</div></div>
+      <div class="art-side-item" id="has1" data-aid="s3"><div class="asi-badge">حوار</div><div class="asi-title">حوار مع فاطمة النجار</div><div class="asi-meta">ليلى المنصور · أبريل ٢٠٢٥</div></div>
+      <div class="art-side-item" id="has2" data-aid="s2"><div class="asi-badge">ثقافة</div><div class="asi-title">مستقبل النشر الرقمي العربي</div><div class="asi-meta">أحمد الكاتب · أبريل ٢٠٢٥</div></div>
     </div>
   </div>
 </div>
-<div class="arch-strip"><div style="max-width:1200px;margin:0 auto;">
+<div class="arch-strip" data-section="archive" style="order:3;"><div style="max-width:1200px;margin:0 auto;">
   <div class="sec-header" style="margin-top:0;"><div class="sec-title">أرشيف الأعداد</div><div class="sec-more" id="more-arch">عرض الكل ←</div></div>
   <div class="arch-row" id="home-arch">
-    <div class="arch-mini" id="am1"><div class="arch-mini-cover" style="background:#1A7A7A;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الأول</div></div><div class="arch-mini-info"><div class="arch-mini-date">أبريل ٢٠٢٥</div><div class="arch-mini-dl">تصفح ←</div></div></div>
+    <div class="arch-mini" id="am1" data-goissue="1"><div class="arch-mini-cover" style="background:#1A7A7A;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الأول</div></div><div class="arch-mini-info"><div class="arch-mini-date">أبريل ٢٠٢٥</div><div class="arch-mini-dl">تصفح ←</div></div></div>
     <div class="arch-mini"><div class="arch-mini-cover" style="background:#C94B1E;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الثاني</div></div><div class="arch-mini-info"><div class="arch-mini-date">مايو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
     <div class="arch-mini"><div class="arch-mini-cover" style="background:#412402;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الثالث</div></div><div class="arch-mini-info"><div class="arch-mini-date">يونيو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
     <div class="arch-mini"><div class="arch-mini-cover" style="background:#26215C;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الرابع</div></div><div class="arch-mini-info"><div class="arch-mini-date">يوليو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
@@ -364,7 +444,7 @@ button,a{cursor:pointer;}
 </div></div>
 
 <!-- MONTH PICK -->
-<div class="month-pick" id="month-pick" style="display:none;">
+<div class="month-pick" id="month-pick" data-section="monthpick" style="display:none;order:4;">
   <div class="mp-in">
     <div>
       <div class="mp-label">توصية الشهر</div>
@@ -380,7 +460,7 @@ button,a{cursor:pointer;}
     </div>
   </div>
 </div>
-<div class="newsletter" id="newsletter" style="background:linear-gradient(135deg,var(--teal),var(--td));">
+<div class="newsletter" id="newsletter" data-section="newsletter" style="order:5;background:linear-gradient(135deg,var(--teal),var(--td));">
   <div class="nl-logo">وَرَق</div>
   <div class="nl-title" id="nl-title">اشترك في وَرَق مجاناً</div>
   <div class="nl-sub" style="color:rgba(255,255,255,.75);" id="nl-sub">احصل على كل عدد جديد في بريدك الإلكتروني</div>
@@ -412,10 +492,10 @@ button,a{cursor:pointer;}
 <div class="view" id="v-books">
 <div class="page-header"><div class="ph-in"><button class="ph-back" id="books-back">← الرئيسية</button><div class="ph-title">الكتب</div><div class="ph-sub">إصدارات مركز الأدب العربي</div></div></div>
 <div class="books-page-grid" id="books-pg">
-  <div class="bpg-card" id="bp1"><div class="bpg-cover" style="background:#1A7A7A;"><span>خوف</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#1A7A7A;">رعب</span><div class="bpg-title">خوف</div><div class="bpg-author">أسامة المسلم</div><div class="bpg-stars">★★★★★</div><div class="bpg-desc">رواية رعب تأخذك لعوالم مظلمة.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
-  <div class="bpg-card" id="bp2"><div class="bpg-cover" style="background:#C94B1E;"><span>التنين الأسود</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#C94B1E;">فانتازيا</span><div class="bpg-title">التنين الأسود</div><div class="bpg-author">فاطمة النجار</div><div class="bpg-stars">★★★★☆</div><div class="bpg-desc">ملحمة فانتازيا عربية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
-  <div class="bpg-card" id="bp3"><div class="bpg-cover" style="background:#412402;"><span>جحيم العابرين</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#412402;">رواية</span><div class="bpg-title">جحيم العابرين</div><div class="bpg-author">مركز الأدب العربي</div><div class="bpg-stars">★★★★★</div><div class="bpg-desc">رواية بين الإثارة والعمق.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
-  <div class="bpg-card" id="bp4"><div class="bpg-cover" style="background:#26215C;"><span>ديوان الظل</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#26215C;">شعر</span><div class="bpg-title">ديوان الظل</div><div class="bpg-author">شعراء المركز</div><div class="bpg-stars">★★★★★</div><div class="bpg-desc">تجربة شعرية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp1" data-bid="sb1"><div class="bpg-cover" style="background:#1A7A7A;"><span>خوف</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#1A7A7A;">رعب</span><div class="bpg-title">خوف</div><div class="bpg-author">أسامة المسلم</div><div class="bpg-stars">★★★★★</div><div class="bpg-desc">رواية رعب تأخذك لعوالم مظلمة.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp2" data-bid="sb2"><div class="bpg-cover" style="background:#C94B1E;"><span>التنين الأسود</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#C94B1E;">فانتازيا</span><div class="bpg-title">التنين الأسود</div><div class="bpg-author">فاطمة النجار</div><div class="bpg-stars">★★★★☆</div><div class="bpg-desc">ملحمة فانتازيا عربية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp3" data-bid="sb3"><div class="bpg-cover" style="background:#412402;"><span>جحيم العابرين</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#412402;">رواية</span><div class="bpg-title">جحيم العابرين</div><div class="bpg-author">مركز الأدب العربي</div><div class="bpg-stars">★★★★★</div><div class="bpg-desc">رواية بين الإثارة والعمق.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp4" data-bid="sb4"><div class="bpg-cover" style="background:#26215C;"><span>ديوان الظل</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#26215C;">شعر</span><div class="bpg-title">ديوان الظل</div><div class="bpg-author">شعراء المركز</div><div class="bpg-stars">★★★★★</div><div class="bpg-desc">تجربة شعرية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
 </div>
 </div>
 
@@ -423,9 +503,9 @@ button,a{cursor:pointer;}
 <div class="view" id="v-articles">
 <div class="page-header"><div class="ph-in"><button class="ph-back" id="arts-back">← الرئيسية</button><div class="ph-title">مقالات</div><div class="ph-sub">أحدث المقالات الأدبية</div></div></div>
 <div class="arts-page"><div class="apg-grid" id="arts-pg">
-  <div class="apg-card" id="ap1"><span class="apg-badge" style="background:#1A7A7A;">نقد أدبي</span><div class="apg-title">رواية "خوف": حين يجرؤ الأدب العربي على الظلام</div><div class="apg-excerpt">في روايته يأخذنا أسامة المسلم إلى عوالم مظلمة...</div><div class="apg-footer"><span class="apg-author">فريق التحرير</span><span class="apg-date">أبريل ٢٠٢٥</span></div></div>
-  <div class="apg-card" id="ap2"><span class="apg-badge" style="background:#412402;">مقالة أدبية</span><div class="apg-title">الرواية العربية والخيال العلمي</div><div class="apg-excerpt">موجة جديدة من الكتاب العرب تكسر التصور السائد...</div><div class="apg-footer"><span class="apg-author">د. سارة الأحمد</span><span class="apg-date">أبريل ٢٠٢٥</span></div></div>
-  <div class="apg-card" id="ap3"><span class="apg-badge" style="background:#C94B1E;">حوار</span><div class="apg-title">حوار مع فاطمة النجار</div><div class="apg-excerpt">التقينا بالكاتبة للحديث عن الفانتازيا العربية...</div><div class="apg-footer"><span class="apg-author">ليلى المنصور</span><span class="apg-date">أبريل ٢٠٢٥</span></div></div>
+  <div class="apg-card" id="ap1" data-aid="s1"><span class="apg-badge" style="background:#1A7A7A;">نقد أدبي</span><div class="apg-title">رواية "خوف": حين يجرؤ الأدب العربي على الظلام</div><div class="apg-excerpt">في روايته يأخذنا أسامة المسلم إلى عوالم مظلمة...</div><div class="apg-footer"><span class="apg-author">فريق التحرير</span><span class="apg-date">أبريل ٢٠٢٥</span></div></div>
+  <div class="apg-card" id="ap2" data-aid="s2"><span class="apg-badge" style="background:#412402;">مقالة أدبية</span><div class="apg-title">الرواية العربية والخيال العلمي</div><div class="apg-excerpt">موجة جديدة من الكتاب العرب تكسر التصور السائد...</div><div class="apg-footer"><span class="apg-author">د. سارة الأحمد</span><span class="apg-date">أبريل ٢٠٢٥</span></div></div>
+  <div class="apg-card" id="ap3" data-aid="s3"><span class="apg-badge" style="background:#C94B1E;">حوار</span><div class="apg-title">حوار مع فاطمة النجار</div><div class="apg-excerpt">التقينا بالكاتبة للحديث عن الفانتازيا العربية...</div><div class="apg-footer"><span class="apg-author">ليلى المنصور</span><span class="apg-date">أبريل ٢٠٢٥</span></div></div>
 </div></div>
 </div>
 
@@ -433,7 +513,7 @@ button,a{cursor:pointer;}
 <div class="view" id="v-archive">
 <div class="page-header"><div class="ph-in"><button class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات جريدة وَرَق</div></div></div>
 <div class="arch-page"><div class="arch-pg-grid" id="arch-pg">
-  <div class="arch-pg-card" id="archpg1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
+  <div class="arch-pg-card" id="archpg1" data-goissue="1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
   <div class="arch-pg-card"><div class="arch-pg-cover" style="background:#C94B1E;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثاني</div></div><div class="arch-pg-info"><span class="arch-pg-date">مايو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
   <div class="arch-pg-card"><div class="arch-pg-cover" style="background:#412402;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثالث</div></div><div class="arch-pg-info"><span class="arch-pg-date">يونيو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
   <div class="arch-pg-card"><div class="arch-pg-cover" style="background:#26215C;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الرابع</div></div><div class="arch-pg-info"><span class="arch-pg-date">يوليو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
@@ -448,7 +528,8 @@ button,a{cursor:pointer;}
   <button class="ph-back" id="art-single-back" style="margin-bottom:18px;">← العودة</button>
   <div class="sa-badge" id="sa-badge"></div>
   <h1 class="sa-title" id="sa-title"></h1>
-  <div class="sa-meta"><span class="sa-author" id="sa-author"></span><span class="sa-date" id="sa-date"></span><span class="sa-cat" id="sa-cat"></span></div>
+  <div class="sa-meta"><span class="sa-author" id="sa-author"></span><span class="sa-date" id="sa-date"></span><span class="sa-cat" id="sa-cat"></span><span class="read-time" id="read-time"></span></div>
+  <div class="font-controls"><button class="font-btn" onclick="changeFontSize(-1)">A-</button><button class="font-btn" onclick="changeFontSize(0)">A</button><button class="font-btn" onclick="changeFontSize(1)">A+</button></div>
   <div class="sa-body" id="sa-body"></div>
 </div>
 <div class="related-sec"><div class="rel-label">مقالات ذات صلة</div><div class="rel-grid" id="rel-arts"></div></div>
@@ -698,25 +779,14 @@ function applySettings(rows) {
       mpc.innerHTML = '<img src="' + s.month_pick.image + '" alt="' + s.month_pick.title + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">';
     }
   }
-  // SECTIONS ORDER — wrap sections in ordered containers
+  // SECTIONS ORDER
   if (s.sections_order && Array.isArray(s.sections_order)) {
-    var vHome = document.getElementById('v-home');
-    if (vHome) {
-      var secMap = {
-        'books': vHome.querySelector('.sec-row:has(#home-books)') || document.getElementById('home-books') && document.getElementById('home-books').closest('.sec-row'),
-        'articles': vHome.querySelector('.arts-grid') && vHome.querySelector('.arts-grid').closest('.sec-row'),
-        'archive': vHome.querySelector('.arch-strip'),
-        'monthpick': document.getElementById('month-pick'),
-        'newsletter': document.getElementById('newsletter')
-      };
-      s.sections_order.forEach(function(sec, idx) {
-        var el = secMap[sec];
-        if (el) el.style.order = String(idx + 1);
-      });
-      // Make v-home a flex column to respect order
-      vHome.style.display = 'flex';
-      vHome.style.flexDirection = 'column';
-    }
+    var vh = document.getElementById('v-home');
+    if (vh) { vh.style.display = 'flex'; vh.style.flexDirection = 'column'; vh.style.alignItems = 'stretch'; }
+    s.sections_order.forEach(function(sec, idx) {
+      var el = document.querySelector('[data-section="' + sec + '"]');
+      if (el) el.style.order = String(idx + 1);
+    });
   }
   if (s.archive && s.archive.length) {
     renderArchive(s.archive);
@@ -770,29 +840,11 @@ function initNav() {
   nav('arch-back', function() { goView('home'); });
   nav('art-single-back', goBack);
   nav('book-single-back', goBack);
-  nav('am1', function() { goView('issue'); });
-  nav('archpg1', function() { goView('issue'); });
+  // am1/archpg1 handled by data-goissue delegation
   nav('nl-btn', doSub);
   nav('hero-title', function() { openArt('s1'); });
   nav('hero-cta', function() { openArt('s1'); });
-  nav('ha1', function() { openArt('s1'); });
-  nav('ha2', function() { openArt('s2'); });
-  nav('has1', function() { openArt('s3'); });
-  nav('has2', function() { openArt('s2'); });
-  nav('ap1', function() { openArt('s1'); });
-  nav('ap2', function() { openArt('s2'); });
-  nav('ap3', function() { openArt('s3'); });
-  nav('hb1', function() { openBook('sb1'); });
-  nav('hb2', function() { openBook('sb2'); });
-  nav('hb3', function() { openBook('sb3'); });
-  nav('hb4', function() { openBook('sb4'); });
-  nav('bp1', function() { openBook('sb1'); });
-  nav('bp2', function() { openBook('sb2'); });
-  nav('bp3', function() { openBook('sb3'); });
-  nav('bp4', function() { openBook('sb4'); });
-  nav('si1', function() { openBook('sb2'); });
-  nav('si2', function() { openBook('sb3'); });
-  nav('si3', function() { openBook('sb4'); });
+  // Static items handled by event delegation (data-aid/data-bid attributes)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -844,23 +896,25 @@ function setupEventDelegation() {
     var bookItem = e.target.closest('[data-bid]');
     if (bookItem) { openBook(bookItem.getAttribute('data-bid')); return; }
 
-    // Archive mini cards
-    var archMini = e.target.closest('.arch-mini');
-    if (archMini) {
-      var dl = archMini.querySelector('.arch-mini-dl[href]');
-      if (!dl) goView('issue');
-      return;
-    }
-
-    // Arch page cards
-    var archPg = e.target.closest('.arch-pg-card');
-    if (archPg) {
-      var pdl = archPg.querySelector('.arch-pg-dl[href]');
-      if (!pdl) goView('issue');
-      return;
-    }
+    // Archive cards with goissue flag
+    var archCard = e.target.closest('[data-goissue]');
+    if (archCard) { goView('issue'); return; }
   });
 
+  // Close search on result click (one global listener)
+  var searchRes = document.getElementById('search-results');
+  if (searchRes) {
+    searchRes.addEventListener('click', function(e) {
+      var item = e.target.closest('.sr-item');
+      if (item) {
+        var sb2 = document.getElementById('search-bar');
+        if (sb2) sb2.classList.remove('show');
+        searchRes.classList.remove('show');
+        var si = document.getElementById('search-input');
+        if (si) si.value = '';
+      }
+    });
+  }
   // Fix iframe title for PDF accessibility
   var iframe = document.getElementById('pdf-frame');
   if (iframe) iframe.setAttribute('title', 'عارض PDF لعدد الجريدة الحالي');
@@ -873,6 +927,167 @@ function setupEventDelegation() {
   }
 }
 
+
+// ── DARK MODE ──
+var _dark = localStorage.getItem('waraq-dark') === '1';
+function applyDark(on) {
+  document.body.classList.toggle('dark', on);
+  var btn = document.getElementById('dark-toggle');
+  if (btn) btn.textContent = on ? '☀️' : '🌙';
+  localStorage.setItem('waraq-dark', on ? '1' : '0');
+  _dark = on;
+}
+applyDark(_dark);
+
+// ── FONT SIZE ──
+var _fontSize = parseInt(localStorage.getItem('waraq-font') || '0');
+function changeFontSize(dir) {
+  if (dir === 0) _fontSize = 0;
+  else _fontSize = Math.max(-2, Math.min(4, _fontSize + dir));
+  var body = document.getElementById('sa-body');
+  if (body) {
+    var base = 15 + _fontSize;
+    body.style.fontSize = base + 'px';
+    body.style.lineHeight = (2.1 - _fontSize * 0.05) + '';
+  }
+  localStorage.setItem('waraq-font', _fontSize);
+}
+
+// ── READ TIME ──
+function calcReadTime(text) {
+  var clean = (text||'').replace(/<[^>]*>/g,'').replace(/&[a-z]+;/gi,' ').trim(); var words = clean ? clean.split(/\s+/).filter(Boolean).length : 0;
+  var mins = words > 0 ? Math.max(1, Math.ceil(words / 200)) : 1;
+  return mins + ' دقائق قراءة';
+}
+
+// ── READING PROGRESS ──
+var _progressInited = false;
+function _onReadScroll() {
+  var fill = document.getElementById('read-bar');
+  if (!fill) return;
+  var total = document.body.scrollHeight - window.innerHeight;
+  var pct = total > 0 ? Math.min(100, (window.scrollY / total) * 100) : 0;
+  fill.style.width = pct + '%';
+}
+function initReadProgress() {
+  if (_progressInited) return;
+  _progressInited = true;
+  window.addEventListener('scroll', _onReadScroll, {passive:true});
+}
+
+// ── BACK TO TOP ──
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('back-top');
+  if (btn) btn.classList.toggle('show', window.scrollY > 400);
+});
+document.addEventListener('DOMContentLoaded', function() {
+  var bt = document.getElementById('back-top');
+  if (bt) bt.addEventListener('click', function() { window.scrollTo({top:0,behavior:'smooth'}); });
+});
+
+// ── SEARCH ──
+var _searchTimer = null;
+function initSearch() {
+  var toggle = document.getElementById('search-toggle');
+  var bar = document.getElementById('search-bar');
+  var input = document.getElementById('search-input');
+  var results = document.getElementById('search-results');
+  if (!toggle || !bar || !input) return;
+  toggle.addEventListener('click', function() {
+    bar.classList.toggle('show');
+    if (bar.classList.contains('show')) { input.focus(); }
+    else { results.classList.remove('show'); input.value = ''; }
+  });
+  input.addEventListener('input', function() {
+    clearTimeout(_searchTimer);
+    var q = input.value.trim();
+    if (!q || q.length < 2) { results.classList.remove('show'); return; }
+    _searchTimer = setTimeout(function() { doSearch(q); }, 200);
+  });
+  document.addEventListener('click', function(e) {
+    if (!bar.contains(e.target) && e.target !== toggle) {
+      bar.classList.remove('show');
+      results.classList.remove('show');
+    }
+  });
+}
+
+function doSearch(q) {
+  var results = document.getElementById('search-results');
+  var qq = q.toLowerCase();
+  var hits = [];
+  // Search articles
+  Object.keys(lA).forEach(function(k) {
+    var a = lA[k];
+    if ((a.title||'').toLowerCase().indexOf(qq) > -1 || (a.excerpt||'').toLowerCase().indexOf(qq) > -1) {
+      hits.push({type:'art', id:k, cat:a.category||'مقالة', title:a.title});
+    }
+  });
+  Object.keys(SA).forEach(function(k) {
+    if (!lA[k]) {
+      var a = SA[k];
+      if ((a.title||'').toLowerCase().indexOf(qq) > -1) {
+        hits.push({type:'art', id:k, cat:a.badge||'مقالة', title:a.title});
+      }
+    }
+  });
+  // Search books
+  Object.keys(lB).forEach(function(k) {
+    var b = lB[k];
+    if ((b.title||'').toLowerCase().indexOf(qq) > -1 || (b.author||'').toLowerCase().indexOf(qq) > -1) {
+      hits.push({type:'book', id:k, cat:b.genre||'كتاب', title:b.title});
+    }
+  });
+  Object.keys(SB).forEach(function(k) {
+    if (!lB[k]) {
+      var b = SB[k];
+      if ((b.title||'').toLowerCase().indexOf(qq) > -1 || (b.author||'').toLowerCase().indexOf(qq) > -1) {
+        hits.push({type:'book', id:k, cat:b.genre||'كتاب', title:b.title});
+      }
+    }
+  });
+  if (!hits.length) {
+    results.innerHTML = '<div class="sr-empty">لا توجد نتائج لـ "' + q + '"</div>';
+    results.classList.add('show');
+    return;
+  }
+  results.innerHTML = hits.slice(0,6).map(function(h) {
+    return '<div class="sr-item" data-' + (h.type==='art'?'aid':'bid') + '="' + h.id + '"><div class="sr-cat">' + h.cat + '</div><div class="sr-title">' + h.title + '</div></div>';
+  }).join('');
+  results.classList.add('show');
+  // Close search bar on result click (delegation handles the openArt/openBook)
+  // click handled by global delegation below
+}
+
+// ── OVERRIDE goView to update progress bar ──
+var _origGoView = goView;
+goView = function(name) {
+  _origGoView(name);
+  var prog = document.getElementById('read-progress');
+  if (prog) prog.style.display = (name === 'art-single') ? 'block' : 'none';
+  var bar = document.getElementById('read-bar');
+  if (bar) bar.style.width = '0%';
+};
+
+// ── OVERRIDE openArt to add read time + font size ──
+var _origOpenArt = openArt;
+openArt = function(id) {
+  _origOpenArt(id);
+  var body = document.getElementById('sa-body');
+  var rt = document.getElementById('read-time');
+  if (body && rt) rt.textContent = '⏱ ' + calcReadTime(body.innerHTML);
+  changeFontSize(_fontSize); // Apply saved font size
+  initReadProgress();
+};
+
+// ── INIT FEATURES ──
+document.addEventListener('DOMContentLoaded', function() {
+  // Dark mode toggle
+  var dt = document.getElementById('dark-toggle');
+  if (dt) dt.addEventListener('click', function() { applyDark(!_dark); });
+  // Search
+  initSearch();
+});
 </script>
 </body>
 </html>
