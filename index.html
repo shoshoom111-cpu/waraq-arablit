@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وَرَق | جريدة مركز الأدب العربي</title>
+<title>وَرَق | مركز الأدب العربي</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;500;700&family=Cairo:wght@300;400;500;600&family=Felfel&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -841,7 +841,7 @@ function openBook(id) {
   var pills = []; try { pills = b.pills ? (typeof b.pills==='string' ? JSON.parse(b.pills) : b.pills) : []; } catch(e) { pills = []; }
   document.getElementById('sb-pills').innerHTML = pills.map(function(p) { return '<span class="sb-pill">' + p + '</span>'; }).join('');
   var buyBtn = document.getElementById('sb-buy');
-  var bUrl = (b.url && b.url.trim()) ? b.url : 'https://adab-book.com/';
+  var bUrl = (b.url && typeof b.url==='string' && b.url.trim()) ? b.url.trim() : 'https://adab-book.com/';
   buyBtn.onclick = function() { window.open(bUrl, '_blank'); };
   var rel = document.getElementById('rel-books');
   rel.innerHTML = '';
@@ -974,7 +974,11 @@ function applySettings(rows) {
     }
     var bi = document.getElementById('banner-img');
     if (bn && bi) { bi.src = s.banner.url; bn.style.display = 'block';
-      if (s.banner.link) bn.onclick = function() { window.open(s.banner.link,'_blank'); };
+      if (s.banner.link) {
+        bn.removeEventListener('click', bn._bannerClick);
+        bn._bannerClick = function() { window.open(s.banner.link,'_blank'); };
+        bn.addEventListener('click', bn._bannerClick);
+      }
     }
   }
   // LOGOS — each location has its own image
@@ -1209,8 +1213,9 @@ async function submitComment() {
     }
   } catch(e) {
     if (errEl) { errEl.textContent = 'خطأ في الاتصال'; errEl.style.display = 'block'; }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'إرسال التعليق'; }
   }
-  if (btn) { btn.disabled = false; btn.textContent = 'إرسال التعليق'; }
 }
 
 // ── EVENT DELEGATION ──
