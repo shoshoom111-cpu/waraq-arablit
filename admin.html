@@ -128,6 +128,7 @@ textarea{resize:vertical;min-height:90px;line-height:1.7;}
 .sp-pub{background:var(--tl);color:#085041;}
 .sp-rej{background:var(--ol);color:#712B13;}
 .sp-draft{background:var(--cream);color:var(--mid);}
+.sp-arch{background:#E5E5E5;color:#666;}
 
 /* COLOR */
 .crow{display:flex;align-items:center;gap:8px;}
@@ -193,6 +194,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
   <div class="ntab on" id="nt-dash" onclick="goSec('dash',this)">الرئيسية</div>
   <div class="ntab" id="nt-site" onclick="goSec('site',this)">تحرير الموقع</div>
   <div class="ntab" id="nt-homepage" onclick="goSec('homepage',this)">الصفحة الرئيسية</div>
+  <div class="ntab" id="nt-comments" onclick="goSec('comments',this)">التعليقات <span id="comments-badge" style="background:var(--orange);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;margin-right:4px;display:none;">0</span></div>
   <div class="ntab" id="nt-add-art" onclick="goSec('add-art',this)">إضافة مقالة</div>
   <div class="ntab" id="nt-arts" onclick="goSec('arts',this)">المقالات <span class="badge" id="pcount">0</span></div>
   <div class="ntab" id="nt-books" onclick="goSec('books',this)">الكتب</div>
@@ -206,6 +208,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
     <div class="sb-sep">عام</div>
     <div class="sb-item on" onclick="goSec('dash',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>الرئيسية</div>
     <div class="sb-item" onclick="goSec('site',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M11 2l3 3-8 8H3v-3l8-8z"/></svg>تحرير الموقع</div>
+    <div class="sb-item" onclick="goSec('comments',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M14 9a5 5 0 01-5 5H4l-3 2V6a5 5 0 015-5h3"/><circle cx="12" cy="4" r="3"/></svg>التعليقات</div>
     <div class="sb-item" onclick="goSec('homepage',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="4" rx="1"/><rect x="1" y="7" width="6" height="8" rx="1"/><rect x="9" y="7" width="6" height="4" rx="1"/></svg>الصفحة الرئيسية</div>
     <div class="sb-sep">المحتوى</div>
     <div class="sb-item" onclick="goSec('add-art',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12"/></svg>إضافة مقالة</div>
@@ -416,7 +419,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           <div class="card-hd">
             <span class="card-title">كل المقالات</span>
             <select id="art-flt" onchange="loadArts()" style="width:auto;padding:5px 10px;font-size:12px;border-radius:6px;">
-              <option value="">الكل</option><option value="published">منشورة</option><option value="pending">قيد المراجعة</option><option value="rejected">مرفوضة</option><option value="draft">مسودة</option>
+              <option value="">الكل</option><option value="published">منشورة</option><option value="pending">قيد المراجعة</option><option value="rejected">مرفوضة</option><option value="archived">مؤرشفة</option><option value="draft">مسودة</option>
             </select>
           </div>
           <div class="card-body" id="arts-list"><div class="empty">جاري التحميل...</div></div>
@@ -480,6 +483,27 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
       </div>
 
 
+
+      <!-- ══ COMMENTS ══ -->
+      <div class="sec" id="sec-comments">
+        <div class="pg-title">إدارة التعليقات</div>
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">التعليقات</span>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <select id="cmt-flt" onchange="loadComments()" style="width:auto;padding:5px 10px;font-size:12px;border-radius:6px;">
+                <option value="pending">قيد المراجعة</option>
+                <option value="approved">معتمدة</option>
+                <option value="all">الكل</option>
+              </select>
+              <button class="btn p sm" onclick="loadComments()">تحديث</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="comments-list"><div class="empty">اختر حالة لعرض التعليقات</div></div>
+          </div>
+        </div>
+      </div>
       <!-- ══ HOMEPAGE ══ -->
       <div class="sec" id="sec-homepage">
         <div class="pg-title">تخصيص الصفحة الرئيسية</div>
@@ -496,8 +520,8 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
             </div>
             <div class="fg"><label>رابط صورة اللوقو (اختياري — يستبدل اسم الجريدة)</label><input type="url" id="s-logo-url" placeholder="https://i.imgur.com/logo.png" oninput="prevLogo()"></div>
             <div class="two">
-              <div class="fg"><label>اسم الجريدة (يظهر بدون لوقو)</label><input type="text" id="s-sitename" value="وَرَق"></div>
-              <div class="fg"><label>وصف الجريدة تحت الاسم</label><input type="text" id="s-sitetag" value="جريدة مركز الأدب العربي الشهرية"></div>
+              <div class="fg"><label>اسم الجريدة (يظهر في الهيدر والفوتر بدون لوقو)</label><input type="text" id="s-sitename" value="وَرَق"></div>
+              <div class="fg"><label>وصف الجريدة تحت الاسم الكبير</label><input type="text" id="s-sitetag" value="جريدة مركز الأدب العربي الشهرية"></div>
             </div>
             <div class="fg"><label>لون خلفية الهيدر (اتركي فارغاً للون الافتراضي)</label><input type="text" id="s-headerbg" placeholder="#FFFFFF"></div>
           </div>
@@ -563,9 +587,9 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
               </select>
             </div>
             <div class="three">
-              <div class="fg"><label>اللون الرئيسي</label><div style="display:flex;gap:8px;"><input type="color" id="c-teal" value="#1A7A7A" oninput="pvc('teal',this.value);document.getElementById('ct-teal').value=this.value"><input type="text" id="ct-teal" value="#1A7A7A" style="flex:1;" oninput="pvc('teal',this.value);document.getElementById('c-teal').value=this.value"></div></div>
-              <div class="fg"><label>لون التمييز</label><div style="display:flex;gap:8px;"><input type="color" id="c-orange" value="#C94B1E" oninput="pvc('orange',this.value);document.getElementById('ct-orange').value=this.value"><input type="text" id="ct-orange" value="#C94B1E" style="flex:1;" oninput="pvc('orange',this.value);document.getElementById('c-orange').value=this.value"></div></div>
-              <div class="fg"><label>اللون الذهبي</label><div style="display:flex;gap:8px;"><input type="color" id="c-gold" value="#D4A843" oninput="pvc('gold',this.value);document.getElementById('ct-gold').value=this.value"><input type="text" id="ct-gold" value="#D4A843" style="flex:1;" oninput="pvc('gold',this.value);document.getElementById('c-gold').value=this.value"></div></div>
+              <div class="fg"><label>اللون الرئيسي</label><div style="display:flex;gap:8px;"><input type="color" id="hp-c-teal" value="#1A7A7A" oninput="pvc('teal',this.value);document.getElementById('hp-ct-teal').value=this.value"><input type="text" id="hp-ct-teal" value="#1A7A7A" style="flex:1;" oninput="pvc('teal',this.value);document.getElementById('hp-c-teal').value=this.value"></div></div>
+              <div class="fg"><label>لون التمييز</label><div style="display:flex;gap:8px;"><input type="color" id="hp-c-orange" value="#C94B1E" oninput="pvc('orange',this.value);document.getElementById('hp-ct-orange').value=this.value"><input type="text" id="hp-ct-orange" value="#C94B1E" style="flex:1;" oninput="pvc('orange',this.value);document.getElementById('hp-c-orange').value=this.value"></div></div>
+              <div class="fg"><label>اللون الذهبي</label><div style="display:flex;gap:8px;"><input type="color" id="hp-c-gold" value="#D4A843" oninput="pvc('gold',this.value);document.getElementById('hp-ct-gold').value=this.value"><input type="text" id="hp-ct-gold" value="#D4A843" style="flex:1;" oninput="pvc('gold',this.value);document.getElementById('hp-c-gold').value=this.value"></div></div>
             </div>
             <div class="fg"><label>ثيمات جاهزة</label>
             <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
@@ -617,12 +641,19 @@ async function init(){
   if(!p || p.role!=='admin'){location.href='writer.html';return;}
   document.getElementById('admin-name').textContent=(p && p.name ? p.name : me.email);
   document.getElementById('aa-author').value=(p && p.name ? p.name : '');
-  loadDash();loadBooks();loadArchive();loadUsers();loadSettings();hideLoad();
+  loadDash();loadBooks();loadArchive();loadUsers();loadSettings();
+  // Show pending comments badge
+  sb.from('comments').select('id').eq('status','pending').then(function(r){
+    if(r.data&&r.data.length){
+      var badge=document.getElementById('comments-badge');
+      if(badge){badge.textContent=r.data.length;badge.style.display='inline';}
+    }
+  });hideLoad();
 }
 init();
 
 // ── NAVIGATION ──
-function goSec(name,el){ if(name==='homepage')loadHomepageSettings();
+function goSec(name,el){ if(name==='homepage')loadHomepageSettings(); if(name==='comments')loadComments();
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
   document.getElementById('sec-'+name).classList.add('on');
@@ -698,9 +729,11 @@ async function loadArts(){
 function renderArtRows(arts,cid,isAdmin){
   var el=document.getElementById(cid);if(!el)return;
   if(!arts.length){el.innerHTML='<div class="empty">لا توجد مقالات</div>';return;}
-  var sl={pending:'قيد المراجعة',published:'منشورة',rejected:'مرفوضة',draft:'مسودة'};
-  var sc={pending:'sp-pend',published:'sp-pub',rejected:'sp-rej',draft:'sp-draft'};
-  el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='irow';var pend=a.status==='pending'?'<button class="bsm t" onclick="pubArt(\''+a.id+'\')">نشر</button><button class="bsm r" onclick="rejectArt(\''+a.id+'\')">رفض</button>':'';d.innerHTML='<span class="spill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="iinfo"><div class="ititle">'+a.title+'</div><div class="imeta">'+(a.author_name||'—')+' · '+(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div></div><div class="iacts"><button class="bsm g" onclick="previewArt(\''+a.id+'\')">معاينة</button>'+pend+'<button class="bsm r" onclick="delArt(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
+  var sl={pending:'قيد المراجعة',published:'منشورة',rejected:'مرفوضة',draft:'مسودة',archived:'مؤرشفة'};
+  var sc={pending:'sp-pend',published:'sp-pub',rejected:'sp-rej',draft:'sp-draft',archived:'sp-arch'};
+  el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='irow';var pend=a.status==='pending'?'<button class="bsm t" onclick="pubArt(\''+a.id+'\')">نشر</button><button class="bsm r" onclick="rejectArt(\''+a.id+'\')">رفض</button>':'';
+    var archBtn=a.status==='archived'?'<button class="bsm t" onclick="unarchiveArt(\''+a.id+'\')">إعادة نشر</button>':'<button class="bsm" style="background:#888" onclick="archiveArt(\''+a.id+'\')">أرشفة</button>';
+    d.innerHTML='<span class="spill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="iinfo"><div class="ititle">'+a.title+'</div><div class="imeta">'+(a.author_name||'—')+' · '+(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div></div><div class="iacts"><button class="bsm g" onclick="previewArt(\''+a.id+'\')">معاينة</button>'+pend+archBtn+'<button class="bsm r" onclick="delArt(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
 }
 
 async function addArticle(){
@@ -813,7 +846,21 @@ async function saveSideItems(){
   toast('تم حفظ الشريط الجانبي!');
 }
 async function saveDesign(){
-  await sb.from('settings').upsert({key:'design',value:{teal:document.getElementById('c-teal').value,orange:document.getElementById('c-orange').value,gold:document.getElementById('c-gold').value}});
+  // Read from whichever color section is active
+  var secHP = document.getElementById('sec-homepage');
+  var isHomepage = secHP && secHP.classList.contains('on');
+  var prefix = isHomepage ? 'hp-' : '';
+  var teal = (document.getElementById(prefix+'c-teal')||document.getElementById('c-teal')||{}).value || '#1A7A7A';
+  var orange = (document.getElementById(prefix+'c-orange')||document.getElementById('c-orange')||{}).value || '#C94B1E';
+  var gold = (document.getElementById(prefix+'c-gold')||document.getElementById('c-gold')||{}).value || '#D4A843';
+  await sb.from('settings').upsert({key:'design',value:{teal:teal,orange:orange,gold:gold}});
+  pvc('teal',teal);pvc('orange',orange);pvc('gold',gold);
+  // Sync both sections
+  ['','hp-'].forEach(function(pfx){
+    sv(pfx+'c-teal',teal);sv(pfx+'ct-teal',teal);
+    sv(pfx+'c-orange',orange);sv(pfx+'ct-orange',orange);
+    sv(pfx+'c-gold',gold);sv(pfx+'ct-gold',gold);
+  });
   toast('تم حفظ التصميم!');
 }
 async function saveSocial(){
@@ -855,6 +902,56 @@ function addTick(){var el=document.getElementById('tick-list');var r=document.cr
 function v(id){var e=document.getElementById(id);return e?e.value:'';}
 function sv(id,val){if(val){var e=document.getElementById(id);if(e)e.value=val;}}
 function se(id,txt){if(txt!==undefined&&txt!==null){var e=document.getElementById(id);if(e)e.textContent=txt;}}
+// ── COMMENTS ADMIN ──
+async function loadComments(){
+  var el=document.getElementById('comments-list');
+  if(el)el.innerHTML='<div class="empty">جاري التحميل...</div>';
+  var flt=document.getElementById('cmt-flt')&&document.getElementById('cmt-flt').value;
+  var q=sb.from('comments').select('*').order('created_at',{ascending:false});
+  if(flt&&flt!=='all') q=q.eq('status',flt);
+  var {data,error}=await q;
+  if(!data||!data.length){if(el)el.innerHTML='<div class="empty">لا توجد تعليقات</div>';return;}
+  // Update badge
+  var pending=data.filter(function(c){return c.status==='pending';}).length;
+  var badge=document.getElementById('comments-badge');
+  if(badge){badge.textContent=pending;badge.style.display=pending?'inline':'none';}
+  if(!el)return;
+  el.innerHTML='';
+  data.forEach(function(c){
+    var d=document.createElement('div');
+    d.className='irow';
+    d.style.flexDirection='column';
+    d.style.alignItems='stretch';
+    var dateStr=new Date(c.created_at).toLocaleDateString('ar-SA');
+    var btns=c.status==='pending'
+      ?'<button class="bsm t" onclick="approveCmt(\''+c.id+'\')">موافقة</button><button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">رفض</button>'
+      :'<button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">حذف</button>';
+    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><span style="font-weight:600;font-size:13px;">'+c.name+'</span><span style="font-size:11px;color:var(--mid);margin-right:10px;">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+( c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px;">مقالة: '+c.article_id+'</div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+c.body+'</div>';
+    el.appendChild(d);
+  });
+}
+async function approveCmt(id){
+  var res=await sb.from('comments').update({status:'approved'}).eq('id',id);
+  if(res.error){toast('خطأ: '+res.error.message);return;}
+  toast('تم اعتماد التعليق ✓');loadComments();
+}
+async function rejectCmt(id){
+  if(!confirm('حذف هذا التعليق نهائياً؟'))return;
+  var res=await sb.from('comments').delete().eq('id',id);
+  if(res.error){toast('خطأ: '+res.error.message);return;}
+  toast('تم الحذف ✓');loadComments();
+}
+async function archiveArt(id){
+  if(!confirm('أرشفة هذه المقالة؟ لن تظهر في الموقع لكن يمكن استعادتها.'))return;
+  var res=await sb.from('articles').update({status:'archived'}).eq('id',id);
+  if(res.error){toast('خطأ: '+res.error.message);return;}
+  toast('تم الأرشفة ✓');loadArts();
+}
+async function unarchiveArt(id){
+  var res=await sb.from('articles').update({status:'published'}).eq('id',id);
+  if(res.error){toast('خطأ: '+res.error.message);return;}
+  toast('تم إعادة النشر ✓');loadArts();
+}
 async function logout(){await sb.auth.signOut();location.href='login.html';}
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3000);}
 
@@ -863,11 +960,16 @@ function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.c
 function prevLogo() {
   var url = v('s-logo-url');
   var wrap = document.getElementById('logo-preview');
-  var pt = document.getElementById('logo-prev-text');
-  if (url) {
-    wrap.innerHTML = '<img src="'+url+'" style="max-width:100%;max-height:100%;object-fit:contain;">';
+  if (!wrap) return;
+  if (url && url.startsWith('http')) {
+    wrap.innerHTML = '<img src="'+url+'" style="max-width:100%;max-height:100%;object-fit:contain;" onerror="this.parentElement.innerHTML='<span style=\"color:#C94B1E;font-size:11px;">رابط غير صالح</span>'">';
+    // Update live preview in site preview panel
+    var lpvName = document.getElementById('lpv-name');
+    if (lpvName) lpvName.innerHTML = '<img src="'+url+'" alt="لوقو" style="max-height:28px;width:auto;object-fit:contain;">';
   } else {
-    wrap.innerHTML = '<span style="font-family:Felfel,serif;font-size:24px;color:#fff;" id="logo-prev-text">وَرَق</span>';
+    wrap.innerHTML = '<span style="font-family:Felfel,serif;font-size:24px;color:#fff;">وَرَق</span>';
+    var lpvName = document.getElementById('lpv-name');
+    if (lpvName) lpvName.textContent = v('s-sitename') || 'وَرَق';
   }
 }
 
@@ -885,7 +987,7 @@ function syncMpPreview() {
   var c = v('mp-color') || '#412402';
   se('mp-prev-t', t); se('mp-prev-a', a); se('mp-prev-title', t);
   var cov = document.getElementById('mp-prev-cover');
-  if (cov) cov.style.background = c;
+  if (cov && c) cov.style.background = c;
 }
 
 async function saveLogo() {
@@ -896,8 +998,9 @@ async function saveLogo() {
   cur.name = v('s-sitename');
   cur.tagline = v('s-sitetag');
   cur.header_bg = v('s-headerbg') || null;
-  await sb.from('settings').upsert({key:'general', value:cur});
-  toast('تم حفظ اللوقو!');
+  var res = await sb.from('settings').upsert({key:'general', value:cur});
+  if (res.error) { toast('خطأ في الحفظ'); return; }
+  toast('تم حفظ اللوقو! ✓ — حدّثي الموقع لتشوفي التغييرات');
 }
 
 async function saveBanner() {
@@ -912,7 +1015,7 @@ async function saveBanner() {
 async function saveMonthPick() {
   var title = v('mp-title');
   if (!title) { toast('أدخلي عنوان الكتاب'); return; }
-  await sb.from('settings').upsert({key:'month_pick', value:{title:title, author:v('mp-author'), desc:v('mp-desc'), color:v('mp-color'), url:v('mp-url'), image:v('mp-img')||null}});
+  await sb.from('settings').upsert({key:'month_pick', value:{title:title, author:v('mp-author'), desc:v('mp-desc'), color:v('mp-color'), url:v('mp-url'), image:(v('mp-img')&&v('mp-img').trim())||null}});
   toast('تم حفظ توصية الشهر!');
 }
 
