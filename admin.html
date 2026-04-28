@@ -628,9 +628,53 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 <div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-hd"><span class="modal-hd-title" id="m-title"></span><button class="modal-x" onclick="closeModal()">×</button></div>
-    <div style="padding:8px 22px;font-size:11px;color:var(--mid);" id="m-meta"></div>
-    <div class="modal-body" style="white-space:pre-wrap;font-size:14px;line-height:1.9;color:#333;" id="m-body"></div>
-    <div style="padding:0 22px 22px;display:flex;gap:8px;flex-wrap:wrap;" id="m-foot"></div>
+
+    <!-- preview mode -->
+    <div id="modal-preview">
+      <div style="padding:8px 22px;font-size:11px;color:var(--mid);" id="m-meta"></div>
+      <div class="modal-body" style="white-space:pre-wrap;font-size:14px;line-height:1.9;color:#333;" id="m-body"></div>
+      <div style="padding:0 22px 22px;display:flex;gap:8px;flex-wrap:wrap;" id="m-foot"></div>
+    </div>
+
+    <!-- edit article mode -->
+    <div id="modal-edit-art" style="display:none;padding:16px 22px 22px;">
+      <input type="hidden" id="ea-id">
+      <div class="two" style="margin-bottom:10px;">
+        <div class="fg"><label>العنوان *</label><input type="text" id="ea-title"></div>
+        <div class="fg"><label>الكاتب</label><input type="text" id="ea-author"></div>
+      </div>
+      <div class="two" style="margin-bottom:10px;">
+        <div class="fg"><label>التصنيف</label><input type="text" id="ea-cat"></div>
+        <div class="fg"><label>رابط صورة</label><input type="url" id="ea-img"></div>
+      </div>
+      <div class="fg" style="margin-bottom:10px;"><label>مقتطف</label><input type="text" id="ea-excerpt"></div>
+      <div class="fg" style="margin-bottom:14px;"><label>المحتوى *</label><textarea id="ea-body" rows="8" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;font-family:Cairo,sans-serif;font-size:13px;resize:vertical;direction:rtl;"></textarea></div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn p" onclick="saveEditArt()">حفظ التعديلات</button>
+        <button class="btn o" onclick="closeModal()">إلغاء</button>
+      </div>
+    </div>
+
+    <!-- edit book mode -->
+    <div id="modal-edit-book" style="display:none;padding:16px 22px 22px;">
+      <input type="hidden" id="eb-id">
+      <div class="two" style="margin-bottom:10px;">
+        <div class="fg"><label>العنوان *</label><input type="text" id="eb-title"></div>
+        <div class="fg"><label>الكاتب *</label><input type="text" id="eb-author"></div>
+      </div>
+      <div class="two" style="margin-bottom:10px;">
+        <div class="fg"><label>التصنيف</label><select id="eb-genre"><option>رعب</option><option>فانتازيا</option><option>رواية</option><option>شعر</option><option>قصص قصيرة</option><option>تاريخي</option><option>أدب</option><option>سيرة ذاتية</option></select></div>
+        <div class="fg"><label>لون البطاقة</label><select id="eb-color"><option value="#1A7A7A">فيروزي</option><option value="#C94B1E">برتقالي</option><option value="#412402">بني</option><option value="#26215C">بنفسجي</option><option value="#633806">ذهبي داكن</option><option value="#085041">أخضر</option><option value="#0E0E0E">أسود</option><option value="#7B2D8B">أرجواني</option></select></div>
+      </div>
+      <div class="fg" style="margin-bottom:10px;"><label>رابط صورة الغلاف</label><input type="url" id="eb-img"></div>
+      <div class="fg" style="margin-bottom:10px;"><label>رابط الشراء</label><input type="url" id="eb-url"></div>
+      <div class="fg" style="margin-bottom:10px;"><label>وصف مختصر</label><textarea id="eb-desc" rows="3" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;font-family:Cairo,sans-serif;font-size:13px;resize:vertical;direction:rtl;"></textarea></div>
+      <div class="fg" style="margin-bottom:14px;"><label>اقتباس</label><input type="text" id="eb-quote"></div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn p" onclick="saveEditBook()">حفظ التعديلات</button>
+        <button class="btn o" onclick="closeModal()">إلغاء</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -670,7 +714,7 @@ async function init(){
 init();
 
 // ── NAVIGATION ──
-function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function goSec(name,el){ if(name==='homepage')loadHomepageSettings(); if(name==='comments')loadComments();
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
@@ -688,8 +732,7 @@ function syncPv(){
   var num=v('s-inum')||'الأول';
   var date=v('s-idate')||'أبريل ٢٠٢٥';
   se('lpv-name',name);se('lpv-tag',tag);
-  se('lpv-meta','العدد '+num+'<br>'+date+'<br>مجانية');
-  document.getElementById('lpv-meta').innerHTML='العدد '+num+'<br>'+date+'<br>مجانية';
+  var lpvMeta=document.getElementById('lpv-meta');if(lpvMeta)lpvMeta.innerHTML='العدد '+num+'<br>'+date+'<br>مجانية';
 }
 function syncHero(){
   se('lpv-title',v('s-htitle').substring(0,60)+'...');
@@ -751,7 +794,7 @@ function renderArtRows(arts,cid,isAdmin){
   var sc={pending:'sp-pend',published:'sp-pub',rejected:'sp-rej',draft:'sp-draft',archived:'sp-arch'};
   el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='irow';var pend=a.status==='pending'?'<button class="bsm t" onclick="pubArt(\''+a.id+'\')">نشر</button><button class="bsm r" onclick="rejectArt(\''+a.id+'\')">رفض</button>':'';
     var archBtn=a.status==='archived'?'<button class="bsm t" onclick="unarchiveArt(\''+a.id+'\')">إعادة نشر</button>':'<button class="bsm" style="background:#888" onclick="archiveArt(\''+a.id+'\')">أرشفة</button>';
-    d.innerHTML='<span class="spill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="iinfo"><div class="ititle">'+escH(a.title)+'</div><div class="imeta">'+escH(a.author_name||'—')+' · '+escH(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div></div><div class="iacts"><button class="bsm g" onclick="previewArt(\''+a.id+'\')">معاينة</button>'+pend+archBtn+'<button class="bsm r" onclick="delArt(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
+    d.innerHTML='<span class="spill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="iinfo"><div class="ititle">'+escH(a.title)+'</div><div class="imeta">'+escH(a.author_name||'—')+' · '+escH(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div></div><div class="iacts"><button class="bsm g" onclick="previewArt(\''+a.id+'\')">معاينة</button><button class="bsm" style="background:var(--teal);color:#fff;" onclick="editArt(\''+a.id+'\')">تعديل</button>'+pend+archBtn+'<button class="bsm r" onclick="delArt(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
 }
 
 async function addArticle(){
@@ -777,7 +820,85 @@ async function previewArt(id){
   f.innerHTML=a.status==='pending'?'<button class="btn p" onclick="pubArt(\''+a.id+'\');closeModal()">نشر</button><button class="btn danger" onclick="rejectArt(\''+a.id+'\');closeModal()">رفض</button><button class="btn o" onclick="closeModal()">إغلاق</button>':'<button class="btn o" onclick="closeModal()">إغلاق</button>';
   document.getElementById('modal-bg').classList.add('on');
 }
-function closeModal(){document.getElementById('modal-bg').classList.remove('on');}
+function closeModal(){
+  document.getElementById('modal-bg').classList.remove('on');
+  document.getElementById('modal-preview').style.display='';
+  document.getElementById('modal-edit-art').style.display='none';
+  document.getElementById('modal-edit-book').style.display='none';
+}
+
+async function editArt(id){
+  var {data:a}=await sb.from('articles').select('*').eq('id',id).single();
+  if(!a)return;
+  document.getElementById('ea-id').value=a.id;
+  document.getElementById('ea-title').value=a.title||'';
+  document.getElementById('ea-author').value=a.author_name||'';
+  document.getElementById('ea-cat').value=a.category||'';
+  document.getElementById('ea-img').value=a.image||'';
+  document.getElementById('ea-excerpt').value=a.excerpt||'';
+  document.getElementById('ea-body').value=a.body||'';
+  document.getElementById('modal-preview').style.display='none';
+  document.getElementById('modal-edit-art').style.display='block';
+  document.getElementById('modal-edit-book').style.display='none';
+  document.getElementById('modal-bg').classList.add('on');
+}
+
+async function saveEditArt(){
+  var id=document.getElementById('ea-id').value;
+  var title=document.getElementById('ea-title').value.trim();
+  var body=document.getElementById('ea-body').value.trim();
+  if(!title||!body){toast('العنوان والمحتوى مطلوبان');return;}
+  var {error}=await sb.from('articles').update({
+    title:title,
+    body:body,
+    excerpt:document.getElementById('ea-excerpt').value,
+    category:document.getElementById('ea-cat').value,
+    author_name:document.getElementById('ea-author').value,
+    image:document.getElementById('ea-img').value||null
+  }).eq('id',id);
+  if(error){toast('خطأ: '+error.message);return;}
+  toast('تم حفظ التعديلات ✓');invalidateCache();closeModal();loadArts();
+}
+
+async function editBook(id){
+  var {data:b}=await sb.from('books').select('*').eq('id',id).single();
+  if(!b)return;
+  document.getElementById('eb-id').value=b.id;
+  document.getElementById('eb-title').value=b.title||'';
+  document.getElementById('eb-author').value=b.author||'';
+  document.getElementById('eb-img').value=b.image||'';
+  document.getElementById('eb-url').value=b.url||'';
+  document.getElementById('eb-desc').value=b.description||'';
+  document.getElementById('eb-quote').value=b.quote||'';
+  var genSel=document.getElementById('eb-genre');
+  for(var i=0;i<genSel.options.length;i++){if(genSel.options[i].value===b.genre)genSel.selectedIndex=i;}
+  var colSel=document.getElementById('eb-color');
+  for(var i=0;i<colSel.options.length;i++){if(colSel.options[i].value===b.color)colSel.selectedIndex=i;}
+  document.getElementById('modal-preview').style.display='none';
+  document.getElementById('modal-edit-art').style.display='none';
+  document.getElementById('modal-edit-book').style.display='block';
+  document.getElementById('modal-bg').classList.add('on');
+}
+
+async function saveEditBook(){
+  var id=document.getElementById('eb-id').value;
+  var title=document.getElementById('eb-title').value.trim();
+  var author=document.getElementById('eb-author').value.trim();
+  if(!title||!author){toast('العنوان واسم الكاتب مطلوبان');return;}
+  var {error}=await sb.from('books').update({
+    title:title,
+    author:author,
+    genre:document.getElementById('eb-genre').value,
+    color:document.getElementById('eb-color').value,
+    image:document.getElementById('eb-img').value||null,
+    url:document.getElementById('eb-url').value||null,
+    description:document.getElementById('eb-desc').value,
+    quote:document.getElementById('eb-quote').value
+  }).eq('id',id);
+  if(error){toast('خطأ: '+error.message);return;}
+  toast('تم حفظ التعديلات ✓');invalidateCache();closeModal();loadBooks();
+}
+
 
 // ── BOOKS ──
 async function loadBooks(){
@@ -791,12 +912,13 @@ async function loadBooks(){
     var archBtn=b.archived
       ?'<button class="bsm t" onclick="unarchiveBook(\''+b.id+'\')">إعادة عرض</button>'
       :'<button class="bsm" style="background:#888" onclick="archiveBook(\''+b.id+'\')">أرشفة</button>';
-    d.innerHTML='<div class="icolor" style="background:'+(b.color||'#1A7A7A')+';">'+escH((b.genre||'').slice(0,4))+'</div><div class="iinfo"><div class="ititle">'+escH(b.title)+(b.archived?' <span style="font-size:10px;color:#888;">(مؤرشف)</span>':'')+'</div><div class="imeta">'+escH(b.author||'')+' · '+escH(b.genre||'')+'</div></div><div class="iacts">'+archBtn+'<button class="bsm r" onclick="delBook(\''+b.id+'\')">حذف</button></div>';
+    d.innerHTML='<div class="icolor" style="background:'+(b.color||'#1A7A7A')+';">'+escH((b.genre||'').slice(0,4))+'</div><div class="iinfo"><div class="ititle">'+escH(b.title)+(b.archived?' <span style="font-size:10px;color:#888;">(مؤرشف)</span>':'')+'</div><div class="imeta">'+escH(b.author||'')+' · '+escH(b.genre||'')+'</div></div><div class="iacts"><button class="bsm" style="background:var(--teal);color:#fff;" onclick="editBook(\''+b.id+'\')">تعديل</button>'+archBtn+'<button class="bsm r" onclick="delBook(\''+b.id+'\')">حذف</button></div>';
     el.appendChild(d);});
 }
 async function addBook(){
   var t=v('nb-t').trim();if(!t){toast('أدخلي عنوان الكتاب');return;}
-  await sb.from('books').insert({title:t,author:v('nb-a'),genre:v('nb-g'),stars:v('nb-s'),description:v('nb-d'),quote:v('nb-q'),url:v('nb-u'),color:v('nb-c'),image:v('nb-img')||null});
+  var a=v('nb-a').trim();if(!a){toast('أدخلي اسم الكاتب');return;}
+  await sb.from('books').insert({title:t,author:a,genre:v('nb-g'),stars:v('nb-s'),description:v('nb-d'),quote:v('nb-q'),url:v('nb-u'),color:v('nb-c'),image:v('nb-img')||null});
   toast('تمت إضافة الكتاب!');loadBooks();toggleIF('add-book');
   ['nb-t','nb-a','nb-d','nb-q','nb-img'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
 }
@@ -804,7 +926,7 @@ async function delBook(id){if(!confirm('حذف هذا الكتاب؟'))return;aw
 
 // ── ARCHIVE ──
 async function loadArchive(){
-  var {data}=await sb.from('settings').select('value').eq('key','archive').single();
+  var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;
   var items=(data && data.value)||[];
   renderArchiveList(items);
 }
@@ -816,16 +938,16 @@ function renderArchiveList(items){
 async function addArchive(){
   var num=v('ar-num'),date=v('ar-date');
   if(!num||!date){toast('أدخلي رقم العدد والتاريخ');return;}
-  var {data}=await sb.from('settings').select('value').eq('key','archive').single();
+  var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;
   var items=(data && data.value)||[];
-  items.unshift({num,date,pdf:v('ar-pdf')||null,color:v('ar-color')});
+  items.unshift({num,date,pdf:v('ar-pdf')||null,color:v('ar-color')||null});
   await sb.from('settings').upsert({key:'archive',value:items});
   toast('تمت الإضافة!');loadArchive();toggleIF('add-arch');
   ['ar-num','ar-date','ar-pdf'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
 }
 async function delArchive(idx){
   if(!confirm('حذف هذا العدد من الأرشيف؟'))return;
-  var {data}=await sb.from('settings').select('value').eq('key','archive').single();
+  var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;
   var items=(data && data.value)||[];items.splice(idx,1);
   await sb.from('settings').upsert({key:'archive',value:items});
   toast('تم الحذف');loadArchive();
@@ -842,15 +964,33 @@ async function loadUsers(){
 async function createUser(){
   var email=v('nu-e'),pass=v('nu-p'),name=v('nu-n'),role=v('nu-r');
   if(!email||!pass){toast('أدخلي البريد وكلمة المرور');return;}
-  if(pass.length<6){toast('كلمة المرور يجب أن تكون ٦ أحرف على الأقل');return;}
+  if(pass.length<8){toast('كلمة المرور يجب أن تكون ٨ أحرف على الأقل');return;}
   var {data:sd,error}=await sb.auth.signUp({email,password:pass});
-  if(error){toast('خطأ: '+error.message);return;}
+  if(error){
+    if(error.message&&(error.message.indexOf('already')>-1||error.message.indexOf('registered')>-1)){
+      toast('البريد الإلكتروني مستخدم بالفعل');
+    } else { toast('خطأ: '+error.message); }
+    return;
+  }
   if(sd && sd.user)await sb.from('profiles').upsert({id:sd.user.id,email,name,role});
   toast('تم إنشاء الحساب بنجاح!');loadUsers();toggleIF('add-user');
   ['nu-n','nu-e','nu-p'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
 }
-async function toggleRole(id,cur){if(!me||me.role!=='admin'){toast('غير مصرح');return;}await sb.from('profiles').update({role:cur==='admin'?'writer':'admin'}).eq('id',id);toast('تم تغيير الصلاحية');loadUsers();}
-async function delUser(id){if(!me||me.role!=='admin'){toast('غير مصرح');return;}if(!confirm('حذف هذا المستخدم نهائياً؟'))return;await sb.from('profiles').delete().eq('id',id);toast('تم الحذف');loadUsers();}
+async function toggleRole(id,cur){
+  if(!me){toast('غير مصرح');return;}
+  var pr=await sb.from('profiles').select('role').eq('id',me.id).single();
+  if(!pr.data||pr.data.role!=='admin'){toast('غير مصرح');return;}
+  await sb.from('profiles').update({role:cur==='admin'?'writer':'admin'}).eq('id',id);
+  toast('تم تغيير الصلاحية');loadUsers();
+}
+async function delUser(id){
+  if(!me){toast('غير مصرح');return;}
+  var pr=await sb.from('profiles').select('role').eq('id',me.id).single();
+  if(!pr.data||pr.data.role!=='admin'){toast('غير مصرح');return;}
+  if(!confirm('حذف هذا المستخدم نهائياً؟'))return;
+  await sb.from('profiles').delete().eq('id',id);
+  toast('تم الحذف');loadUsers();
+}
 
 // ── SAVE SETTINGS ──
 async function saveGeneral(){
@@ -876,9 +1016,9 @@ async function saveDesign(){
   var secHP = document.getElementById('sec-homepage');
   var isHomepage = secHP && secHP.classList.contains('on');
   var prefix = isHomepage ? 'hp-' : '';
-  var teal = (document.getElementById(prefix+'c-teal')||document.getElementById('c-teal')||{}).value || '#1A7A7A';
-  var orange = (document.getElementById(prefix+'c-orange')||document.getElementById('c-orange')||{}).value || '#C94B1E';
-  var gold = (document.getElementById(prefix+'c-gold')||document.getElementById('c-gold')||{}).value || '#D4A843';
+  var teal = ((document.getElementById(prefix+'c-teal')||document.getElementById('c-teal')||{}).value||'').trim() || '#1A7A7A';
+  var orange = ((document.getElementById(prefix+'c-orange')||document.getElementById('c-orange')||{}).value||'').trim() || '#C94B1E';
+  var gold = ((document.getElementById(prefix+'c-gold')||document.getElementById('c-gold')||{}).value||'').trim() || '#D4A843';
   await sb.from('settings').upsert({key:'design',value:{teal:teal,orange:orange,gold:gold}});
   pvc('teal',teal);pvc('orange',orange);pvc('gold',gold);
   // Sync both sections
@@ -906,7 +1046,8 @@ async function saveTicker(){
 }
 async function getCurSettings(key){
   var res=await sb.from('settings').select('value').eq('key',key).maybeSingle();
-  return (res.data && res.data.value)||{};
+  if (!res.data) return {};
+  return (res.data.value !== null && res.data.value !== undefined) ? res.data.value : {};
 }
 
 // ── DESIGN ──
@@ -936,6 +1077,7 @@ async function loadComments(){
   var q=sb.from('comments').select('*').order('created_at',{ascending:false});
   if(flt&&flt!=='all') q=q.eq('status',flt);
   var {data,error}=await q;
+  if(error){if(el)el.innerHTML='<div class="empty">تعذر تحميل التعليقات</div>';return;}
   if(!data||!data.length){if(el)el.innerHTML='<div class="empty">لا توجد تعليقات</div>';return;}
   // Update badge
   var pending=data.filter(function(c){return c.status==='pending';}).length;
@@ -952,7 +1094,7 @@ async function loadComments(){
     var btns=c.status==='pending'
       ?'<button class="bsm t" onclick="approveCmt(\''+c.id+'\')">موافقة</button><button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">رفض</button>'
       :'<button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">حذف</button>';
-    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);margin-right:10px;">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+( c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px;">مقالة: '+c.article_id+'</div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+c.body+'</div>';
+    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);margin-right:10px;">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+( c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px;">معرف المقالة: '+String(c.article_id||'').substring(0,8)+'...</div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+escH(c.body)+'</div>';
     el.appendChild(d);
   });
 }
@@ -1141,11 +1283,6 @@ async function loadHomepageSettings() {
     if(s.design.teal){sv('hp-c-teal',s.design.teal);sv('hp-ct-teal',s.design.teal);}
     if(s.design.orange){sv('hp-c-orange',s.design.orange);sv('hp-ct-orange',s.design.orange);}
     if(s.design.gold){sv('hp-c-gold',s.design.gold);sv('hp-ct-gold',s.design.gold);}
-  }
-  if (s.design) {
-    if (s.design.teal) { pvc('teal',s.design.teal); sv('c-teal',s.design.teal); sv('ct-teal',s.design.teal); }
-    if (s.design.orange) { pvc('orange',s.design.orange); sv('c-orange',s.design.orange); sv('ct-orange',s.design.orange); }
-    if (s.design.gold) { pvc('gold',s.design.gold); sv('c-gold',s.design.gold); sv('ct-gold',s.design.gold); }
   }
 }
 </script>
