@@ -157,8 +157,8 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 .modal-body{padding:22px;}
 
 /* TOAST */
-.toast{position:fixed;bottom:24px;right:50%;transform:translateX(50%) translateY(80px);background:var(--teal);color:#fff;font-size:13px;padding:11px 22px;border-radius:8px;transition:transform .3s;z-index:9999;font-family:'Cairo',sans-serif;font-weight:500;}
-.toast.on{transform:translateX(50%) translateY(0);}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--teal);color:#fff;font-size:13px;padding:11px 22px;border-radius:8px;transition:transform .3s;z-index:9999;font-family:'Cairo',sans-serif;font-weight:500;}
+.toast.on{transform:translateX(-50%) translateY(0);}
 
 .empty{text-align:center;padding:40px;color:var(--mid);font-size:13px;}
 
@@ -477,7 +477,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           <div class="two">
             <div class="fg"><label>الاسم الكامل</label><input type="text" id="nu-n"></div>
             <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="nu-e"></div>
-            <div class="fg"><label>كلمة المرور</label><input type="password" id="nu-p" placeholder="٨ أحرف على الأقل"></div>
+            <div class="fg"><label>كلمة المرور</label><input type="password" id="nu-p" placeholder="٨ أحرف على الأقل" autocomplete="new-password"></div>
             <div class="fg"><label>الصلاحية</label><select id="nu-r"><option value="writer">كاتب</option><option value="admin">مدير</option></select></div>
           </div>
           <div style="display:flex;gap:8px;margin-top:8px;"><button class="btn p" onclick="createUser()">إنشاء الحساب</button><button class="btn o" onclick="toggleIF('add-user')">إلغاء</button></div>
@@ -697,7 +697,19 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
+<script>
+// config.js fallback check
+window._configMissing = true;
+</script>
+<script src="config.js" onload="window._configMissing=false;"></script>
+<script>
+if(window._configMissing||typeof SUPABASE_URL==='undefined'||!SUPABASE_URL){
+  document.addEventListener('DOMContentLoaded',function(){
+    var ov=document.getElementById('loading-overlay');
+    if(ov)ov.innerHTML='<div style="text-align:center;color:#C94B1E;"><div style="font-size:28px;margin-bottom:12px;">⚠</div><div>ملف config.js مفقود أو يحتوي على خطأ<br><small>تحقق من إعدادات Supabase</small></div></div>';
+  });
+}
+</script>
 <script>
 var sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
@@ -710,6 +722,7 @@ function invalidateCache(){_cache={};}
 var me=null;
 
 async function init(){
+  clearRoleCache();
   showLoad();
   var _loadTimeout=setTimeout(function(){hideLoad();toast('تعذر الاتصال — تحقق من الإنترنت');},15000);
   init._clearTimeout=function(){clearTimeout(_loadTimeout);};
@@ -735,7 +748,7 @@ async function init(){
       var badge=document.getElementById('comments-badge');
       if(badge){badge.textContent=r.data.length;badge.style.display='inline';}
     }
-  });hideLoad();
+  });
 }
 init();
 
@@ -975,6 +988,7 @@ async function addArchive(){
   if(!num||!date){toast('أدخلي رقم العدد والتاريخ');return;}
   var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;
   var items=(data && data.value)||[];
+  if(items.find(function(i){return String(i.num)===String(num);})){toast('هذا العدد موجود بالفعل');return;}
   items.unshift({num,date,pdf:v('ar-pdf')||null,color:v('ar-color')||null});
   await sb.from('settings').upsert({key:'archive',value:items});
   toast('تمت الإضافة!');loadArchive();toggleIF('add-arch');
