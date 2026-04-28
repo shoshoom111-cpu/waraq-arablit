@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وَرَق | مجلة مركز الأدب العربي</title>
+<title>وَرَق | جريدة مركز الأدب العربي</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;500;700&family=Cairo:wght@300;400;500;600&family=Felfel&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -944,6 +944,7 @@ function renderArchive(items) {
 
 function parseVal(v){try{return(typeof v==='string')?JSON.parse(v):v;}catch(e){return v;}}
 function applySettings(rows) {
+  if (!rows || !rows.length) return;
   var s = {};
   rows.forEach(function(r) { s[r.key] = parseVal(r.value); });
   if (s.design) { var R = document.documentElement.style; if (s.design.teal) R.setProperty('--teal', s.design.teal); if (s.design.orange) R.setProperty('--orange', s.design.orange); if (s.design.gold) R.setProperty('--gold', s.design.gold); }
@@ -1571,8 +1572,8 @@ document.addEventListener('DOMContentLoaded', function() {
       var ar=results[0], bk=results[1], st=results[2];
       if (ar.data && ar.data.length) { ar.data.forEach(function(a){lA[a.id]=a;}); renderArts(ar.data); }
       if (bk.data && bk.data.length) { bk.data.forEach(function(b){lB[b.id]=b;}); renderBooks(bk.data); }
-      if (st.data) applySettings(st.data);
-    }).catch(function(){});
+      if (st.data && st.data.length) applySettings(st.data);
+    }).catch(function(e){ console.warn('Data load failed:', e.message||e); });
   });
   var bt = document.getElementById('back-top');
   if (bt) bt.addEventListener('click', function() { window.scrollTo({top:0,behavior:'smooth'}); });
