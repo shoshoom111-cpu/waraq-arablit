@@ -281,10 +281,10 @@ button,a{cursor:pointer;}
 .sk-text.w60{width:60%;}
 .sk-cover{height:180px;margin-bottom:10px;}
 /* READING PROGRESS */
-.read-progress{position:fixed;top:0;right:0;left:0;height:3px;background:var(--border);z-index:9000;display:none;}
+.read-progress{position:fixed;top:0;right:0;left:0;height:3px;background:var(--border);z-index:7000;display:none;}
 .read-progress-bar{height:100%;background:var(--teal);width:0%;transition:width .1s;}
 /* BACK TO TOP */
-.back-top{position:fixed;bottom:32px;left:24px;z-index:500;width:42px;height:42px;border-radius:50%;background:var(--teal);color:#fff;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:18px;z-index:900;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:all .2s;}
+.back-top{position:fixed;bottom:32px;left:24px;z-index:600;width:42px;height:42px;border-radius:50%;background:var(--teal);color:#fff;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:18px;z-index:900;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:all .2s;}
 .back-top.show{display:flex;}
 .back-top:hover{background:var(--td);transform:translateY(-2px);}
 /* DARK MODE */
@@ -376,7 +376,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 .search-icon-inner{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--mid);font-size:18px;pointer-events:none;}
 .search-clear{position:absolute;left:14px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:var(--mid);font-size:18px;display:none;padding:0;line-height:1;}
 .search-clear.show{display:block;}
-.search-results{position:absolute;top:calc(100% + 6px);right:0;left:0;background:var(--paper);border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.12);z-index:100;max-height:380px;overflow-y:auto;display:none;}
+.search-results{position:absolute;top:calc(100% + 6px);right:0;left:0;background:var(--paper);border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.12);z-index:5000;max-height:380px;overflow-y:auto;display:none;}
 .search-results.show{display:block;}
 .sr-item{padding:14px 18px;cursor:pointer;border-bottom:.5px solid var(--border);transition:background .15s;}
 .sr-item:hover{background:var(--tl);}
@@ -435,7 +435,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 </style>
 </head>
 <body>
-<div class="topbar"><div class="topbar-in"><span class="topbar-text" id="tb-txt">مركز الأدب العربي للنشر والتوزيع</span><div class="tb-links"><a id="ig-lnk" href="https://www.instagram.com/servicesbook1" target="_blank">Instagram</a><a id="tt-lnk" href="https://www.tiktok.com/@adab_book" target="_blank">TikTok</a><a id="store-lnk" href="https://adab-book.com/" target="_blank">المتجر</a></div></div></div>
+<div class="topbar"><div class="topbar-in"><span class="topbar-text" id="tb-txt">مركز الأدب العربي للنشر والتوزيع</span><div class="tb-links"><a id="ig-lnk" href="https://www.instagram.com/servicesbook1" target="_blank" rel="noopener noreferrer">Instagram</a><a id="tt-lnk" href="https://www.tiktok.com/@adab_book" target="_blank" rel="noopener noreferrer">TikTok</a><a id="store-lnk" href="https://adab-book.com/" target="_blank" rel="noopener noreferrer">المتجر</a></div></div></div>
 
 <!-- BANNER -->
 <div class="site-banner" id="site-banner">
@@ -459,7 +459,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
     <a class="btn-ghost" href="login.html">دخول المحررين</a>
     <button class="btn-primary" id="sub-btn">اشترك مجاناً</button>
   </div>
-  <button class="ham-btn" id="ham"><span></span><span></span><span></span></button>
+  <button class="ham-btn" id="ham" aria-label="فتح القائمة" aria-expanded="false"><span></span><span></span><span></span></button>
 </div></header>
 <div class="read-progress" id="read-progress"><div class="read-progress-bar" id="read-bar"></div></div>
 <button class="back-top" id="back-top" aria-label="العودة للأعلى">↑</button>
@@ -571,10 +571,10 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <footer class="footer" data-section="footer"><div class="ft">
   <div><div class="ft-logo" id="ft-logo">وَرَق</div><div class="ft-tag" id="ft-tag">جريدة مركز الأدب العربي<br>شهرية · رقمية · مجانية</div></div>
   <div class="ft-col"><h4>أقسام الموقع</h4><a id="fl-home">الرئيسية</a><a id="fl-issue">العدد الحالي</a><a id="fl-books">الكتب</a><a id="fl-arts">مقالات</a><a id="fl-arch">الأرشيف</a></div>
-  <div class="ft-col"><h4>تواصل معنا</h4><a id="ft-ig" href="https://www.instagram.com/servicesbook1" target="_blank">Instagram</a><a id="ft-tt" href="https://www.tiktok.com/@adab_book" target="_blank">TikTok</a><a id="ft-store" href="https://adab-book.com/" target="_blank">المتجر</a></div>
+  <div class="ft-col"><h4>تواصل معنا</h4><a id="ft-ig" href="https://www.instagram.com/servicesbook1" target="_blank" rel="noopener noreferrer">Instagram</a><a id="ft-tt" href="https://www.tiktok.com/@adab_book" target="_blank" rel="noopener noreferrer">TikTok</a><a id="ft-store" href="https://adab-book.com/" target="_blank" rel="noopener noreferrer">المتجر</a></div>
   <div class="ft-col"><h4>المركز</h4><a href="login.html">لوحة التحكم</a></div>
 </div>
-<div class="ft-btm" style="max-width:1200px;margin:16px auto 0;"><span class="ft-copy" id="ft-copy">© ٢٠٢٥ مركز الأدب العربي للنشر والتوزيع</span><div style="display:flex;gap:6px;"><a class="ft-soc" style="background:#1A7A7A;" href="https://www.instagram.com/servicesbook1" target="_blank">Instagram</a><a class="ft-soc" style="background:#C94B1E;" href="https://www.tiktok.com/@adab_book" target="_blank">TikTok</a><a class="ft-soc" style="background:#412402;" href="https://adab-book.com/" target="_blank">المتجر</a></div></div>
+<div class="ft-btm" style="max-width:1200px;margin:16px auto 0;"><span class="ft-copy" id="ft-copy">© ٢٠٢٥ مركز الأدب العربي للنشر والتوزيع</span><div style="display:flex;gap:6px;"><a class="ft-soc" style="background:#1A7A7A;" href="https://www.instagram.com/servicesbook1" target="_blank" rel="noopener noreferrer">Instagram</a><a class="ft-soc" style="background:#C94B1E;" href="https://www.tiktok.com/@adab_book" target="_blank" rel="noopener noreferrer">TikTok</a><a class="ft-soc" style="background:#412402;" href="https://adab-book.com/" target="_blank" rel="noopener noreferrer">المتجر</a></div></div>
 </footer>
 </div>
 
@@ -582,11 +582,11 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <div class="view" id="v-issue">
 <div class="issue-hd"><div class="issue-hd-in">
   <div><button class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label">العدد الأول · أبريل ٢٠٢٥</div></div>
-  <div style="display:flex;gap:8px;align-items:center;"><a id="pdf-dl-btn" href="#" target="_blank" style="display:none;font-size:12px;color:#fff;background:var(--teal);padding:8px 16px;border-radius:6px;text-decoration:none;font-family:'Cairo',sans-serif;">تحميل PDF ↓</a><span id="pdf-no-link" style="font-size:12px;color:#555;font-family:'Cairo',sans-serif;">سيتوفر قريباً</span></div>
+  <div style="display:flex;gap:8px;align-items:center;"><a id="pdf-dl-btn" href="#" target="_blank" rel="noopener noreferrer" style="display:none;font-size:12px;color:#fff;background:var(--teal);padding:8px 16px;border-radius:6px;text-decoration:none;font-family:'Cairo',sans-serif;">تحميل PDF ↓</a><span id="pdf-no-link" style="font-size:12px;color:#555;font-family:'Cairo',sans-serif;">سيتوفر قريباً</span></div>
 </div></div>
 <div class="issue-pdf-wrap">
   <div class="pdf-placeholder" id="pdf-placeholder"><div class="pdf-placeholder-icon"><svg width="28" height="36" viewBox="0 0 28 36" fill="none"><rect x="2" y="2" width="24" height="32" rx="3" stroke="#888" stroke-width="2"/><path d="M7 11h14M7 17h14M7 23h9" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div><div style="font-family:'Noto Serif Arabic',serif;font-size:20px;color:#ccc;margin-bottom:10px;">العدد الحالي</div><div style="font-size:13px;color:#888;line-height:1.8;">سيظهر هنا ملف PDF بعد رفعه من لوحة التحكم</div></div>
-  <div class="pdf-frame-wrap" id="pdf-frame-wrap" style="display:none;"><iframe id="pdf-frame" src="" style="width:100%;height:90vh;border:none;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5);" allowfullscreen></iframe></div>
+  <div class="pdf-frame-wrap" id="pdf-frame-wrap" style="display:none;"><iframe id="pdf-frame" src="" style="width:100%;height:90vh;border:none;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5);" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups"></iframe></div>
 </div>
 </div>
 
@@ -616,11 +616,11 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <div class="page-header"><div class="ph-in"><button class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات جريدة وَرَق</div></div></div>
 <div class="arch-page"><div class="arch-pg-grid" id="arch-pg">
   <div class="arch-pg-card" id="archpg1" data-goissue="1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
-  <div class="arch-pg-card"><div class="arch-pg-cover" style="background:#C94B1E;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثاني</div></div><div class="arch-pg-info"><span class="arch-pg-date">مايو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
-  <div class="arch-pg-card"><div class="arch-pg-cover" style="background:#412402;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثالث</div></div><div class="arch-pg-info"><span class="arch-pg-date">يونيو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
-  <div class="arch-pg-card"><div class="arch-pg-cover" style="background:#26215C;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الرابع</div></div><div class="arch-pg-info"><span class="arch-pg-date">يوليو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
-  <div class="arch-pg-card"><div class="arch-pg-cover" style="background:#633806;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الخامس</div></div><div class="arch-pg-info"><span class="arch-pg-date">أغسطس ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
-  <div class="arch-pg-card"><div class="arch-pg-cover" style="background:#085041;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد السادس</div></div><div class="arch-pg-info"><span class="arch-pg-date">سبتمبر ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
+  <div class="arch-pg-card" data-goissue="1"><div class="arch-pg-cover" style="background:#C94B1E;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثاني</div></div><div class="arch-pg-info"><span class="arch-pg-date">مايو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
+  <div class="arch-pg-card" data-goissue="2"><div class="arch-pg-cover" style="background:#412402;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثالث</div></div><div class="arch-pg-info"><span class="arch-pg-date">يونيو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
+  <div class="arch-pg-card" data-goissue="3"><div class="arch-pg-cover" style="background:#26215C;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الرابع</div></div><div class="arch-pg-info"><span class="arch-pg-date">يوليو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
+  <div class="arch-pg-card" data-goissue="4"><div class="arch-pg-cover" style="background:#633806;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الخامس</div></div><div class="arch-pg-info"><span class="arch-pg-date">أغسطس ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
+  <div class="arch-pg-card" data-goissue="5"><div class="arch-pg-cover" style="background:#085041;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد السادس</div></div><div class="arch-pg-info"><span class="arch-pg-date">سبتمبر ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
 </div></div>
 </div>
 
@@ -697,7 +697,7 @@ try {
   if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && typeof supabase !== 'undefined') {
     sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   }
-} catch(e) { sb = null; console.warn('Supabase init failed', e); }
+} catch(e) { sb = null; console.warn('Connection unavailable'); }
 var lA = {}, lB = {}, prevView = 'home';
 
 var SA = {
@@ -734,11 +734,11 @@ function goView(name) {
 }
 window.addEventListener('popstate', function(e) {
   if (e.state && e.state.view) {
-    if (e.state.view === 'art-single' && e.state.id) openArt(e.state.id);
-    else if (e.state.view === 'book-single' && e.state.id) openBook(e.state.id);
+    if (e.state.view === 'art-single' && e.state.id) { prevView = prevView || 'home'; openArt(e.state.id); }
+    else if (e.state.view === 'book-single' && e.state.id) { prevView = prevView || 'home'; openBook(e.state.id); }
     else goView(e.state.view);
   } else {
-    goView('home');
+    goView(prevView || 'home');
   }
 });
 function goBack() { goView(prevView); }
@@ -762,6 +762,7 @@ function closeMob() {
   h.setAttribute('aria-label', 'فتح القائمة');
 }
 function se(id, txt) { if (txt !== undefined && txt !== null) { var e = document.getElementById(id); if (e) e.textContent = txt; } }
+function seH(id, val) { if (val !== undefined && val !== null) { var e = document.getElementById(id); if (e) e.innerHTML = val; } }
 
 function openArt(id) {
   var a = lA[id] || SA[id];
@@ -777,17 +778,30 @@ function openArt(id) {
   document.getElementById('sa-body').innerHTML = (a.body && a.body.trim()) ? a.body : '<p>لا يوجد محتوى</p>';
   var rel = document.getElementById('rel-arts');
   rel.innerHTML = '';
-  // Build pool from both live and static data
-  var allArts = [];
-  Object.keys(lA).forEach(function(k) { if (k !== id) allArts.push([k, lA[k]]); });
-  Object.keys(SA).forEach(function(k) { if (k !== id && !lA[k]) allArts.push([k, SA[k]]); });
-  allArts.slice(0,3).forEach(function(pair) {
-    var c = document.createElement('div');
-    c.className = 'rel-card';
-    c.setAttribute('data-aid', pair[0]);
-    c.innerHTML = '<div class="rel-title">' + pair[1].title + '</div><div class="rel-meta">' + (pair[1].author_name || '') + '</div>';
-    rel.appendChild(c);
-  });
+  // Fetch from Supabase directly to avoid showing deleted articles
+  if (sb) {
+    sb.from('articles').select('id,title,author_name,category').eq('status','published').neq('id',id).limit(3)
+      .then(function(res) {
+        if (!res.data || !res.data.length) return;
+        res.data.forEach(function(a) {
+          var c = document.createElement('div');
+          c.className = 'rel-card';
+          c.setAttribute('data-aid', a.id);
+          c.innerHTML = '<div class="rel-title">' + escHtml(a.title) + '</div><div class="rel-meta">' + escHtml(a.author_name||'') + '</div>';
+          rel.appendChild(c);
+        });
+      });
+  } else {
+    // Fallback to static only (no deleted articles in SA)
+    Object.keys(SA).slice(0,3).forEach(function(k) {
+      if (k === id) return;
+      var c = document.createElement('div');
+      c.className = 'rel-card';
+      c.setAttribute('data-aid', k);
+      c.innerHTML = '<div class="rel-title">' + escHtml(SA[k].title) + '</div><div class="rel-meta">' + escHtml(SA[k].author_name||'') + '</div>';
+      rel.appendChild(c);
+    });
+  }
   goView('art-single');
 }
 
@@ -856,13 +870,13 @@ function renderBooks(books) {
   var si = document.getElementById('side-items');
   function bookCardHTML(b) {
     var imgHTML = (b.image&&b.image.trim()) ? '<img style="width:100%;height:180px;object-fit:cover;display:block;" src="' + b.image + '" alt="' + b.title + '" loading="lazy">' : '<div class="book-card-strip" style="background:' + (b.color||'#1A7A7A') + ';"></div>';
-    return '<div class="book-card" data-bid="' + b.id + '">' + imgHTML + '<div class="book-card-body"><div class="book-genre">' + (b.genre||'') + '</div><div class="book-title">' + b.title + '</div><div class="book-author">' + (b.author||'') + '</div><div class="book-desc">' + (b.description||'') + '</div><div class="book-cta">اقرأ المزيد</div></div></div>';
+    return '<div class="book-card" data-bid="' + b.id + '">' + imgHTML + '<div class="book-card-body"><div class="book-genre">' + (b.genre||'') + '</div><div class="book-title">' + b.title + '</div><div class="book-author">' + (b.author||'') + '</div><div class="book-desc">' + (b.description||b.desc||'') + '</div><div class="book-cta">اقرأ المزيد</div></div></div>';
   }
   if (hg) { hg.innerHTML = books.slice(0,4).map(bookCardHTML).join(''); hg.querySelectorAll('.book-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); }); }
   if (pg) {
     pg.innerHTML = books.map(function(b) {
       var covHTML = b.image ? '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';padding:0;"><img src="' + b.image + '" style="width:100%;height:100%;object-fit:cover;"></div>' : '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';"><span>' + b.title + '</span></div>';
-      return '<div class="bpg-card" data-bid="' + b.id + '">' + covHTML + '<div class="bpg-body"><span class="bpg-badge" style="background:' + (b.color||'#1A7A7A') + ';">' + (b.genre||'') + '</span><div class="bpg-title">' + b.title + '</div><div class="bpg-author">' + (b.author||'') + '</div><div class="bpg-desc">' + (b.description||'') + '</div><button class="bpg-btn">اقرأ المزيد</button></div></div>';
+      return '<div class="bpg-card" data-bid="' + b.id + '">' + covHTML + '<div class="bpg-body"><span class="bpg-badge" style="background:' + (b.color||'#1A7A7A') + ';">' + (b.genre||'') + '</span><div class="bpg-title">' + b.title + '</div><div class="bpg-author">' + (b.author||'') + '</div><div class="bpg-desc">' + (b.description||b.desc||'') + '</div><button class="bpg-btn">اقرأ المزيد</button></div></div>';
     }).join('');
     pg.querySelectorAll('.bpg-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); });
   }
@@ -903,8 +917,8 @@ function renderArts(arts) {
 function renderArchive(items) {
   var hr = document.getElementById('home-arch');
   var pg = document.getElementById('arch-pg');
-  if (hr) hr.innerHTML = items.slice(0,5).map(function(i) { return '<div class="arch-mini" data-goissue="'+i.id+'"><div class="arch-mini-cover" style="background:' + (i.color||'#1A7A7A') + ';border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد ' + i.num + '</div></div><div class="arch-mini-info"><div class="arch-mini-date">' + (i.date||'') + '</div>' + (i.pdf ? '<a class="arch-mini-dl" href="' + i.pdf + '" target="_blank">تحميل PDF</a>' : '<div class="arch-mini-dl" style="color:var(--light);">قريباً</div>') + '</div></div>'; }).join('');
-  if (pg) pg.innerHTML = items.map(function(i) { return '<div class="arch-pg-card"><div class="arch-pg-cover" style="background:' + (i.color||'#1A7A7A') + ';"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد ' + i.num + '</div></div><div class="arch-pg-info"><span class="arch-pg-date">' + (i.date||'') + '</span>' + (i.pdf ? '<a class="arch-pg-dl" href="' + i.pdf + '" target="_blank">تحميل PDF</a>' : '<span style="font-size:12px;color:var(--light);">قريباً</span>') + '</div></div>'; }).join('');
+  if (hr) { hr.innerHTML = ''; if (items && items.length) hr.innerHTML = items.slice(0,5).map(function(i) { return '<div class="arch-mini" data-goissue="'+i.id+'"><div class="arch-mini-cover" style="background:' + (i.color||'#1A7A7A') + ';border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد ' + i.num + '</div></div><div class="arch-mini-info"><div class="arch-mini-date">' + (i.date||'') + '</div>' + (i.pdf ? '<a class="arch-mini-dl" href="' + i.pdf + '" target="_blank" rel="noopener noreferrer">تحميل PDF</a>' : '<div class="arch-mini-dl" style="color:var(--light); }">قريباً</div>') + '</div></div>'; }).join('');
+  if (pg) pg.innerHTML = items.map(function(i) { return '<div class="arch-pg-card"><div class="arch-pg-cover" style="background:' + (i.color||'#1A7A7A') + ';"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد ' + i.num + '</div></div><div class="arch-pg-info"><span class="arch-pg-date">' + (i.date||'') + '</span>' + (i.pdf ? '<a class="arch-pg-dl" href="' + i.pdf + '" target="_blank" rel="noopener noreferrer">تحميل PDF</a>' : '<span style="font-size:12px;color:var(--light);">قريباً</span>') + '</div></div>'; }).join('');
 }
 
 function parseVal(v){try{return(typeof v==='string')?JSON.parse(v):v;}catch(e){return v;}}
@@ -1136,7 +1150,7 @@ function loadComments(articleId) {
         d.innerHTML = '<div class="ci-header"><span class="ci-name">' + escHtml(c.name) + '</span><span class="ci-date">' + date + '</span></div><div class="ci-body">' + escHtml(c.body) + '</div>';
         list.appendChild(d);
       });
-    }).catch(function() { list.innerHTML = ''; });
+    }).catch(function() { list.innerHTML = '<div class="comments-empty">تعذر تحميل التعليقات</div>'; });
 }
 async function submitComment() {
   var name = document.getElementById('cf-name') ? document.getElementById('cf-name').value.trim() : '';
@@ -1164,7 +1178,8 @@ async function submitComment() {
   try {
     var res = await sb.from('comments').insert({ article_id: String(_currentArticleId), name: name, body: body, status: 'pending' });
     if (res.error) {
-      if (errEl) { errEl.textContent = 'حدث خطأ — حاول مجدداً'; errEl.style.display = 'block'; }
+      var errMsg = res.error.message && res.error.message.length < 100 ? res.error.message : 'حدث خطأ — تحقق من الاتصال وحاول مجدداً';
+      if (errEl) { errEl.textContent = errMsg; errEl.style.display = 'block'; }
     } else {
       if (successEl) successEl.style.display = 'block';
       if (document.getElementById('cf-name')) document.getElementById('cf-name').value = '';
@@ -1176,44 +1191,7 @@ async function submitComment() {
   }
   if (btn) { btn.disabled = false; btn.textContent = 'إرسال التعليق'; }
 }
-document.addEventListener('DOMContentLoaded', function() {
-  initNav();
-  setupEventDelegation();
-  // Handle direct URL with hash
-  var hash = window.location.hash.replace('#', '');
-  var validViews = ['home','issue','books','articles','archive'];
-  if (hash.indexOf('art/') === 0) {
-    var artId = hash.replace('art/', '');
-    if (artId) setTimeout(function() { openArt(artId); }, 500);
-  } else if (hash.indexOf('book/') === 0) {
-    var bookId = hash.replace('book/', '');
-    if (bookId) setTimeout(function() { openBook(bookId); }, 500);
-  } else if (hash && validViews.indexOf(hash) > -1) {
-    goView(hash);
-  }
-
-  // Try loading from Supabase with error handling
-  try {
-    if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
-      Promise.all([
-        sb.from('articles').select('*').eq('status','published').order('published_at',{ascending:false}),
-        sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
-        sb.from('settings').select('*')
-      ]).then(function(results) {
-        var ar = results[0], bk = results[1], st = results[2];
-        if (ar.data && ar.data.length) { ar.data.forEach(function(a) { lA[a.id] = a; }); renderArts(ar.data); }
-        if (bk.data && bk.data.length) { bk.data.forEach(function(b) { lB[b.id] = b; }); renderBooks(bk.data); }
-        if (st.data) applySettings(st.data);
-      }).catch(function(err) {
-        // Silently keep static content — user still sees placeholder data
-        console.warn('Supabase load failed, using static content');
-      });
-    }
-  } catch(e) {
-    // config.js missing or malformed — static content still shows
-    console.warn('Config error, using static content');
-  }
-});
+;
 
 // ── EVENT DELEGATION ──
 // Handles clicks on dynamically rendered elements
@@ -1284,18 +1262,18 @@ function setupEventDelegation() {
 
 
 // ── DARK MODE ──
-var _dark = localStorage.getItem('waraq-dark') === '1';
+var _dark = (function(){ try { return localStorage.getItem('waraq-dark') === '1'; } catch(e) { return false; } })();
 function applyDark(on) {
   document.body.classList.toggle('dark', on);
   var btn = document.getElementById('dark-toggle');
   if (btn) btn.textContent = on ? '☀️' : '🌙';
-  localStorage.setItem('waraq-dark', on ? '1' : '0');
+  try { localStorage.setItem('waraq-dark', on ? '1' : '0'); } catch(e) {}
   _dark = on;
 }
 applyDark(_dark);
 
 // ── FONT SIZE ──
-var _fontSize = parseInt(localStorage.getItem('waraq-font') || '0');
+var _fontSize = (function(){ try { return parseInt(localStorage.getItem('waraq-font') || '0'); } catch(e) { return 0; } })();
 function changeFontSize(dir) {
   if (dir === 0) _fontSize = 0;
   else _fontSize = Math.max(-2, Math.min(4, _fontSize + dir));
@@ -1305,13 +1283,13 @@ function changeFontSize(dir) {
     body.style.fontSize = base + 'px';
     body.style.lineHeight = (2.1 - _fontSize * 0.05) + '';
   }
-  localStorage.setItem('waraq-font', _fontSize);
+  try { localStorage.setItem('waraq-font', _fontSize); } catch(e) {}
 }
 
 // ── READ TIME ──
 function calcReadTime(text) {
   var clean = (text||'').replace(/<[^>]*>/g,'').replace(/&[a-z]+;/gi,' ').trim(); var words = clean ? clean.split(/\s+/).filter(Boolean).length : 0;
-  var mins = words > 0 ? Math.max(1, Math.ceil(words / 150)) : 1;
+  var mins = words > 0 ? Math.max(1, Math.ceil(words / 130)) : 1;
   return mins + (mins === 1 ? ' دقيقة قراءة' : ' دقائق قراءة');
 }
 
@@ -1336,10 +1314,7 @@ window.addEventListener('scroll', function() {
   var btn = document.getElementById('back-top');
   if (btn) btn.classList.toggle('show', window.scrollY > 400);
 });
-document.addEventListener('DOMContentLoaded', function() {
-  var bt = document.getElementById('back-top');
-  if (bt) bt.addEventListener('click', function() { window.scrollTo({top:0,behavior:'smooth'}); });
-});
+;
 
 // ── SEARCH ──
 var _searchTimer = null;
@@ -1511,13 +1486,53 @@ function copyShareUrl() {
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeShare(); });
 
 // ── INIT FEATURES ──
+
 document.addEventListener('DOMContentLoaded', function() {
+  initNav();
+  setupEventDelegation();
+  // Handle direct URL with hash
+  var hash = window.location.hash.replace('#', '');
+  var validViews = ['home','issue','books','articles','archive'];
+  if (hash.indexOf('art/') === 0) {
+    var artId = hash.replace('art/', '');
+    if (artId) setTimeout(function() { openArt(artId); }, 500);
+  } else if (hash.indexOf('book/') === 0) {
+    var bookId = hash.replace('book/', '');
+    if (bookId) setTimeout(function() { openBook(bookId); }, 500);
+  } else if (hash && validViews.indexOf(hash) > -1) {
+    goView(hash);
+  }
+
+  // Try loading from Supabase with error handling
+  try {
+    if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
+      Promise.all([
+        sb.from('articles').select('*').eq('status','published').order('published_at',{ascending:false}),
+        sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
+        sb.from('settings').select('*')
+      ]).then(function(results) {
+        var ar = results[0], bk = results[1], st = results[2];
+        if (ar.data && ar.data.length) { ar.data.forEach(function(a) { lA[a.id] = a; }); renderArts(ar.data); }
+        if (bk.data && bk.data.length) { bk.data.forEach(function(b) { lB[b.id] = b; }); renderBooks(bk.data); }
+        if (st.data) applySettings(st.data);
+      }).catch(function(err) {
+        // Silently keep static content — user still sees placeholder data
+        console.warn('Supabase load failed, using static content');
+      });
+    }
+  } catch(e) {
+    // config.js missing or malformed — static content still shows
+    console.warn('Config error, using static content');
+  }
+  var bt = document.getElementById('back-top');
+  if (bt) bt.addEventListener('click', function() { window.scrollTo({top:0,behavior:'smooth'}); });
   // Dark mode toggle
   var dt = document.getElementById('dark-toggle');
   if (dt) dt.addEventListener('click', function() { applyDark(!_dark); });
   // Search
   initSearch();
 });
+;
 </script>
 
 <!-- SHARE POPUP -->
