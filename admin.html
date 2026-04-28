@@ -429,7 +429,10 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
       <!-- ══ BOOKS ══ -->
       <div class="sec" id="sec-books">
         <div class="pg-title">إدارة الكتب</div>
-        <button class="btn p" style="margin-bottom:14px;" onclick="toggleIF('add-book')">إضافة كتاب جديد +</button>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <button class="btn p" onclick="toggleIF('add-book')">إضافة كتاب جديد +</button>
+          <label style="font-size:11px;color:var(--mid);display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="checkbox" id="show-archived-books" onchange="loadBooks()" style="accent-color:var(--teal);"> عرض المؤرشفة</label>
+        </div>
         <div class="iform" id="add-book">
           <div class="iform-title">📚 كتاب جديد</div>
           <div class="two">
@@ -512,18 +515,32 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         <div class="card">
           <div class="card-hd"><span class="card-title">اللوقو والهوية</span><button class="btn p sm" onclick="saveLogo()">حفظ</button></div>
           <div class="card-body">
-            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:16px;background:var(--bg);border-radius:8px;">
+
+            <!-- اللوقو -->
+            <div style="font-size:11px;font-weight:700;color:var(--mid);letter-spacing:.08em;margin-bottom:10px;">اللوقو (الصورة)</div>
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;padding:14px;background:var(--bg);border-radius:8px;">
               <div id="logo-preview" style="width:80px;height:50px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-                <span style="font-family:Felfel,serif;font-size:24px;color:#fff;" id="logo-prev-text">وَرَق</span>
+                <span style="font-family:Felfel,serif;font-size:24px;color:#fff;">وَرَق</span>
               </div>
-              <div style="font-size:12px;color:var(--mid);">معاينة اللوقو في الهيدر</div>
+              <div style="font-size:11px;color:var(--mid);">معاينة اللوقو في الهيدر</div>
             </div>
-            <div class="fg"><label>رابط صورة اللوقو (اختياري — يستبدل اسم الجريدة)</label><input type="url" id="s-logo-url" placeholder="https://i.imgur.com/logo.png" oninput="prevLogo()"></div>
+            <div class="fg"><label>رابط صورة اللوقو <span style="font-weight:400;color:var(--mid);">(يستبدل الشعار النصي في كل الموقع)</span></label><input type="url" id="s-logo-url" placeholder="https://i.postimg.cc/..." oninput="prevLogo()"></div>
+            <div style="font-size:11px;color:var(--mid);margin-top:4px;margin-bottom:18px;">⚠ اتركي فارغاً ليظهر اسم الجريدة بدل الصورة</div>
+
+            <div style="height:1px;background:var(--border);margin:16px 0;"></div>
+
+            <!-- الشعار النصي -->
+            <div style="font-size:11px;font-weight:700;color:var(--mid);letter-spacing:.08em;margin-bottom:10px;">الشعار النصي (بدون لوقو)</div>
             <div class="two">
-              <div class="fg"><label>اسم الجريدة (يظهر في الهيدر والفوتر بدون لوقو)</label><input type="text" id="s-sitename" value="وَرَق"></div>
-              <div class="fg"><label>وصف الجريدة تحت الاسم الكبير</label><input type="text" id="s-sitetag" value="جريدة مركز الأدب العربي الشهرية"></div>
+              <div class="fg"><label>اسم الجريدة <span style="font-weight:400;color:var(--mid);">(يظهر لو ما في صورة لوقو)</span></label><input type="text" id="s-sitename" value="وَرَق"></div>
+              <div class="fg"><label>وصف الجريدة <span style="font-weight:400;color:var(--mid);">(تحت الاسم الكبير)</span></label><input type="text" id="s-sitetag" value="جريدة مركز الأدب العربي الشهرية"></div>
             </div>
-            <div class="fg"><label>لون خلفية الهيدر (اتركي فارغاً للون الافتراضي)</label><input type="text" id="s-headerbg" placeholder="#FFFFFF"></div>
+
+            <div style="height:1px;background:var(--border);margin:16px 0;"></div>
+
+            <!-- ألوان الهيدر -->
+            <div style="font-size:11px;font-weight:700;color:var(--mid);letter-spacing:.08em;margin-bottom:10px;">الهيدر</div>
+            <div class="fg"><label>لون خلفية الهيدر <span style="font-weight:400;color:var(--mid);">(اتركي فارغاً للون الافتراضي)</span></label><input type="text" id="s-headerbg" placeholder="#FFFFFF"></div>
           </div>
         </div>
 
@@ -764,10 +781,18 @@ function closeModal(){document.getElementById('modal-bg').classList.remove('on')
 
 // ── BOOKS ──
 async function loadBooks(){
-  var {data}=await sb.from('books').select('*').order('created_at',{ascending:false});
+  var showArch=document.getElementById('show-archived-books')&&document.getElementById('show-archived-books').checked;
+  var q=sb.from('books').select('*').order('created_at',{ascending:false});
+  if(!showArch) q=q.neq('archived',true);
+  var {data}=await q;
   var el=document.getElementById('books-list');
   if(!(data && data.length)){el.innerHTML='<div class="empty">لا توجد كتب — أضيفي كتاباً</div>';return;}
-  el.innerHTML='';data.forEach(function(b){var d=document.createElement('div');d.className='irow';d.innerHTML='<div class="icolor" style="background:'+(b.color||'#1A7A7A')+';">'+(b.genre||'').slice(0,4)+'</div><div class="iinfo"><div class="ititle">'+b.title+'</div><div class="imeta">'+(b.author||'')+' · '+(b.genre||'')+' · '+(b.stars||'')+'</div></div><div class="iacts"><button class="bsm r" onclick="delBook(\''+b.id+'\')">'+'حذف</button></div>';el.appendChild(d);});
+  el.innerHTML='';data.forEach(function(b){var d=document.createElement('div');d.className='irow';
+    var archBtn=b.archived
+      ?'<button class="bsm t" onclick="unarchiveBook(\''+b.id+'\')">إعادة عرض</button>'
+      :'<button class="bsm" style="background:#888" onclick="archiveBook(\''+b.id+'\')">أرشفة</button>';
+    d.innerHTML='<div class="icolor" style="background:'+(b.color||'#1A7A7A')+';">'+escH((b.genre||'').slice(0,4))+'</div><div class="iinfo"><div class="ititle">'+escH(b.title)+(b.archived?' <span style="font-size:10px;color:#888;">(مؤرشف)</span>':'')+'</div><div class="imeta">'+escH(b.author||'')+' · '+escH(b.genre||'')+'</div></div><div class="iacts">'+archBtn+'<button class="bsm r" onclick="delBook(\''+b.id+'\')">حذف</button></div>';
+    el.appendChild(d);});
 }
 async function addBook(){
   var t=v('nb-t').trim();if(!t){toast('أدخلي عنوان الكتاب');return;}
@@ -945,8 +970,24 @@ async function rejectCmt(id){
 async function archiveArt(id){
   if(!confirm('أرشفة هذه المقالة؟ لن تظهر في الموقع لكن يمكن استعادتها.'))return;
   var res=await sb.from('articles').update({status:'archived'}).eq('id',id);
+  if(res.error){
+    if(res.error.message&&res.error.message.indexOf('status_check')>-1){
+      toast('خطأ: شغّلي SQL في Supabase لإضافة حالة archived');
+    } else { toast('خطأ: '+res.error.message); }
+    return;
+  }
+  toast('تم الأرشفة ✓');invalidateCache();loadArts();
+}
+async function archiveBook(id){
+  if(!confirm('أرشفة هذا الكتاب؟ لن يظهر في الموقع لكن يمكن استعادته.'))return;
+  var res=await sb.from('books').update({archived:true}).eq('id',id);
   if(res.error){toast('خطأ: '+res.error.message);return;}
-  toast('تم الأرشفة ✓');loadArts();
+  toast('تم أرشفة الكتاب ✓');invalidateCache();loadBooks();
+}
+async function unarchiveBook(id){
+  var res=await sb.from('books').update({archived:false}).eq('id',id);
+  if(res.error){toast('خطأ: '+res.error.message);return;}
+  toast('تم إعادة عرض الكتاب ✓');invalidateCache();loadBooks();
 }
 async function unarchiveArt(id){
   var res=await sb.from('articles').update({status:'published'}).eq('id',id);
