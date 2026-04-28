@@ -516,31 +516,47 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           <div class="card-hd"><span class="card-title">اللوقو والهوية</span><button class="btn p sm" onclick="saveLogo()">حفظ</button></div>
           <div class="card-body">
 
-            <!-- اللوقو -->
-            <div style="font-size:11px;font-weight:700;color:var(--mid);letter-spacing:.08em;margin-bottom:10px;">اللوقو (الصورة)</div>
-            <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;padding:14px;background:var(--bg);border-radius:8px;">
+            <!-- 1. لوقو الزاوية -->
+            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">① لوقو الزاوية (الهيدر)</div>
+            <div style="font-size:11px;color:var(--mid);margin-bottom:8px;">يظهر في الزاوية العلوية — صورة صغيرة للشعار</div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;padding:12px;background:var(--bg);border-radius:8px;">
               <div id="logo-preview" style="width:80px;height:50px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-                <span style="font-family:Felfel,serif;font-size:24px;color:#fff;">وَرَق</span>
+                <span style="font-family:Felfel,serif;font-size:22px;color:#fff;">وَرَق</span>
               </div>
-              <div style="font-size:11px;color:var(--mid);">معاينة اللوقو في الهيدر</div>
+              <div style="font-size:11px;color:var(--mid);">معاينة</div>
             </div>
-            <div class="fg"><label>رابط صورة اللوقو <span style="font-weight:400;color:var(--mid);">(يستبدل الشعار النصي في كل الموقع)</span></label><input type="url" id="s-logo-url" placeholder="https://i.postimg.cc/..." oninput="prevLogo()"></div>
-            <div style="font-size:11px;color:var(--mid);margin-top:4px;margin-bottom:18px;">⚠ اتركي فارغاً ليظهر اسم الجريدة بدل الصورة</div>
+            <div class="fg" style="margin-bottom:4px;"><label>رابط الصورة</label><input type="url" id="s-logo-url" placeholder="https://i.postimg.cc/..." oninput="prevLogo()"></div>
+            <div style="font-size:11px;color:var(--mid);margin-bottom:18px;">اتركي فارغاً لعرض الاسم النصي</div>
 
-            <div style="height:1px;background:var(--border);margin:16px 0;"></div>
+            <div style="height:1px;background:var(--border);margin:14px 0;"></div>
 
-            <!-- الشعار النصي -->
-            <div style="font-size:11px;font-weight:700;color:var(--mid);letter-spacing:.08em;margin-bottom:10px;">الشعار النصي (بدون لوقو)</div>
+            <!-- 2. اسم الجريدة الكبير -->
+            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">② الاسم الكبير في المنتصف (Masthead)</div>
+            <div style="font-size:11px;color:var(--mid);margin-bottom:8px;">يظهر في وسط الصفحة الرئيسية — ضعي صورة باسم الجريدة بخط Felfel</div>
+            <div class="fg" style="margin-bottom:4px;"><label>رابط صورة الاسم الكبير</label><input type="url" id="s-masthead-url" placeholder="https://i.postimg.cc/..."></div>
+            <div style="font-size:11px;color:var(--mid);margin-bottom:18px;">اتركي فارغاً لعرض النص: <strong id="s-sitename-preview">وَرَق</strong></div>
+
+            <div style="height:1px;background:var(--border);margin:14px 0;"></div>
+
+            <!-- 3. لوقو الفوتر -->
+            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">③ لوقو الفوتر</div>
+            <div style="font-size:11px;color:var(--mid);margin-bottom:8px;">يظهر في الجزء السفلي من الموقع</div>
+            <div class="fg" style="margin-bottom:18px;"><label>رابط الصورة</label><input type="url" id="s-footer-logo-url" placeholder="https://i.postimg.cc/..."></div>
+
+            <div style="height:1px;background:var(--border);margin:14px 0;"></div>
+
+            <!-- 4. الشعار النصي -->
+            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">④ الشعار النصي</div>
             <div class="two">
-              <div class="fg"><label>اسم الجريدة <span style="font-weight:400;color:var(--mid);">(يظهر لو ما في صورة لوقو)</span></label><input type="text" id="s-sitename" value="وَرَق"></div>
-              <div class="fg"><label>وصف الجريدة <span style="font-weight:400;color:var(--mid);">(تحت الاسم الكبير)</span></label><input type="text" id="s-sitetag" value="جريدة مركز الأدب العربي الشهرية"></div>
+              <div class="fg"><label>اسم الجريدة <span style="font-weight:400;color:var(--mid);">(يظهر لو ما في صورة)</span></label><input type="text" id="s-sitename" value="وَرَق" oninput="document.getElementById('s-sitename-preview').textContent=this.value||'وَرَق'"></div>
+              <div class="fg"><label>وصف الجريدة</label><input type="text" id="s-sitetag" value="جريدة مركز الأدب العربي الشهرية"></div>
             </div>
 
-            <div style="height:1px;background:var(--border);margin:16px 0;"></div>
+            <div style="height:1px;background:var(--border);margin:14px 0;"></div>
 
-            <!-- ألوان الهيدر -->
-            <div style="font-size:11px;font-weight:700;color:var(--mid);letter-spacing:.08em;margin-bottom:10px;">الهيدر</div>
-            <div class="fg"><label>لون خلفية الهيدر <span style="font-weight:400;color:var(--mid);">(اتركي فارغاً للون الافتراضي)</span></label><input type="text" id="s-headerbg" placeholder="#FFFFFF"></div>
+            <!-- لون الهيدر -->
+            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">⑤ لون خلفية الهيدر</div>
+            <div class="fg"><label>اللون <span style="font-weight:400;color:var(--mid);">(اتركي فارغاً للون الافتراضي)</span></label><input type="text" id="s-headerbg" placeholder="#FFFFFF"></div>
           </div>
         </div>
 
@@ -695,6 +711,8 @@ var me=null;
 
 async function init(){
   showLoad();
+  var _loadTimeout=setTimeout(function(){hideLoad();toast('تعذر الاتصال — تحقق من الإنترنت');},15000);
+  init._clearTimeout=function(){clearTimeout(_loadTimeout);};
   var {data:{session}}=await sb.auth.getSession();
   if(!session){location.href='login.html';return;}
   me=session.user;
@@ -702,8 +720,16 @@ async function init(){
   if(!p || p.role!=='admin'){location.href='writer.html';return;}
   document.getElementById('admin-name').textContent=(p && p.name ? p.name : me.email);
   document.getElementById('aa-author').value=(p && p.name ? p.name : '');
-  loadDash();loadBooks();loadArchive();loadUsers();loadSettings();
-  // Show pending comments badge
+  Promise.all([
+    loadDash(),
+    loadBooks(),
+    loadArchive(),
+    loadUsers(),
+    loadSettings()
+  ]).catch(function(e){console.warn('Init error:',e);}).finally(function(){
+    hideLoad();
+  });
+  // Comments badge
   sb.from('comments').select('id').eq('status','pending').then(function(r){
     if(r.data&&r.data.length){
       var badge=document.getElementById('comments-badge');
@@ -714,7 +740,7 @@ async function init(){
 init();
 
 // ── NAVIGATION ──
-function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/`/g,'&#96;');}
 function goSec(name,el){ if(name==='homepage')loadHomepageSettings(); if(name==='comments')loadComments();
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
@@ -766,14 +792,23 @@ async function loadSettings(){
 
 // ── DASHBOARD ──
 async function loadDash(){
-  var {data:all}=await sb.from('articles').select('*');
-  var arts=all||[];
-  var pend=arts.filter(a=>a.status==='pending');
-  var {data:wr}=await sb.from('profiles').select('id').eq('role','writer');
-  se('st-all',arts.length);se('st-pub',arts.filter(a=>a.status==='published').length);
+  var [rAll,rWr]=await Promise.all([
+    sb.from('articles').select('*'),
+    sb.from('profiles').select('id').eq('role','writer')
+  ]);
+  var arts=(rAll.data)||[];
+  var pend=arts.filter(function(a){return a.status==='pending';});
+  var wr=rWr.data;
+  se('st-all',arts.length);se('st-pub',arts.filter(function(a){return a.status==='published';}).length);
   se('st-pend',pend.length);se('st-wr',(wr||[]).length);
   document.getElementById('pcount').textContent=pend.length;
   renderArtRows(pend.slice(0,5),'dash-pend',true);
+  // Refresh comments badge
+  if(sb) sb.from('comments').select('id').eq('status','pending').then(function(pr){
+    var pcount=(pr.data&&pr.data.length)||0;
+    var badge=document.getElementById('comments-badge');
+    if(badge){badge.textContent=pcount;badge.style.display=pcount?'inline':'none';}
+  });
 }
 
 // ── ARTICLES ──
@@ -933,7 +968,7 @@ async function loadArchive(){
 function renderArchiveList(items){
   var el=document.getElementById('arch-list');
   if(!items.length){el.innerHTML='<div class="empty">لا توجد أعداد — أضيفي أول عدد</div>';return;}
-  el.innerHTML='';items.forEach(function(i,idx){var d=document.createElement('div');d.className='irow';var pdfBtn=i.pdf?'<button class="bsm t" onclick="window.open(\''+i.pdf+'\',\'_blank\')">فتح PDF</button>':'';d.innerHTML='<div class="icolor" style="background:'+(i.color||'#1A7A7A')+'">وَرَق</div><div class="iinfo"><div class="ititle">العدد '+i.num+'</div><div class="imeta">'+(i.date||'')+' '+(i.pdf?'· PDF متاح ✓':'· لا يوجد PDF')+'</div></div><div class="iacts">'+pdfBtn+'<button class="bsm r" onclick="delArchive('+idx+')">حذف</button></div>';el.appendChild(d);});
+  el.innerHTML='';items.forEach(function(i,idx){var d=document.createElement('div');d.className='irow';var safePdf=i.pdf&&i.pdf.toLowerCase().startsWith('http')?escH(i.pdf):'';var pdfBtn=safePdf?'<button class="bsm t" onclick="window.open(&quot;'+safePdf+'&quot;,&quot;_blank&quot;)">فتح PDF</button>':'';d.innerHTML='<div class="icolor" style="background:'+escH(i.color||'#1A7A7A')+'">وَرَق</div><div class="iinfo"><div class="ititle">العدد '+escH(String(i.num||''))+'</div><div class="imeta">'+escH(i.date||'')+' '+(i.pdf?'· PDF متاح ✓':'· لا يوجد PDF')+'</div></div><div class="iacts">'+pdfBtn+'<button class="bsm r" onclick="delArchive('+idx+')">حذف</button></div>';el.appendChild(d);});
 }
 async function addArchive(){
   var num=v('ar-num'),date=v('ar-date');
@@ -972,21 +1007,31 @@ async function createUser(){
     } else { toast('خطأ: '+error.message); }
     return;
   }
-  if(sd && sd.user)await sb.from('profiles').upsert({id:sd.user.id,email,name,role});
+  if(sd && sd.user){
+    var profRes=await sb.from('profiles').upsert({id:sd.user.id,email,name,role});
+    if(profRes.error)console.warn('Profile upsert failed:',profRes.error.message);
+  } else if(!error){
+    console.warn('signUp succeeded but no user returned');
+  }
   toast('تم إنشاء الحساب بنجاح!');loadUsers();toggleIF('add-user');
   ['nu-n','nu-e','nu-p'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
 }
-async function toggleRole(id,cur){
-  if(!me){toast('غير مصرح');return;}
+var _myRole = null;
+async function isAdmin(){
+  if(!me)return false;
+  if(_myRole)return _myRole==='admin';
   var pr=await sb.from('profiles').select('role').eq('id',me.id).single();
-  if(!pr.data||pr.data.role!=='admin'){toast('غير مصرح');return;}
+  _myRole = pr.data ? pr.data.role : null;
+  return _myRole==='admin';
+}
+function clearRoleCache(){ _myRole = null; }
+async function toggleRole(id,cur){
+  if(!await isAdmin()){toast('غير مصرح');return;}
   await sb.from('profiles').update({role:cur==='admin'?'writer':'admin'}).eq('id',id);
   toast('تم تغيير الصلاحية');loadUsers();
 }
 async function delUser(id){
-  if(!me){toast('غير مصرح');return;}
-  var pr=await sb.from('profiles').select('role').eq('id',me.id).single();
-  if(!pr.data||pr.data.role!=='admin'){toast('غير مصرح');return;}
+  if(!await isAdmin()){toast('غير مصرح');return;}
   if(!confirm('حذف هذا المستخدم نهائياً؟'))return;
   await sb.from('profiles').delete().eq('id',id);
   toast('تم الحذف');loadUsers();
@@ -1067,7 +1112,7 @@ function toggleIF(id){document.getElementById(id).classList.toggle('on');}
 function addSideItem(){var el=document.getElementById('side-list');var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" placeholder="اسم الكتاب" style="margin-bottom:5px;"><input type="text" placeholder="الكاتب · التصنيف"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);}
 function addTick(){var el=document.getElementById('tick-list');var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" placeholder="نص الخبر..." style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);}
 function v(id){var e=document.getElementById(id);return e?e.value:'';}
-function sv(id,val){if(val){var e=document.getElementById(id);if(e)e.value=val;}}
+function sv(id,val){if(val!==undefined&&val!==null){var e=document.getElementById(id);if(e)e.value=val;}}
 function se(id,txt){if(txt!==undefined&&txt!==null){var e=document.getElementById(id);if(e)e.textContent=txt;}}
 // ── COMMENTS ADMIN ──
 async function loadComments(){
@@ -1080,9 +1125,12 @@ async function loadComments(){
   if(error){if(el)el.innerHTML='<div class="empty">تعذر تحميل التعليقات</div>';return;}
   if(!data||!data.length){if(el)el.innerHTML='<div class="empty">لا توجد تعليقات</div>';return;}
   // Update badge
-  var pending=data.filter(function(c){return c.status==='pending';}).length;
-  var badge=document.getElementById('comments-badge');
-  if(badge){badge.textContent=pending;badge.style.display=pending?'inline':'none';}
+  // Badge: always fetch pending count regardless of current filter
+  sb.from('comments').select('id').eq('status','pending').then(function(pr){
+    var pending=(pr.data&&pr.data.length)||0;
+    var badge=document.getElementById('comments-badge');
+    if(badge){badge.textContent=pending;badge.style.display=pending?'inline':'none';}
+  });
   if(!el)return;
   el.innerHTML='';
   data.forEach(function(c){
@@ -1094,7 +1142,7 @@ async function loadComments(){
     var btns=c.status==='pending'
       ?'<button class="bsm t" onclick="approveCmt(\''+c.id+'\')">موافقة</button><button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">رفض</button>'
       :'<button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">حذف</button>';
-    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);margin-right:10px;">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+( c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px;">معرف المقالة: '+String(c.article_id||'').substring(0,8)+'...</div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+escH(c.body)+'</div>';
+    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);margin-right:10px;">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+( c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px;">معرف المقالة: '+escH(String(c.article_id||'').substring(0,8))+'...</div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+escH(c.body)+'</div>';
     el.appendChild(d);
   });
 }
@@ -1136,7 +1184,7 @@ async function unarchiveArt(id){
   if(res.error){toast('خطأ: '+res.error.message);return;}
   toast('تم إعادة النشر ✓');loadArts();
 }
-async function logout(){await sb.auth.signOut();location.href='login.html';}
+async function logout(){clearRoleCache();await sb.auth.signOut();location.href='login.html';}
 var _toastTimer=null;function toast(msg){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('on');if(_toastTimer)clearTimeout(_toastTimer);_toastTimer=setTimeout(function(){t.classList.remove('on');_toastTimer=null;},3000);}
 
 // ── HOMEPAGE FUNCTIONS ──
@@ -1181,15 +1229,21 @@ function syncMpPreview() {
 
 async function saveLogo() {
   var logoUrl = v('s-logo-url');
-  if (logoUrl && !logoUrl.startsWith('http')) { toast('رابط اللوقو غير صالح'); return; }
+  var mastheadUrl = v('s-masthead-url');
+  var footerUrl = v('s-footer-logo-url');
+  if (logoUrl && !logoUrl.startsWith('http')) { toast('رابط لوقو الزاوية غير صالح'); return; }
+  if (mastheadUrl && !mastheadUrl.startsWith('http')) { toast('رابط صورة الاسم الكبير غير صالح'); return; }
+  if (footerUrl && !footerUrl.startsWith('http')) { toast('رابط لوقو الفوتر غير صالح'); return; }
   var cur = await getCurSettings('general') || {};
-  cur.logo_url = v('s-logo-url') || null;
+  cur.logo_url = logoUrl || null;
+  cur.masthead_logo_url = mastheadUrl || null;
+  cur.footer_logo_url = footerUrl || null;
   cur.name = v('s-sitename');
   cur.tagline = v('s-sitetag');
   cur.header_bg = v('s-headerbg') || null;
   var res = await sb.from('settings').upsert({key:'general', value:cur});
   if (res.error) { toast('خطأ في الحفظ'); return; }
-  toast('تم حفظ اللوقو! ✓ — حدّثي الموقع لتشوفي التغييرات');
+  toast('تم الحفظ ✓');
 }
 
 async function saveBanner() {
@@ -1249,8 +1303,12 @@ async function loadHomepageSettings() {
   data.forEach(function(r) { s[r.key] = r.value; });
   if (s.general) {
     sv('s-logo-url', s.general.logo_url || '');
+    sv('s-masthead-url', s.general.masthead_logo_url || '');
+    sv('s-footer-logo-url', s.general.footer_logo_url || '');
     sv('s-sitename', s.general.name || 'وَرَق');
     sv('s-sitetag', s.general.tagline || '');
+    var snp = document.getElementById('s-sitename-preview');
+    if (snp) snp.textContent = s.general.name || 'وَرَق';
     sv('s-headerbg', s.general.header_bg || '');
     if (s.general.logo_url) prevLogo();
   }
