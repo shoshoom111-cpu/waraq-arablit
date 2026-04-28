@@ -231,6 +231,7 @@ button,a{cursor:pointer;}
   .ham-btn{display:flex;}
   .header-in{padding:0 16px;}
   .topbar-text{display:none;}
+  .search-btn-text{display:none;}
   .mh-name{font-size:40px;}
   .hero-section,.wrap{padding-left:16px;padding-right:16px;}
   .books-grid{grid-template-columns:1fr 1fr;}
@@ -288,36 +289,75 @@ button,a{cursor:pointer;}
 /* DARK MODE */
 .dark-toggle{font-size:16px;cursor:pointer;border:none;background:none;padding:4px 8px;border-radius:6px;transition:background .2s;}
 .dark-toggle:hover{background:var(--cream);}
-body.dark{--paper:#0E0E0E;--ink:#F0EFEB;--cream:#1a1a1a;--mid:#999;--border:#2a2a2a;--tl:#0f2a2a;}
-body.dark .site-header{background:#111;}
+body.dark{--paper:#0E0E0E;--ink:#F0EFEB;--cream:#1a1a1a;--mid:#aaa;--border:#2a2a2a;--tl:#0f2a2a;--light:#666;}
+body.dark .site-header{background:#111;border-color:#2a2a2a;}
+body.dark .topbar{background:#000;}
 body.dark .header-nav .nav-a{color:#aaa;}
 body.dark .header-nav .nav-a.on{color:var(--teal);background:rgba(26,122,122,.2);}
+body.dark .header-logo{color:#F0EFEB;}
+body.dark .btn-ghost{border-color:#333;color:#aaa;}
 body.dark .book-card{background:#111;}
+body.dark .book-card:hover{background:#1a1a1a;}
 body.dark .book-title,body.dark .ai-title,body.dark .asi-title,body.dark .bpg-title,body.dark .apg-title{color:#F0EFEB;}
+body.dark .book-desc,body.dark .ai-excerpt,body.dark .apg-excerpt,body.dark .bpg-desc{color:#888;}
 body.dark .art-item,body.dark .art-side-item{border-color:#2a2a2a;}
 body.dark .apg-card,body.dark .bpg-card{background:#111;border-color:#2a2a2a;}
+body.dark .apg-footer,body.dark .bpg-body{border-color:#2a2a2a;}
 body.dark .rel-card{background:#111;border-color:#2a2a2a;}
-body.dark .masthead{background:#0E0E0E;}
-body.dark .sa-body{color:#ddd;}
-body.dark .sa-body h2{color:#F0EFEB;}
+body.dark .masthead{background:#0E0E0E;border-color:#2a2a2a;}
+body.dark .mh-name{color:#F0EFEB;}
+body.dark .mh-tag{color:var(--teal);}
+body.dark .ticker{background:var(--teal);}
+body.dark .hero-title{color:#F0EFEB;}
+body.dark .hero-body{color:#999;}
+body.dark .hero-rule{background:var(--orange);}
+body.dark .hero-section{background:#0E0E0E;}
+body.dark .hero-grid{border-color:#2a2a2a;}
+body.dark .hero-main{border-color:#2a2a2a;}
+body.dark .side-item{border-color:#2a2a2a;}
+body.dark .side-item:hover{background:#1a1a1a;}
 body.dark .quote-card{background:#1a1500;}
+body.dark .wrap .sec-header{border-color:#F0EFEB;}
+body.dark .sec-title{color:#F0EFEB;}
+body.dark .sec-more{color:var(--teal);}
 body.dark .arch-mini-info,body.dark .arch-pg-info{background:#111;border-color:#2a2a2a;}
 body.dark .arch-strip{background:#111;}
-body.dark .hero-title{color:#F0EFEB;}
-body.dark .hero-body{color:#aaa;}
-body.dark .single-art-wrap,.dark .single-book-wrap{background:#0E0E0E;}
+body.dark .arch-mini-date,body.dark .arch-pg-date{color:#888;}
+body.dark .page-header{background:#000;}
+body.dark .sa-body{color:#ddd;}
+body.dark .sa-body h2{color:#F0EFEB;}
 body.dark .sa-meta{border-color:#2a2a2a;}
+body.dark .sa-cat{background:#0f2a2a;color:var(--teal);}
+body.dark .single-art-wrap{background:#0E0E0E;}
+body.dark .single-book-wrap{background:#0E0E0E;}
+body.dark .sb-in{background:#0E0E0E;}
+body.dark .sb-pill{background:#1a1a1a;border-color:#2a2a2a;color:#aaa;}
+body.dark .sb-desc{color:#ccc;}
+body.dark .sb-quote{background:#1a1500;}
+body.dark .related-sec{border-color:#2a2a2a;}
+body.dark .comments-sec{border-color:#2a2a2a;}
+body.dark .comment-form{background:#1a1a1a;}
+body.dark .cf-input,.dark .cf-textarea{background:#111;border-color:#333;color:#ddd;}
+body.dark .comment-item{background:#111;border-color:#2a2a2a;}
+body.dark .ci-body{color:#ccc;}
 body.dark .bpg-card:hover,body.dark .apg-card:hover{border-color:var(--teal);}
-body.dark .mh-name{color:#F0EFEB;}
-body.dark .sec-header{border-color:#F0EFEB;}
-body.dark .sec-title{color:#F0EFEB;}
 body.dark .search-results{background:#111;border-color:#2a2a2a;}
 body.dark .sr-item{border-color:#2a2a2a;color:#ddd;}
 body.dark .sr-item:hover{background:rgba(26,122,122,.2);}
 body.dark .font-btn{background:#1a1a1a;border-color:#2a2a2a;color:#ddd;}
 body.dark .read-progress{background:#2a2a2a;}
-body.dark .search-input{background:#111;border-color:#2a2a2a;color:#ddd;}
-body.dark .search-bar{background:#111;}
+body.dark .search-bar{background:#111;border-color:#2a2a2a;}
+body.dark .search-input{background:#111;border-color:#333;color:#ddd;}
+body.dark .search-input::placeholder{color:#555;}
+body.dark .share-box{background:#111;color:#F0EFEB;}
+body.dark .share-opt{border-color:#333;color:#ddd;}
+body.dark .share-opt:hover{background:#1a1a1a;}
+body.dark .share-url input{background:#0E0E0E;border-color:#333;color:#888;}
+body.dark .footer{background:#000;}
+body.dark .dark-toggle{color:#F0EFEB;}
+body.dark .dark-toggle:hover{background:#1a1a1a;}
+body.dark #mob-search-input{background:#1a1a1a;border-color:#333;color:#ddd;}
+body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 /* READ TIME */
 .read-time{font-size:11px;color:var(--mid);display:flex;align-items:center;gap:4px;}
 /* FONT SIZE */
@@ -325,20 +365,72 @@ body.dark .search-bar{background:#111;}
 .font-btn{font-size:12px;padding:4px 10px;border:1px solid var(--border);border-radius:5px;cursor:pointer;background:var(--cream);font-family:'Cairo',sans-serif;}
 .font-btn:hover{border-color:var(--teal);color:var(--teal);}
 /* SEARCH */
-.search-bar{display:none;padding:12px 24px;background:var(--paper);border-bottom:1px solid var(--border);position:relative;z-index:201;}
+.search-bar{display:none;padding:14px 24px;background:var(--paper);border-bottom:1px solid var(--border);position:relative;z-index:201;}
 .search-bar.show{display:block;}
-.search-in{max-width:600px;margin:0 auto;position:relative;}
-.search-input{width:100%;padding:10px 40px 10px 14px;border:1px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:13px;direction:rtl;background:var(--paper);color:var(--ink);}
-.search-input:focus{outline:none;border-color:var(--teal);}
-.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mid);font-size:16px;}
-.search-results{position:absolute;top:calc(100% + 4px);right:0;left:0;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:100;max-height:320px;overflow-y:auto;display:none;}
+.search-in{max-width:680px;margin:0 auto;position:relative;}
+.search-input-wrap{position:relative;display:flex;align-items:center;}
+.search-input{width:100%;padding:13px 50px 13px 50px;border:2px solid var(--border);border-radius:12px;font-family:'Cairo',sans-serif;font-size:15px;direction:rtl;background:var(--paper);color:var(--ink);transition:all .2s;}
+.search-input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,122,122,.1);}
+.search-input::placeholder{color:var(--light);font-size:14px;}
+.search-icon-inner{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--mid);font-size:18px;pointer-events:none;}
+.search-clear{position:absolute;left:14px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:var(--mid);font-size:18px;display:none;padding:0;line-height:1;}
+.search-clear.show{display:block;}
+.search-results{position:absolute;top:calc(100% + 6px);right:0;left:0;background:var(--paper);border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.12);z-index:100;max-height:380px;overflow-y:auto;display:none;}
 .search-results.show{display:block;}
-.sr-item{padding:12px 16px;cursor:pointer;border-bottom:.5px solid var(--border);transition:background .15s;}
+.sr-item{padding:14px 18px;cursor:pointer;border-bottom:.5px solid var(--border);transition:background .15s;}
 .sr-item:hover{background:var(--tl);}
 .sr-item:last-child{border:none;}
-.sr-cat{font-size:9px;color:var(--teal);letter-spacing:.06em;margin-bottom:3px;font-weight:600;}
-.sr-title{font-size:13px;font-weight:500;}
-.sr-empty{padding:20px;text-align:center;color:var(--mid);font-size:13px;}
+.sr-cat{font-size:9px;color:var(--teal);letter-spacing:.06em;margin-bottom:4px;font-weight:700;}
+.sr-title{font-size:14px;font-weight:500;color:var(--ink);}
+.sr-empty{padding:24px;text-align:center;color:var(--mid);font-size:13px;}
+.search-hint{font-size:11px;color:var(--light);text-align:center;margin-top:8px;}
+
+/* SHARE BUTTON */
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--mid);background:transparent;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s;}
+.share-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--tl);}
+.share-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+.share-popup{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:8000;display:none;align-items:center;justify-content:center;}
+.share-popup.on{display:flex;}
+.share-box{background:#fff;border-radius:12px;padding:24px;width:320px;direction:rtl;}
+.share-box h3{font-size:15px;font-weight:600;margin-bottom:16px;color:var(--ink);}
+.share-options{display:flex;flex-direction:column;gap:8px;}
+.share-opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:13px;color:var(--ink);background:transparent;font-family:'Cairo',sans-serif;width:100%;text-align:right;}
+.share-opt:hover{background:var(--cream);}
+.share-opt-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.share-url{display:flex;gap:6px;margin-top:12px;}
+.share-url input{flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;direction:ltr;color:var(--mid);}
+.share-url button{padding:8px 14px;background:var(--teal);color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer;font-family:'Cairo',sans-serif;}
+.share-close{float:left;background:none;border:none;font-size:18px;cursor:pointer;color:var(--mid);padding:0;}
+
+/* ── COMMENTS ── */
+.comments-sec{max-width:720px;margin:0 auto;padding:32px 24px 60px;border-top:1px solid var(--border);}
+.comments-title{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--mid);margin-bottom:20px;}
+.comment-form{background:var(--cream);border-radius:10px;padding:20px;margin-bottom:28px;}
+.comment-form-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:14px;}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.cf-field{display:flex;flex-direction:column;gap:4px;}
+.cf-field label{font-size:11px;color:var(--mid);font-weight:500;}
+.cf-field label span{color:var(--orange);}
+.cf-input{padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-family:'Cairo',sans-serif;font-size:13px;direction:rtl;background:#fff;color:var(--ink);transition:border .2s;}
+.cf-input:focus{outline:none;border-color:var(--teal);}
+.cf-input[aria-invalid="true"]{border-color:var(--orange);}
+.cf-textarea{padding:10px 12px;border:1px solid var(--border);border-radius:7px;font-family:'Cairo',sans-serif;font-size:13px;direction:rtl;background:#fff;color:var(--ink);resize:vertical;min-height:90px;width:100%;transition:border .2s;}
+.cf-textarea:focus{outline:none;border-color:var(--teal);}
+.cf-submit{background:var(--teal);color:#fff;border:none;padding:10px 22px;border-radius:7px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;}
+.cf-submit:hover{background:var(--td);}
+.cf-submit:disabled{opacity:.6;cursor:not-allowed;}
+.cf-note{font-size:11px;color:var(--mid);margin-top:8px;}
+.cf-error{font-size:11px;color:var(--orange);margin-top:6px;display:none;}
+.cf-success{font-size:12px;color:var(--teal);background:var(--tl);padding:10px 14px;border-radius:7px;margin-top:10px;display:none;}
+.comments-list{display:flex;flex-direction:column;gap:16px;}
+.comment-item{padding:16px;border:1px solid var(--border);border-radius:10px;background:#fff;}
+.ci-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.ci-name{font-size:13px;font-weight:600;color:var(--ink);}
+.ci-date{font-size:11px;color:var(--light);}
+.ci-body{font-size:13px;color:#333;line-height:1.8;}
+.comments-empty{font-size:13px;color:var(--light);text-align:center;padding:20px 0;}
+.comments-loading{font-size:13px;color:var(--mid);text-align:center;padding:16px;}
+@media(max-width:600px){.cf-row{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -361,8 +453,8 @@ body.dark .search-bar{background:#111;}
     <a class="nav-a" id="nav-archive">الأرشيف</a>
   </nav>
   <div class="header-actions">
-    <button class="dark-toggle" id="dark-toggle" title="وضع ليلي" aria-label="تبديل الوضع الليلي">🌙</button>
-    <button class="dark-toggle" id="search-toggle" title="بحث" aria-label="بحث">🔍</button>
+    <button class="dark-toggle" id="dark-toggle" title="وضع ليلي" aria-label="تبديل الوضع الليلي" style="font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;">🌙</button>
+    <button id="search-toggle" title="بحث" aria-label="بحث" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:transparent;cursor:pointer;font-family:Cairo,sans-serif;font-size:13px;color:var(--mid);transition:all .2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--mid)'"><span style="font-size:15px;">🔍</span><span class="search-btn-text">بحث</span></button>
     <a class="btn-ghost" href="login.html">دخول المحررين</a>
     <button class="btn-primary" id="sub-btn">اشترك مجاناً</button>
   </div>
@@ -372,12 +464,21 @@ body.dark .search-bar{background:#111;}
 <button class="back-top" id="back-top" aria-label="العودة للأعلى">↑</button>
 <div class="search-bar" id="search-bar">
   <div class="search-in">
-    <input class="search-input" id="search-input" type="text" placeholder="ابحثي في المقالات والكتب..." aria-label="بحث">
-    <span class="search-icon">🔍</span>
+    <div class="search-input-wrap">
+      <span class="search-icon-inner">🔍</span>
+      <input class="search-input" id="search-input" type="text" placeholder="ابحث في المقالات والكتب..." aria-label="بحث" autocomplete="off">
+      <button class="search-clear" id="search-clear" onclick="clearSearch()" aria-label="مسح البحث">×</button>
+    </div>
     <div class="search-results" id="search-results"></div>
+    <div class="search-hint">ابحث بعنوان المقالة أو اسم الكتاب أو الكاتب</div>
   </div>
 </div>
 <div class="mob-menu" id="mob-menu"  style="display:none;flex-direction:column;">
+  <div style="padding:8px 0 12px;">
+    <input id="mob-search-input" type="text" placeholder="🔍  ابحث في المقالات والكتب..." autocomplete="off"
+      style="width:100%;padding:11px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:14px;direction:rtl;background:var(--cream);color:var(--ink);">
+    <div id="mob-search-results" style="display:none;background:var(--paper);border:1px solid var(--border);border-radius:10px;margin-top:6px;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.1);"></div>
+  </div>
   <a id="mob-home">الرئيسية</a><a id="mob-issue">العدد الحالي</a><a id="mob-books">الكتب</a><a id="mob-articles">مقالات</a><a id="mob-archive">الأرشيف</a>
   <div class="mob-actions"><a class="btn-ghost" href="login.html">دخول المحررين</a><button class="btn-primary" id="mob-sub">اشترك</button></div>
 </div>
@@ -415,10 +516,10 @@ body.dark .search-bar{background:#111;}
 <div class="wrap" data-section="books">
   <div class="sec-header"><div class="sec-title">إصدارات المركز</div><div class="sec-more" id="more-books">الكتب كلها ←</div></div>
   <div class="books-grid" id="home-books">
-    <div class="book-card" id="hb1" data-bid="sb1"><div class="book-card-strip" style="background:#1A7A7A;"></div><div class="book-card-body"><div class="book-genre">رعب</div><div class="book-title">خوف</div><div class="book-author">أسامة المسلم</div><div class="book-stars">★★★★★</div><div class="book-desc">رواية رعب عربية تأخذك لعوالم مظلمة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
-    <div class="book-card" id="hb2" data-bid="sb2"><div class="book-card-strip" style="background:#C94B1E;"></div><div class="book-card-body"><div class="book-genre">فانتازيا</div><div class="book-title">التنين الأسود</div><div class="book-author">فاطمة النجار</div><div class="book-stars">★★★★☆</div><div class="book-desc">ملحمة فانتازيا عربية فريدة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
-    <div class="book-card" id="hb3" data-bid="sb3"><div class="book-card-strip" style="background:#412402;"></div><div class="book-card-body"><div class="book-genre">رواية</div><div class="book-title">جحيم العابرين</div><div class="book-author">مركز الأدب العربي</div><div class="book-stars">★★★★★</div><div class="book-desc">رواية بين الإثارة والعمق.</div><div class="book-cta">اقرأ المزيد</div></div></div>
-    <div class="book-card" id="hb4" data-bid="sb4"><div class="book-card-strip" style="background:#26215C;"></div><div class="book-card-body"><div class="book-genre">شعر</div><div class="book-title">ديوان الظل</div><div class="book-author">شعراء المركز</div><div class="book-stars">★★★★★</div><div class="book-desc">تجربة شعرية فريدة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
+    <div class="book-card" id="hb1" data-bid="sb1"><div class="book-card-strip" style="background:#1A7A7A;"></div><div class="book-card-body"><div class="book-genre">رعب</div><div class="book-title">خوف</div><div class="book-author">أسامة المسلم</div><div class="book-desc">رواية رعب عربية تأخذك لعوالم مظلمة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
+    <div class="book-card" id="hb2" data-bid="sb2"><div class="book-card-strip" style="background:#C94B1E;"></div><div class="book-card-body"><div class="book-genre">فانتازيا</div><div class="book-title">التنين الأسود</div><div class="book-author">فاطمة النجار</div><div class="book-desc">ملحمة فانتازيا عربية فريدة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
+    <div class="book-card" id="hb3" data-bid="sb3"><div class="book-card-strip" style="background:#412402;"></div><div class="book-card-body"><div class="book-genre">رواية</div><div class="book-title">جحيم العابرين</div><div class="book-author">مركز الأدب العربي</div><div class="book-desc">رواية بين الإثارة والعمق.</div><div class="book-cta">اقرأ المزيد</div></div></div>
+    <div class="book-card" id="hb4" data-bid="sb4"><div class="book-card-strip" style="background:#26215C;"></div><div class="book-card-body"><div class="book-genre">شعر</div><div class="book-title">ديوان الظل</div><div class="book-author">شعراء المركز</div><div class="book-desc">تجربة شعرية فريدة.</div><div class="book-cta">اقرأ المزيد</div></div></div>
   </div>
   <div class="sec-header"><div class="sec-title">مقالات أدبية</div><div class="sec-more" id="more-arts">كل المقالات ←</div></div>
   <div class="arts-grid">
@@ -492,10 +593,10 @@ body.dark .search-bar{background:#111;}
 <div class="view" id="v-books">
 <div class="page-header"><div class="ph-in"><button class="ph-back" id="books-back">← الرئيسية</button><div class="ph-title">الكتب</div><div class="ph-sub">إصدارات مركز الأدب العربي</div></div></div>
 <div class="books-page-grid" id="books-pg">
-  <div class="bpg-card" id="bp1" data-bid="sb1"><div class="bpg-cover" style="background:#1A7A7A;"><span>خوف</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#1A7A7A;">رعب</span><div class="bpg-title">خوف</div><div class="bpg-author">أسامة المسلم</div><div class="bpg-stars">★★★★★</div><div class="bpg-desc">رواية رعب تأخذك لعوالم مظلمة.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
-  <div class="bpg-card" id="bp2" data-bid="sb2"><div class="bpg-cover" style="background:#C94B1E;"><span>التنين الأسود</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#C94B1E;">فانتازيا</span><div class="bpg-title">التنين الأسود</div><div class="bpg-author">فاطمة النجار</div><div class="bpg-stars">★★★★☆</div><div class="bpg-desc">ملحمة فانتازيا عربية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
-  <div class="bpg-card" id="bp3" data-bid="sb3"><div class="bpg-cover" style="background:#412402;"><span>جحيم العابرين</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#412402;">رواية</span><div class="bpg-title">جحيم العابرين</div><div class="bpg-author">مركز الأدب العربي</div><div class="bpg-stars">★★★★★</div><div class="bpg-desc">رواية بين الإثارة والعمق.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
-  <div class="bpg-card" id="bp4" data-bid="sb4"><div class="bpg-cover" style="background:#26215C;"><span>ديوان الظل</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#26215C;">شعر</span><div class="bpg-title">ديوان الظل</div><div class="bpg-author">شعراء المركز</div><div class="bpg-stars">★★★★★</div><div class="bpg-desc">تجربة شعرية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp1" data-bid="sb1"><div class="bpg-cover" style="background:#1A7A7A;"><span>خوف</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#1A7A7A;">رعب</span><div class="bpg-title">خوف</div><div class="bpg-author">أسامة المسلم</div><div class="bpg-desc">رواية رعب تأخذك لعوالم مظلمة.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp2" data-bid="sb2"><div class="bpg-cover" style="background:#C94B1E;"><span>التنين الأسود</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#C94B1E;">فانتازيا</span><div class="bpg-title">التنين الأسود</div><div class="bpg-author">فاطمة النجار</div><div class="bpg-desc">ملحمة فانتازيا عربية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp3" data-bid="sb3"><div class="bpg-cover" style="background:#412402;"><span>جحيم العابرين</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#412402;">رواية</span><div class="bpg-title">جحيم العابرين</div><div class="bpg-author">مركز الأدب العربي</div><div class="bpg-desc">رواية بين الإثارة والعمق.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp4" data-bid="sb4"><div class="bpg-cover" style="background:#26215C;"><span>ديوان الظل</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#26215C;">شعر</span><div class="bpg-title">ديوان الظل</div><div class="bpg-author">شعراء المركز</div><div class="bpg-desc">تجربة شعرية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
 </div>
 </div>
 
@@ -528,11 +629,42 @@ body.dark .search-bar{background:#111;}
   <button class="ph-back" id="art-single-back" style="margin-bottom:18px;">← العودة</button>
   <div class="sa-badge" id="sa-badge"></div>
   <h1 class="sa-title" id="sa-title"></h1>
-  <div class="sa-meta"><span class="sa-author" id="sa-author"></span><span class="sa-date" id="sa-date"></span><span class="sa-cat" id="sa-cat"></span><span class="read-time" id="read-time"></span></div>
+  <div class="sa-meta"><span class="sa-author" id="sa-author"></span><span class="sa-date" id="sa-date"></span><span class="sa-cat" id="sa-cat"></span><span class="read-time" id="read-time"></span><button class="share-btn" onclick="openShare('art')" aria-label="مشاركة"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>مشاركة</button></div>
   <div class="font-controls"><button class="font-btn" onclick="changeFontSize(-1)">A-</button><button class="font-btn" onclick="changeFontSize(0)">A</button><button class="font-btn" onclick="changeFontSize(1)">A+</button></div>
   <div class="sa-body" id="sa-body"></div>
 </div>
 <div class="related-sec"><div class="rel-label">مقالات ذات صلة</div><div class="rel-grid" id="rel-arts"></div></div>
+
+<!-- COMMENTS -->
+<div class="comments-sec" id="comments-sec">
+  <div class="comments-title">التعليقات (<span id="comments-count">٠</span>)</div>
+
+  <!-- Form -->
+  <div class="comment-form">
+    <div class="comment-form-title">اترك تعليقاً</div>
+    <div class="cf-row">
+      <div class="cf-field">
+        <label for="cf-name">الاسم <span>*</span></label>
+        <input class="cf-input" type="text" id="cf-name" placeholder="اسمك" maxlength="60" aria-required="true">
+      </div>
+      <div class="cf-field">
+        <label for="cf-email">البريد الإلكتروني <span style="color:var(--mid);font-weight:400;">(اختياري)</span></label>
+        <input class="cf-input" type="email" id="cf-email" placeholder="لن يُنشر">
+      </div>
+    </div>
+    <div class="cf-field">
+      <label for="cf-body">التعليق <span>*</span></label>
+      <textarea class="cf-textarea" id="cf-body" placeholder="اكتب تعليقك هنا..." maxlength="1000"></textarea>
+    </div>
+    <div class="cf-error" id="cf-error"></div>
+    <button class="cf-submit" id="cf-submit" onclick="submitComment()">إرسال التعليق</button>
+    <div class="cf-success" id="cf-success">شكراً! تعليقك قيد المراجعة وسيظهر بعد موافقة المحررين.</div>
+    <div class="cf-note">⚠ التعليقات تُراجع قبل النشر · الاسم مطلوب · لا تشارك معلومات شخصية</div>
+  </div>
+
+  <!-- Comments List -->
+  <div id="comments-list"><div class="comments-loading">جاري تحميل التعليقات...</div></div>
+</div>
 </div>
 
 <!-- SINGLE BOOK -->
@@ -545,11 +677,11 @@ body.dark .search-bar{background:#111;}
       <div class="sb-badge" id="sb-badge"></div>
       <div class="sb-title" id="sb-title"></div>
       <div class="sb-author" id="sb-author"></div>
-      <div class="sb-stars" id="sb-stars"></div>
+      
       <div class="sb-pills" id="sb-pills"></div>
       <div class="sb-desc" id="sb-desc"></div>
       <div class="sb-quote"><p id="sb-quote"></p></div>
-      <button class="sb-buy" id="sb-buy">احصل على الكتاب</button>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;"><button class="sb-buy" id="sb-buy">احصل على الكتاب</button><button class="share-btn" onclick="openShare('book')" aria-label="مشاركة"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>مشاركة</button></div>
     </div>
   </div>
 </div>
@@ -559,7 +691,8 @@ body.dark .search-bar{background:#111;}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script>
-var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+var sb;
+try { sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { sb = null; console.warn('Supabase init failed'); }
 var lA = {}, lB = {}, prevView = 'home';
 
 var SA = {
@@ -568,10 +701,10 @@ var SA = {
   s3:{id:'s3',badge:'حوار',category:'حوار',title:'حوار مع فاطمة النجار',author_name:'ليلى المنصور',date:'أبريل ٢٠٢٥',body:'<p>التقينا بالكاتبة فاطمة النجار للحديث عن الفانتازيا العربية.</p><div class="sa-quote"><p>أردت أن أكتب الفانتازيا التي كنت أتمنى أن أجدها.</p></div>'}
 };
 var SB = {
-  sb1:{id:'sb1',genre:'رعب',color:'#1A7A7A',stars:'★★★★★',title:'خوف',author:'أسامة المسلم',pills:['٣٢٠ صفحة','٢٠٢٥'],desc:'في روايته يأخذنا إلى عوالم مظلمة.',quote:'الخوف ليس ضعفاً.',url:'https://adab-book.com/'},
-  sb2:{id:'sb2',genre:'فانتازيا',color:'#C94B1E',stars:'★★★★☆',title:'التنين الأسود',author:'فاطمة النجار',pills:['٤٨٠ صفحة','٢٠٢٥'],desc:'ملحمة فانتازيا عربية.',quote:'أردت أن أكتب الفانتازيا التي أتمنيتها.',url:'https://adab-book.com/'},
-  sb3:{id:'sb3',genre:'رواية',color:'#412402',stars:'★★★★★',title:'جحيم العابرين',author:'مركز الأدب العربي',pills:['٢٨٠ صفحة','٢٠٢٥'],desc:'رواية بين الإثارة والعمق.',quote:'العابر من لا وطن له إلا الطريق.',url:'https://adab-book.com/'},
-  sb4:{id:'sb4',genre:'شعر',color:'#26215C',stars:'★★★★★',title:'ديوان الظل',author:'شعراء المركز',pills:['١٦٠ صفحة','٢٠٢٥'],desc:'تجربة شعرية فريدة.',quote:'الظل دليل على وجود ضوء.',url:'https://adab-book.com/'}
+  sb1:{id:'sb1',genre:'رعب',color:'#1A7A7A',title:'خوف',author:'أسامة المسلم',pills:['٣٢٠ صفحة','٢٠٢٥'],desc:'في روايته يأخذنا إلى عوالم مظلمة.',quote:'الخوف ليس ضعفاً.',url:'https://adab-book.com/'},
+  sb2:{id:'sb2',genre:'فانتازيا',color:'#C94B1E',title:'التنين الأسود',author:'فاطمة النجار',pills:['٤٨٠ صفحة','٢٠٢٥'],desc:'ملحمة فانتازيا عربية.',quote:'أردت أن أكتب الفانتازيا التي أتمنيتها.',url:'https://adab-book.com/'},
+  sb3:{id:'sb3',genre:'رواية',color:'#412402',title:'جحيم العابرين',author:'مركز الأدب العربي',pills:['٢٨٠ صفحة','٢٠٢٥'],desc:'رواية بين الإثارة والعمق.',quote:'العابر من لا وطن له إلا الطريق.',url:'https://adab-book.com/'},
+  sb4:{id:'sb4',genre:'شعر',color:'#26215C',title:'ديوان الظل',author:'شعراء المركز',pills:['١٦٠ صفحة','٢٠٢٥'],desc:'تجربة شعرية فريدة.',quote:'الظل دليل على وجود ضوء.',url:'https://adab-book.com/'}
 };
 
 function goView(name) {
@@ -585,11 +718,20 @@ function goView(name) {
   if (name !== 'art-single' && name !== 'book-single') {
     prevView = name;
     try { history.pushState({view:name}, '', '#' + name); } catch(e) {}
+  } else if (name === 'art-single' && _currentShareId) {
+    try { history.pushState({view:'art-single', id:_currentShareId}, '', '#art/' + _currentShareId); } catch(e) {}
+  } else if (name === 'book-single' && _currentShareBookId) {
+    try { history.pushState({view:'book-single', id:_currentShareBookId}, '', '#book/' + _currentShareBookId); } catch(e) {}
   }
 }
 window.addEventListener('popstate', function(e) {
-  if (e.state && e.state.view) goView(e.state.view);
-  else goView('home');
+  if (e.state && e.state.view) {
+    if (e.state.view === 'art-single' && e.state.id) openArt(e.state.id);
+    else if (e.state.view === 'book-single' && e.state.id) openBook(e.state.id);
+    else goView(e.state.view);
+  } else {
+    goView('home');
+  }
 });
 function goBack() { goView(prevView); }
 function scrollTo2(id) { setTimeout(function() { var e = document.getElementById(id); if (e) e.scrollIntoView({behavior:'smooth'}); }, 60); }
@@ -650,7 +792,7 @@ function openBook(id) {
   se('sb-cover-t', b.title);
   se('sb-title', b.title);
   se('sb-author', b.author || '');
-  se('sb-stars', b.stars || '★★★★★');
+  
   se('sb-desc', b.desc || b.description || '');
   document.getElementById('sb-quote').textContent = '"' + (b.quote || '') + '"';
   var pills = b.pills ? (typeof b.pills==='string' ? JSON.parse(b.pills) : b.pills) : [];
@@ -671,6 +813,7 @@ function openBook(id) {
     c.innerHTML = '<div style="height:40px;background:' + (pair[1].color||'#1A7A7A') + ';border-radius:5px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;"><span style="font-size:12px;color:#fff;">' + pair[1].title + '</span></div><div class="rel-title">' + pair[1].title + '</div><div class="rel-meta">' + (pair[1].author || '') + '</div>';
     rel.appendChild(c);
   });
+  _currentShareBookId = id;
   goView('book-single');
 }
 
@@ -690,13 +833,13 @@ function renderBooks(books) {
   var si = document.getElementById('side-items');
   function bookCardHTML(b) {
     var imgHTML = (b.image&&b.image.trim()) ? '<img style="width:100%;height:180px;object-fit:cover;display:block;" src="' + b.image + '" alt="' + b.title + '" loading="lazy">' : '<div class="book-card-strip" style="background:' + (b.color||'#1A7A7A') + ';"></div>';
-    return '<div class="book-card" data-bid="' + b.id + '">' + imgHTML + '<div class="book-card-body"><div class="book-genre">' + (b.genre||'') + '</div><div class="book-title">' + b.title + '</div><div class="book-author">' + (b.author||'') + '</div><div class="book-stars">' + (b.stars||'★★★★★') + '</div><div class="book-desc">' + (b.description||'') + '</div><div class="book-cta">اقرأ المزيد</div></div></div>';
+    return '<div class="book-card" data-bid="' + b.id + '">' + imgHTML + '<div class="book-card-body"><div class="book-genre">' + (b.genre||'') + '</div><div class="book-title">' + b.title + '</div><div class="book-author">' + (b.author||'') + '</div><div class="book-desc">' + (b.description||'') + '</div><div class="book-cta">اقرأ المزيد</div></div></div>';
   }
   if (hg) { hg.innerHTML = books.slice(0,4).map(bookCardHTML).join(''); hg.querySelectorAll('.book-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); }); }
   if (pg) {
     pg.innerHTML = books.map(function(b) {
       var covHTML = b.image ? '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';padding:0;"><img src="' + b.image + '" style="width:100%;height:100%;object-fit:cover;"></div>' : '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';"><span>' + b.title + '</span></div>';
-      return '<div class="bpg-card" data-bid="' + b.id + '">' + covHTML + '<div class="bpg-body"><span class="bpg-badge" style="background:' + (b.color||'#1A7A7A') + ';">' + (b.genre||'') + '</span><div class="bpg-title">' + b.title + '</div><div class="bpg-author">' + (b.author||'') + '</div><div class="bpg-stars">' + (b.stars||'★★★★★') + '</div><div class="bpg-desc">' + (b.description||'') + '</div><button class="bpg-btn">اقرأ المزيد</button></div></div>';
+      return '<div class="bpg-card" data-bid="' + b.id + '">' + covHTML + '<div class="bpg-body"><span class="bpg-badge" style="background:' + (b.color||'#1A7A7A') + ';">' + (b.genre||'') + '</span><div class="bpg-title">' + b.title + '</div><div class="bpg-author">' + (b.author||'') + '</div><div class="bpg-desc">' + (b.description||'') + '</div><button class="bpg-btn">اقرأ المزيد</button></div></div>';
     }).join('');
     pg.querySelectorAll('.bpg-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); });
   }
@@ -759,12 +902,25 @@ function applySettings(rows) {
       if (s.banner.link) bn.onclick = function() { window.open(s.banner.link,'_blank'); };
     }
   }
-  // LOGO
+  // LOGO — apply everywhere
   if (s.general && s.general.logo_url) {
+    var logoUrl = s.general.logo_url;
+    // Header logo
     var li = document.getElementById('header-logo-img');
     var lt = document.getElementById('header-logo-text');
-    if (li) { li.src = s.general.logo_url; li.style.display = 'block'; }
+    if (li) { li.src = logoUrl; li.style.display = 'block'; }
     if (lt) lt.style.display = 'none';
+    // Masthead logo (big name in center)
+    var mhName = document.getElementById('mh-name');
+    if (mhName) {
+      mhName.innerHTML = '<img src="'+logoUrl+'" alt="وَرَق" style="max-height:90px;width:auto;object-fit:contain;">';
+    }
+    // Footer logo
+    var ftLogo = document.getElementById('ft-logo');
+    if (ftLogo) ftLogo.innerHTML = '<img src="'+logoUrl+'" alt="وَرَق" style="max-height:44px;width:auto;object-fit:contain;filter:brightness(10);">';
+    // Newsletter logo
+    var nlLogo = document.querySelector('.nl-logo');
+    if (nlLogo) nlLogo.innerHTML = '<img src="'+logoUrl+'" alt="وَرَق" style="max-height:48px;width:auto;object-fit:contain;opacity:.4;">';
   }
   // MONTH PICK
   if (s.month_pick && s.month_pick.title) {
@@ -853,7 +1009,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle direct URL with hash
   var hash = window.location.hash.replace('#', '');
   var validViews = ['home','issue','books','articles','archive'];
-  if (hash && validViews.indexOf(hash) > -1) goView(hash);
+  if (hash.indexOf('art/') === 0) {
+    var artId = hash.replace('art/', '');
+    if (artId) setTimeout(function() { openArt(artId); }, 500);
+  } else if (hash.indexOf('book/') === 0) {
+    var bookId = hash.replace('book/', '');
+    if (bookId) setTimeout(function() { openBook(bookId); }, 500);
+  } else if (hash && validViews.indexOf(hash) > -1) {
+    goView(hash);
+  }
 
   // Try loading from Supabase with error handling
   try {
@@ -996,29 +1160,93 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ── SEARCH ──
 var _searchTimer = null;
+function clearSearch() {
+  var input = document.getElementById('search-input');
+  var results = document.getElementById('search-results');
+  var clr = document.getElementById('search-clear');
+  if (input) input.value = '';
+  if (results) results.classList.remove('show');
+  if (clr) clr.classList.remove('show');
+  if (input) input.focus();
+}
 function initSearch() {
   var toggle = document.getElementById('search-toggle');
   var bar = document.getElementById('search-bar');
   var input = document.getElementById('search-input');
   var results = document.getElementById('search-results');
+  var clr = document.getElementById('search-clear');
   if (!toggle || !bar || !input) return;
   toggle.addEventListener('click', function() {
     bar.classList.toggle('show');
-    if (bar.classList.contains('show')) { input.focus(); }
-    else { results.classList.remove('show'); input.value = ''; }
+    if (bar.classList.contains('show')) {
+      input.focus();
+      toggle.style.borderColor = 'var(--teal)';
+      toggle.style.color = 'var(--teal)';
+    } else {
+      results.classList.remove('show');
+      input.value = '';
+      if (clr) clr.classList.remove('show');
+      toggle.style.borderColor = 'var(--border)';
+      toggle.style.color = 'var(--mid)';
+    }
   });
   input.addEventListener('input', function() {
     clearTimeout(_searchTimer);
     var q = input.value.trim();
+    if (clr) clr.classList.toggle('show', q.length > 0);
     if (!q || q.length < 2) { results.classList.remove('show'); return; }
     _searchTimer = setTimeout(function() { doSearch(q); }, 200);
   });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      bar.classList.remove('show');
+      results.classList.remove('show');
+      input.value = '';
+      if (clr) clr.classList.remove('show');
+    }
+  });
   document.addEventListener('click', function(e) {
-    if (!bar.contains(e.target) && e.target !== toggle) {
+    if (!bar.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
       bar.classList.remove('show');
       results.classList.remove('show');
     }
   });
+
+  // Mobile search
+  var mobInput = document.getElementById('mob-search-input');
+  var mobResults = document.getElementById('mob-search-results');
+  if (mobInput && mobResults) {
+    var mobTimer = null;
+    mobInput.addEventListener('input', function() {
+      clearTimeout(mobTimer);
+      var q = mobInput.value.trim();
+      if (!q || q.length < 2) { mobResults.style.display = 'none'; return; }
+      mobTimer = setTimeout(function() {
+        var qq = q.toLowerCase();
+        var hits = [];
+        Object.keys(SA).forEach(function(k) { var a = SA[k]; if ((a.title||'').toLowerCase().indexOf(qq)>-1) hits.push({type:'art',id:k,cat:a.badge||'مقالة',title:a.title}); });
+        Object.keys(lA).forEach(function(k) { if (!SA[k]) { var a = lA[k]; if ((a.title||'').toLowerCase().indexOf(qq)>-1) hits.push({type:'art',id:k,cat:a.category||'مقالة',title:a.title}); } });
+        Object.keys(SB).forEach(function(k) { var b = SB[k]; if ((b.title||'').toLowerCase().indexOf(qq)>-1) hits.push({type:'book',id:k,cat:b.genre||'كتاب',title:b.title}); });
+        Object.keys(lB).forEach(function(k) { if (!SB[k]) { var b = lB[k]; if ((b.title||'').toLowerCase().indexOf(qq)>-1) hits.push({type:'book',id:k,cat:b.genre||'كتاب',title:b.title}); } });
+        if (!hits.length) { mobResults.innerHTML = '<div class="sr-empty">لا توجد نتائج</div>'; mobResults.style.display = 'block'; return; }
+        mobResults.innerHTML = hits.slice(0,5).map(function(h) {
+          return '<div class="sr-item" data-'+(h.type==='art'?'aid':'bid')+'="'+h.id+'"><div class="sr-cat">'+h.cat+'</div><div class="sr-title">'+h.title+'</div></div>';
+        }).join('');
+        mobResults.style.display = 'block';
+        mobResults.querySelectorAll('.sr-item').forEach(function(item) {
+          item.addEventListener('click', function() {
+            var aid = item.getAttribute('data-aid');
+            var bid = item.getAttribute('data-bid');
+            if (aid) openArt(aid);
+            else if (bid) openBook(bid);
+            closeMob();
+            mobResults.style.display = 'none';
+            if (mobInput) mobInput.value = '';
+          });
+        });
+      }, 200);
+    });
+  }
 }
 
 function doSearch(q) {
@@ -1090,7 +1318,112 @@ openArt = function(id) {
   if (body && rt) rt.textContent = '⏱ ' + calcReadTime(body.innerHTML);
   changeFontSize(_fontSize); // Apply saved font size
   initReadProgress();
+  _currentShareId = id;
+  // Load comments
+  loadComments(id);
+  var errEl = document.getElementById('cf-error');
+  var succ = document.getElementById('cf-success');
+  if (errEl) errEl.style.display = 'none';
+  if (succ) succ.style.display = 'none';
 };
+
+
+// ── COMMENTS FUNCTIONS ──
+var _currentArticleId = null;
+function escHtml(str) {
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function loadComments(articleId) {
+  _currentArticleId = articleId;
+  var list = document.getElementById('comments-list');
+  var countEl = document.getElementById('comments-count');
+  if (!list) return;
+  if (!sb) { list.innerHTML = ''; return; }
+  list.innerHTML = '<div class="comments-loading">جاري تحميل التعليقات...</div>';
+  sb.from('comments')
+    .select('*')
+    .eq('article_id', String(articleId))
+    .eq('status', 'approved')
+    .order('created_at', {ascending:true})
+    .then(function(res) {
+      if (res.error || !res.data) { list.innerHTML = '<div class="comments-empty">تعذر تحميل التعليقات</div>'; return; }
+      var data = res.data;
+      if (countEl) countEl.textContent = data.length;
+      if (!data.length) { list.innerHTML = '<div class="comments-empty">لا توجد تعليقات بعد — كن أول من يعلق!</div>'; return; }
+      list.innerHTML = '';
+      data.forEach(function(c) {
+        var d = document.createElement('div');
+        d.className = 'comment-item';
+        var date = new Date(c.created_at).toLocaleDateString('ar-SA');
+        d.innerHTML = '<div class="ci-header"><span class="ci-name">' + escHtml(c.name) + '</span><span class="ci-date">' + date + '</span></div><div class="ci-body">' + escHtml(c.body) + '</div>';
+        list.appendChild(d);
+      });
+    }).catch(function() { list.innerHTML = ''; });
+}
+async function submitComment() {
+  var name = document.getElementById('cf-name') ? document.getElementById('cf-name').value.trim() : '';
+  var body = document.getElementById('cf-body') ? document.getElementById('cf-body').value.trim() : '';
+  var errEl = document.getElementById('cf-error');
+  var btn = document.getElementById('cf-submit');
+  var successEl = document.getElementById('cf-success');
+  if (errEl) errEl.style.display = 'none';
+  if (successEl) successEl.style.display = 'none';
+  if (document.getElementById('cf-name')) document.getElementById('cf-name').removeAttribute('aria-invalid');
+  if (document.getElementById('cf-body')) document.getElementById('cf-body').removeAttribute('aria-invalid');
+  if (!name) {
+    if (errEl) { errEl.textContent = 'الاسم مطلوب'; errEl.style.display = 'block'; }
+    if (document.getElementById('cf-name')) { document.getElementById('cf-name').setAttribute('aria-invalid','true'); document.getElementById('cf-name').focus(); }
+    return;
+  }
+  if (!body || body.length < 3) {
+    if (errEl) { errEl.textContent = !body ? 'التعليق مطلوب' : 'التعليق قصير جداً'; errEl.style.display = 'block'; }
+    if (document.getElementById('cf-body')) { document.getElementById('cf-body').setAttribute('aria-invalid','true'); document.getElementById('cf-body').focus(); }
+    return;
+  }
+  if (!_currentArticleId) return;
+  if (!sb) { if (errEl) { errEl.textContent = 'خطأ في الاتصال'; errEl.style.display = 'block'; } return; }
+  if (btn) { btn.disabled = true; btn.textContent = 'جاري الإرسال...'; }
+  try {
+    var res = await sb.from('comments').insert({ article_id: String(_currentArticleId), name: name, body: body, status: 'pending' });
+    if (res.error) {
+      if (errEl) { errEl.textContent = 'حدث خطأ — حاول مجدداً'; errEl.style.display = 'block'; }
+    } else {
+      if (successEl) successEl.style.display = 'block';
+      if (document.getElementById('cf-name')) document.getElementById('cf-name').value = '';
+      if (document.getElementById('cf-body')) document.getElementById('cf-body').value = '';
+      if (document.getElementById('cf-email')) document.getElementById('cf-email').value = '';
+    }
+  } catch(e) {
+    if (errEl) { errEl.textContent = 'خطأ في الاتصال'; errEl.style.display = 'block'; }
+  }
+  if (btn) { btn.disabled = false; btn.textContent = 'إرسال التعليق'; }
+}
+// ── SHARE ──
+var _shareTitle = '', _shareUrl = '', _currentShareId = null, _currentShareBookId = null;
+function openShare(type) {
+  var title = type === 'art'
+    ? (document.getElementById('sa-title') ? document.getElementById('sa-title').textContent : '')
+    : (document.getElementById('sb-title') ? document.getElementById('sb-title').textContent : '');
+  var id = type === 'art' ? _currentShareId : _currentShareBookId;
+  var hash = type === 'art' ? '#art/' : '#book/';
+  _shareTitle = title + ' — وَرَق | مركز الأدب العربي';
+  _shareUrl = window.location.origin + window.location.pathname + hash + (id||'');
+  var input = document.getElementById('share-url-input');
+  if (input) input.value = _shareUrl;
+  var popup = document.getElementById('share-popup');
+  if (popup) popup.classList.add('on');
+}
+function closeShare() { var p = document.getElementById('share-popup'); if (p) p.classList.remove('on'); }
+function shareX() { window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(_shareTitle)+'&url='+encodeURIComponent(_shareUrl),'_blank'); closeShare(); }
+function shareWA() { window.open('https://wa.me/?text='+encodeURIComponent(_shareTitle+'\n'+_shareUrl),'_blank'); closeShare(); }
+function shareNative() { if(navigator.share){navigator.share({title:_shareTitle,url:_shareUrl}).catch(function(){});closeShare();}else{copyShareUrl();} }
+function copyShareUrl() {
+  var input = document.getElementById('share-url-input');
+  if (input) { input.select(); try{document.execCommand('copy');}catch(e){} }
+  var btn = document.querySelector('.share-url button');
+  if (btn) { btn.textContent = 'تم النسخ ✓'; setTimeout(function() { btn.textContent = 'نسخ'; }, 2000); }
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeShare(); });
 
 // ── INIT FEATURES ──
 document.addEventListener('DOMContentLoaded', function() {
@@ -1101,5 +1434,33 @@ document.addEventListener('DOMContentLoaded', function() {
   initSearch();
 });
 </script>
+
+<!-- SHARE POPUP -->
+<div class="share-popup" id="share-popup" onclick="if(event.target===this)closeShare()">
+  <div class="share-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <h3 style="margin:0;">مشاركة</h3>
+      <button class="share-close" onclick="closeShare()">×</button>
+    </div>
+    <div class="share-options">
+      <button class="share-opt" onclick="shareX()">
+        <div class="share-opt-icon" style="background:#000;color:#fff;">𝕏</div>
+        <span>مشاركة على X / Twitter</span>
+      </button>
+      <button class="share-opt" onclick="shareWA()">
+        <div class="share-opt-icon" style="background:#25D366;color:#fff;">📱</div>
+        <span>مشاركة عبر WhatsApp</span>
+      </button>
+      <button class="share-opt" onclick="shareNative()">
+        <div class="share-opt-icon" style="background:var(--teal);color:#fff;">↑</div>
+        <span>مشاركة...</span>
+      </button>
+    </div>
+    <div class="share-url">
+      <input type="text" id="share-url-input" readonly>
+      <button onclick="copyShareUrl()">نسخ</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
