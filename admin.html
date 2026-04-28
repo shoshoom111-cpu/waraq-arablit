@@ -696,22 +696,47 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 
 <div class="toast" id="toast"></div>
 
+<script>window._configMissing=true;</script>
+<script src="config.js" onload="window._configMissing=false;"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// config.js fallback check
-window._configMissing = true;
-</script>
-<script src="config.js" onload="window._configMissing=false;"></script>
-<script>
-if(window._configMissing||typeof SUPABASE_URL==='undefined'||!SUPABASE_URL){
-  document.addEventListener('DOMContentLoaded',function(){
-    var ov=document.getElementById('loading-overlay');
-    if(ov)ov.innerHTML='<div style="text-align:center;color:#C94B1E;"><div style="font-size:28px;margin-bottom:12px;">⚠</div><div>ملف config.js مفقود أو يحتوي على خطأ<br><small>تحقق من إعدادات Supabase</small></div></div>';
+var sb = null;
+var _supabaseReady = false;
+function initSupabase() {
+  try {
+    if (typeof SUPABASE_URL === 'undefined' || !SUPABASE_URL || SUPABASE_URL.indexOf('YOUR_PROJECT') >= 0) {
+      console.warn('Supabase URL not configured — check config.js');
+      return false;
+    }
+    if (typeof SUPABASE_KEY === 'undefined' || !SUPABASE_KEY) {
+      console.warn('Supabase KEY not configured — check config.js');
+      return false;
+    }
+    if (typeof supabase !== 'undefined' && supabase.createClient) {
+      sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      _supabaseReady = true;
+      return true;
+    }
+    console.warn('Supabase library not loaded yet');
+    return false;
+  } catch(e) {
+    console.warn('Supabase init failed:', e.message);
+    sb = null;
+    _supabaseReady = false;
+    return false;
+  }
+}
+initSupabase();
+if (!_supabaseReady) {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Retry once after DOM ready
+    if (!initSupabase()) {
+      var ov = document.getElementById('loading-overlay');
+      if (ov) ov.innerHTML = '<div style="text-align:center;color:#C94B1E;padding:40px;"><div style="font-size:28px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">لم يتم الاتصال بقاعدة البيانات</div><div style="font-size:12px;color:#666;">تحقق من:<br>١. وجود ملف config.js<br>٢. صحة SUPABASE_URL و SUPABASE_KEY</div></div>';
+    }
   });
 }
-</script>
-<script>
-var sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
 
 var _cache = {};
 function showLoad(){var o=document.getElementById('loading-overlay');if(o)o.classList.add('on');}
