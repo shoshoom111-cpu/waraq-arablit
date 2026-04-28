@@ -48,6 +48,7 @@ button,a{cursor:pointer;}
 .mh-tag{font-size:11px;color:var(--teal);letter-spacing:.1em;margin-top:5px;text-align:center;}
 .ticker{background:var(--teal);overflow:hidden;padding:6px 0;}
 .ticker-track{display:flex;gap:56px;animation:roll 36s linear infinite;white-space:nowrap;}
+.ticker:hover .ticker-track{animation-play-state:paused;}
 .ticker-track span{font-size:11px;color:#fff;cursor:pointer;}
 .ticker-track span::before{content:"◄ ";color:var(--gold);font-size:9px;}
 @keyframes roll{from{transform:translateX(-50%)}to{transform:translateX(0)}}
@@ -337,7 +338,7 @@ body.dark .sb-quote{background:#1a1500;}
 body.dark .related-sec{border-color:#2a2a2a;}
 body.dark .comments-sec{border-color:#2a2a2a;}
 body.dark .comment-form{background:#1a1a1a;}
-body.dark .cf-input,.dark .cf-textarea{background:#111;border-color:#333;color:#ddd;}
+body.dark .cf-input,body.dark .cf-textarea{background:#111;border-color:#333;color:#ddd;}
 body.dark .comment-item{background:#111;border-color:#2a2a2a;}
 body.dark .ci-body{color:#ccc;}
 body.dark .bpg-card:hover,body.dark .apg-card:hover{border-color:var(--teal);}
@@ -487,7 +488,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <div class="view active" id="v-home">
 <div class="masthead"><div class="mh-in">
   <div class="mh-left" id="mh-left">العدد الأول<br>أبريل ٢٠٢٥<br>مجانية</div>
-  <div><div class="mh-name" id="mh-name">وَرَق</div><div class="mh-tag" id="mh-tag">جريدة مركز الأدب العربي الشهرية</div></div>
+  <div><div class="mh-name" id="mh-name" data-text-logo="1">وَرَق</div><div class="mh-tag" id="mh-tag">جريدة مركز الأدب العربي الشهرية</div></div>
   <div class="mh-right">رقمية<br>شهرية<br>مجانية</div>
 </div></div>
 <div class="ticker"><div class="ticker-track" id="ticker-track">
@@ -691,8 +692,12 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script>
-var sb;
-try { sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { sb = null; console.warn('Supabase init failed'); }
+var sb = null;
+try {
+  if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && typeof supabase !== 'undefined') {
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  }
+} catch(e) { sb = null; console.warn('Supabase init failed', e); }
 var lA = {}, lB = {}, prevView = 'home';
 
 var SA = {
@@ -718,7 +723,10 @@ function goView(name) {
   if (name !== 'art-single' && name !== 'book-single') {
     prevView = name;
     try { history.pushState({view:name}, '', '#' + name); } catch(e) {}
-  } else if (name === 'art-single' && _currentShareId) {
+  } else if (!prevView) {
+    prevView = 'home';
+  }
+  if (name === 'art-single' && _currentShareId) {
     try { history.pushState({view:'art-single', id:_currentShareId}, '', '#art/' + _currentShareId); } catch(e) {}
   } else if (name === 'book-single' && _currentShareBookId) {
     try { history.pushState({view:'book-single', id:_currentShareBookId}, '', '#book/' + _currentShareBookId); } catch(e) {}
@@ -757,7 +765,7 @@ function se(id, txt) { if (txt !== undefined && txt !== null) { var e = document
 
 function openArt(id) {
   var a = lA[id] || SA[id];
-  if (!a) return;
+  if (!a) { console.warn('Article not found:', id); goView('articles'); return; }
   var badge = a.badge || a.category || 'مقالة';
   var bc = badge === 'حوار' ? '#C94B1E' : '#1A7A7A';
   document.getElementById('sa-badge').textContent = badge;
@@ -785,7 +793,7 @@ function openArt(id) {
 
 function openBook(id) {
   var b = lB[id] || SB[id];
-  if (!b) return;
+  if (!b) { console.warn('Book not found:', id); goView('books'); return; }
   document.getElementById('sb-badge').textContent = b.genre || 'كتاب';
   document.getElementById('sb-badge').style.background = b.color || '#1A7A7A';
   document.getElementById('sb-cover').style.background = b.color || '#1A7A7A';
@@ -890,13 +898,30 @@ function applySettings(rows) {
   rows.forEach(function(r) { s[r.key] = parseVal(r.value); });
   if (s.design) { var R = document.documentElement.style; if (s.design.teal) R.setProperty('--teal', s.design.teal); if (s.design.orange) R.setProperty('--orange', s.design.orange); if (s.design.gold) R.setProperty('--gold', s.design.gold); }
   if (s.issue) { se('hero-title', s.issue.hero_title); se('hero-body', s.issue.hero_body); se('hero-by', s.issue.hero_by); if (s.issue.hero_badge) { var hb = document.getElementById('hero-badge'); if (hb) hb.textContent = s.issue.hero_badge; } if (s.issue.quote) { var qt = document.getElementById('quote-t'); if (qt) qt.textContent = '"' + s.issue.quote + '"'; } if (s.issue.num && s.issue.date) { var ml = document.getElementById('mh-left'); if (ml) ml.innerHTML = 'العدد ' + s.issue.num + '<br>' + s.issue.date + '<br>مجانية'; } }
-  if (s.general) { se('mh-tag', s.general.tagline); se('tb-txt', s.general.topbar); se('ft-tag', s.general.footer_tag); se('ft-copy', s.general.copyright); se('nl-title', s.general.nl_title); se('nl-sub', s.general.nl_desc); }
+  if (s.general) {
+    // Site name — update all text instances
+    if (s.general.name) {
+      var nameEls = document.querySelectorAll('#mh-name[data-text-logo], .header-logo-text, #ft-logo-text, .nl-logo-text');
+      nameEls.forEach(function(el){ if(el) el.textContent = s.general.name; });
+    }
+    se('mh-tag', s.general.tagline); se('tb-txt', s.general.topbar); se('ft-tag', s.general.footer_tag); se('ft-copy', s.general.copyright); se('nl-title', s.general.nl_title); se('nl-sub', s.general.nl_desc);
+  }
   if (s.social) { if (s.social.ig) { document.getElementById('ig-lnk').href = s.social.ig; document.getElementById('ft-ig').href = s.social.ig; } if (s.social.tt) { document.getElementById('tt-lnk').href = s.social.tt; document.getElementById('ft-tt').href = s.social.tt; } if (s.social.store) { document.getElementById('store-lnk').href = s.social.store; document.getElementById('ft-store').href = s.social.store; } if (s.social.brevo) window._brevoUrl = s.social.brevo; }
   if (s.ticker && s.ticker.length) { var t = document.getElementById('ticker-track'); if (t) t.innerHTML = s.ticker.concat(s.ticker).map(function(x) { return '<span>' + x + '</span>'; }).join(''); }
   if (s.side_items && s.side_items.length) { var si = document.getElementById('side-items'); if (si) si.innerHTML = s.side_items.map(function(i) { return '<div class="side-item" data-bid="'+(i.id||'')+'"><div class="si-badge"></div><div class="si-title">' + (i.title||'') + '</div><div class="si-meta">' + (i.meta||'') + '</div></div>'; }).join(''); }
   // BANNER
   if (s.banner && s.banner.url) {
     var bn = document.getElementById('site-banner');
+    // Add close button if not already there
+    if (bn && !document.getElementById('banner-close')) {
+      var bc = document.createElement('button');
+      bc.id = 'banner-close';
+      bc.innerHTML = '×';
+      bc.setAttribute('style', 'position:absolute;top:6px;left:8px;background:rgba(0,0,0,.3);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:14px;line-height:1;');
+      bc.onclick = function() { bn.style.display = 'none'; };
+      bn.style.position = 'relative';
+      bn.appendChild(bc);
+    }
     var bi = document.getElementById('banner-img');
     if (bn && bi) { bi.src = s.banner.url; bn.style.display = 'block';
       if (s.banner.link) bn.onclick = function() { window.open(s.banner.link,'_blank'); };
@@ -1024,7 +1049,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
       Promise.all([
         sb.from('articles').select('*').eq('status','published').order('published_at',{ascending:false}),
-        sb.from('books').select('*').eq('archived',false).order('created_at',{ascending:false}),
+        sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
         sb.from('settings').select('*')
       ]).then(function(results) {
         var ar = results[0], bk = results[1], st = results[2];
@@ -1216,7 +1241,8 @@ function initSearch() {
     }
   });
   document.addEventListener('click', function(e) {
-    if (!bar.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
+    var searchToggle = document.getElementById('search-toggle');
+    if (!bar.contains(e.target) && e.target !== searchToggle && !(searchToggle && searchToggle.contains(e.target))) {
       bar.classList.remove('show');
       results.classList.remove('show');
     }
@@ -1227,6 +1253,9 @@ function initSearch() {
   var mobResults = document.getElementById('mob-search-results');
   if (mobInput && mobResults) {
     var mobTimer = null;
+    mobInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { mobResults.style.display = 'none'; mobInput.value = ''; }
+    });
     mobInput.addEventListener('input', function() {
       clearTimeout(mobTimer);
       var q = mobInput.value.trim();
@@ -1314,6 +1343,7 @@ goView = function(name) {
   // Reset progress bar
   var prog = document.getElementById('read-progress');
   if (prog) prog.style.display = (name === 'art-single') ? 'block' : 'none';
+  if (name === 'book-single' && prog) prog.style.display = 'none';
   var bar = document.getElementById('read-bar');
   if (bar) bar.style.width = '0%';
   // Reset reading progress flag when leaving article
@@ -1342,7 +1372,7 @@ openArt = function(id) {
 // ── COMMENTS FUNCTIONS ──
 var _currentArticleId = null;
 function escHtml(str) {
-  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 function loadComments(articleId) {
   _currentArticleId = articleId;
