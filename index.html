@@ -586,7 +586,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 </div></div>
 <div class="issue-pdf-wrap">
   <div class="pdf-placeholder" id="pdf-placeholder"><div class="pdf-placeholder-icon"><svg width="28" height="36" viewBox="0 0 28 36" fill="none"><rect x="2" y="2" width="24" height="32" rx="3" stroke="#888" stroke-width="2"/><path d="M7 11h14M7 17h14M7 23h9" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div><div style="font-family:'Noto Serif Arabic',serif;font-size:20px;color:#ccc;margin-bottom:10px;">العدد الحالي</div><div style="font-size:13px;color:#888;line-height:1.8;">سيظهر هنا ملف PDF بعد رفعه من لوحة التحكم</div></div>
-  <div class="pdf-frame-wrap" id="pdf-frame-wrap" style="display:none;"><iframe id="pdf-frame" src="" style="width:100%;height:90vh;border:none;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5);" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups"></iframe></div>
+  <div class="pdf-frame-wrap" id="pdf-frame-wrap" style="display:none;"><iframe id="pdf-frame" src="" style="width:100%;height:90vh;border:none;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5);" allowfullscreen sandbox="allow-scripts allow-popups allow-forms"></iframe></div>
 </div>
 </div>
 
@@ -1191,7 +1191,6 @@ async function submitComment() {
   }
   if (btn) { btn.disabled = false; btn.textContent = 'إرسال التعليق'; }
 }
-;
 
 // ── EVENT DELEGATION ──
 // Handles clicks on dynamically rendered elements
@@ -1314,7 +1313,6 @@ window.addEventListener('scroll', function() {
   var btn = document.getElementById('back-top');
   if (btn) btn.classList.toggle('show', window.scrollY > 400);
 });
-;
 
 // ── SEARCH ──
 var _searchTimer = null;
@@ -1532,7 +1530,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Search
   initSearch();
 });
-;
 </script>
 
 <!-- SHARE POPUP -->
