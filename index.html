@@ -689,15 +689,36 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <div class="related-sec" style="max-width:860px;"><div class="rel-label">كتب مشابهة</div><div class="rel-grid" id="rel-books"></div></div>
 </div>
 
+<script>window._configMissing=true;</script>
+<script src="config.js" onload="window._configMissing=false;"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
 <script>
 var sb = null;
-try {
-  if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && typeof supabase !== 'undefined') {
-    sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+var _supabaseReady = false;
+function initSupabase() {
+  try {
+    if (typeof SUPABASE_URL === 'undefined' || !SUPABASE_URL || SUPABASE_URL.indexOf('YOUR_PROJECT') >= 0) {
+      console.warn('Supabase not configured — check config.js');
+      return false;
+    }
+    if (typeof SUPABASE_KEY === 'undefined' || !SUPABASE_KEY) {
+      console.warn('Supabase KEY missing — check config.js');
+      return false;
+    }
+    if (typeof supabase !== 'undefined' && supabase.createClient) {
+      sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      _supabaseReady = true;
+      return true;
+    }
+    return false;
+  } catch(e) {
+    console.warn('Supabase init failed:', e.message);
+    sb = null;
+    _supabaseReady = false;
+    return false;
   }
-} catch(e) { sb = null; console.warn('Connection unavailable'); }
+}
+initSupabase();
 var lA = {}, lB = {}, prevView = 'home';
 
 var SA = {
@@ -1486,6 +1507,16 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
 // ── INIT FEATURES ──
 
 document.addEventListener('DOMContentLoaded', function() {
+  // Retry Supabase if not ready yet
+  if (!_supabaseReady) {
+    setTimeout(function() {
+      if (initSupabase()) {
+        // Re-trigger data load if Supabase connected on retry
+        var evt = new Event('supabase-ready');
+        document.dispatchEvent(evt);
+      }
+    }, 500);
+  }
   initNav();
   setupEventDelegation();
   // Handle direct URL with hash
@@ -1501,6 +1532,10 @@ document.addEventListener('DOMContentLoaded', function() {
     goView(hash);
   }
 
+  // Show warning if config.js missing
+  if (window._configMissing) {
+    console.warn('config.js not loaded — static content only');
+  }
   // Try loading from Supabase with error handling
   try {
     if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
@@ -1514,14 +1549,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (bk.data && bk.data.length) { bk.data.forEach(function(b) { lB[b.id] = b; }); renderBooks(bk.data); }
         if (st.data) applySettings(st.data);
       }).catch(function(err) {
-        // Silently keep static content — user still sees placeholder data
         console.warn('Supabase load failed, using static content');
       });
     }
   } catch(e) {
-    // config.js missing or malformed — static content still shows
     console.warn('Config error, using static content');
   }
+  // Also load when Supabase connects via retry
+  document.addEventListener('supabase-ready', function() {
+    if (!sb) return;
+    Promise.all([
+      sb.from('articles').select('*').eq('status','published').order('published_at',{ascending:false}),
+      sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
+      sb.from('settings').select('*')
+    ]).then(function(results) {
+      var ar=results[0], bk=results[1], st=results[2];
+      if (ar.data && ar.data.length) { ar.data.forEach(function(a){lA[a.id]=a;}); renderArts(ar.data); }
+      if (bk.data && bk.data.length) { bk.data.forEach(function(b){lB[b.id]=b;}); renderBooks(bk.data); }
+      if (st.data) applySettings(st.data);
+    }).catch(function(){});
+  });
   var bt = document.getElementById('back-top');
   if (bt) bt.addEventListener('click', function() { window.scrollTo({top:0,behavior:'smooth'}); });
   // Dark mode toggle
