@@ -454,21 +454,21 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
     <a class="nav-a" id="nav-archive">الأرشيف</a>
   </nav>
   <div class="header-actions">
-    <button class="dark-toggle" id="dark-toggle" title="وضع ليلي" aria-label="تبديل الوضع الليلي" style="font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;">🌙</button>
-    <button id="search-toggle" title="بحث" aria-label="بحث" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:transparent;cursor:pointer;font-family:Cairo,sans-serif;font-size:13px;color:var(--mid);transition:all .2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--mid)'"><span style="font-size:15px;">🔍</span><span class="search-btn-text">بحث</span></button>
+    <button type="button" class="dark-toggle" id="dark-toggle" title="وضع ليلي" aria-label="تبديل الوضع الليلي" style="font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;">🌙</button>
+    <button type="button" id="search-toggle" title="بحث" aria-label="بحث" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:transparent;cursor:pointer;font-family:Cairo,sans-serif;font-size:13px;color:var(--mid);transition:all .2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--mid)'"><span style="font-size:15px;">🔍</span><span class="search-btn-text">بحث</span></button>
     <a class="btn-ghost" href="login.html">دخول المحررين</a>
-    <button class="btn-primary" id="sub-btn">اشترك مجاناً</button>
+    <button type="button" class="btn-primary" id="sub-btn">اشترك مجاناً</button>
   </div>
-  <button class="ham-btn" id="ham" aria-label="فتح القائمة" aria-expanded="false"><span></span><span></span><span></span></button>
+  <button type="button" class="ham-btn" id="ham" aria-label="فتح القائمة" aria-expanded="false"><span></span><span></span><span></span></button>
 </div></header>
 <div class="read-progress" id="read-progress"><div class="read-progress-bar" id="read-bar"></div></div>
-<button class="back-top" id="back-top" aria-label="العودة للأعلى">↑</button>
+<button type="button" class="back-top" id="back-top" aria-label="العودة للأعلى">↑</button>
 <div class="search-bar" id="search-bar">
   <div class="search-in">
     <div class="search-input-wrap">
       <span class="search-icon-inner">🔍</span>
       <input class="search-input" id="search-input" type="text" placeholder="ابحث في المقالات والكتب..." aria-label="بحث" autocomplete="off">
-      <button class="search-clear" id="search-clear" onclick="clearSearch()" aria-label="مسح البحث">×</button>
+      <button type="button" class="search-clear" id="search-clear" onclick="clearSearch()" aria-label="مسح البحث">×</button>
     </div>
     <div class="search-results" id="search-results"></div>
     <div class="search-hint">ابحث بعنوان المقالة أو اسم الكتاب أو الكاتب</div>
@@ -481,7 +481,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
     <div id="mob-search-results" style="display:none;background:var(--paper);border:1px solid var(--border);border-radius:10px;margin-top:6px;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.1);"></div>
   </div>
   <a id="mob-home">الرئيسية</a><a id="mob-issue">العدد الحالي</a><a id="mob-books">الكتب</a><a id="mob-articles">مقالات</a><a id="mob-archive">الأرشيف</a>
-  <div class="mob-actions"><a class="btn-ghost" href="login.html">دخول المحررين</a><button class="btn-primary" id="mob-sub">اشترك</button></div>
+  <div class="mob-actions"><a class="btn-ghost" href="login.html">دخول المحررين</a><button type="button" class="btn-primary" id="mob-sub">اشترك</button></div>
 </div>
 
 <!-- HOME -->
@@ -566,7 +566,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
   <div class="nl-logo">وَرَق</div>
   <div class="nl-title" id="nl-title">اشترك في وَرَق مجاناً</div>
   <div class="nl-sub" style="color:rgba(255,255,255,.75);" id="nl-sub">احصل على كل عدد جديد في بريدك الإلكتروني</div>
-  <div class="nl-form"><input class="nl-input" type="email" placeholder="بريدك الإلكتروني" id="nl-input"><button class="nl-btn" id="nl-btn" style="background:var(--gold);color:var(--gd);">اشترك الآن</button></div>
+  <div class="nl-form"><input class="nl-input" type="email" placeholder="بريدك الإلكتروني" id="nl-input"><button type="button" class="nl-btn" id="nl-btn" style="background:var(--gold);color:var(--gd);">اشترك الآن</button></div>
 </div>
 <footer class="footer" data-section="footer"><div class="ft">
   <div><div class="ft-logo" id="ft-logo">وَرَق</div><div class="ft-tag" id="ft-tag">جريدة مركز الأدب العربي<br>شهرية · رقمية · مجانية</div></div>
@@ -581,7 +581,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <!-- ISSUE -->
 <div class="view" id="v-issue">
 <div class="issue-hd"><div class="issue-hd-in">
-  <div><button class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label">العدد الأول · أبريل ٢٠٢٥</div></div>
+  <div><button type="button" class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label">العدد الأول · أبريل ٢٠٢٥</div></div>
   <div style="display:flex;gap:8px;align-items:center;"><a id="pdf-dl-btn" href="#" target="_blank" rel="noopener noreferrer" style="display:none;font-size:12px;color:#fff;background:var(--teal);padding:8px 16px;border-radius:6px;text-decoration:none;font-family:'Cairo',sans-serif;">تحميل PDF ↓</a><span id="pdf-no-link" style="font-size:12px;color:#555;font-family:'Cairo',sans-serif;">سيتوفر قريباً</span></div>
 </div></div>
 <div class="issue-pdf-wrap">
@@ -592,18 +592,18 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 
 <!-- BOOKS -->
 <div class="view" id="v-books">
-<div class="page-header"><div class="ph-in"><button class="ph-back" id="books-back">← الرئيسية</button><div class="ph-title">الكتب</div><div class="ph-sub">إصدارات مركز الأدب العربي</div></div></div>
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="books-back">← الرئيسية</button><div class="ph-title">الكتب</div><div class="ph-sub">إصدارات مركز الأدب العربي</div></div></div>
 <div class="books-page-grid" id="books-pg">
-  <div class="bpg-card" id="bp1" data-bid="sb1"><div class="bpg-cover" style="background:#1A7A7A;"><span>خوف</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#1A7A7A;">رعب</span><div class="bpg-title">خوف</div><div class="bpg-author">أسامة المسلم</div><div class="bpg-desc">رواية رعب تأخذك لعوالم مظلمة.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
-  <div class="bpg-card" id="bp2" data-bid="sb2"><div class="bpg-cover" style="background:#C94B1E;"><span>التنين الأسود</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#C94B1E;">فانتازيا</span><div class="bpg-title">التنين الأسود</div><div class="bpg-author">فاطمة النجار</div><div class="bpg-desc">ملحمة فانتازيا عربية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
-  <div class="bpg-card" id="bp3" data-bid="sb3"><div class="bpg-cover" style="background:#412402;"><span>جحيم العابرين</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#412402;">رواية</span><div class="bpg-title">جحيم العابرين</div><div class="bpg-author">مركز الأدب العربي</div><div class="bpg-desc">رواية بين الإثارة والعمق.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
-  <div class="bpg-card" id="bp4" data-bid="sb4"><div class="bpg-cover" style="background:#26215C;"><span>ديوان الظل</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#26215C;">شعر</span><div class="bpg-title">ديوان الظل</div><div class="bpg-author">شعراء المركز</div><div class="bpg-desc">تجربة شعرية.</div><button class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp1" data-bid="sb1"><div class="bpg-cover" style="background:#1A7A7A;"><span>خوف</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#1A7A7A;">رعب</span><div class="bpg-title">خوف</div><div class="bpg-author">أسامة المسلم</div><div class="bpg-desc">رواية رعب تأخذك لعوالم مظلمة.</div><button type="button" class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp2" data-bid="sb2"><div class="bpg-cover" style="background:#C94B1E;"><span>التنين الأسود</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#C94B1E;">فانتازيا</span><div class="bpg-title">التنين الأسود</div><div class="bpg-author">فاطمة النجار</div><div class="bpg-desc">ملحمة فانتازيا عربية.</div><button type="button" class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp3" data-bid="sb3"><div class="bpg-cover" style="background:#412402;"><span>جحيم العابرين</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#412402;">رواية</span><div class="bpg-title">جحيم العابرين</div><div class="bpg-author">مركز الأدب العربي</div><div class="bpg-desc">رواية بين الإثارة والعمق.</div><button type="button" class="bpg-btn">اقرأ المزيد</button></div></div>
+  <div class="bpg-card" id="bp4" data-bid="sb4"><div class="bpg-cover" style="background:#26215C;"><span>ديوان الظل</span></div><div class="bpg-body"><span class="bpg-badge" style="background:#26215C;">شعر</span><div class="bpg-title">ديوان الظل</div><div class="bpg-author">شعراء المركز</div><div class="bpg-desc">تجربة شعرية.</div><button type="button" class="bpg-btn">اقرأ المزيد</button></div></div>
 </div>
 </div>
 
 <!-- ARTICLES -->
 <div class="view" id="v-articles">
-<div class="page-header"><div class="ph-in"><button class="ph-back" id="arts-back">← الرئيسية</button><div class="ph-title">مقالات</div><div class="ph-sub">أحدث المقالات الأدبية</div></div></div>
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arts-back">← الرئيسية</button><div class="ph-title">مقالات</div><div class="ph-sub">أحدث المقالات الأدبية</div></div></div>
 <div class="arts-page"><div class="apg-grid" id="arts-pg">
   <div class="apg-card" id="ap1" data-aid="s1"><span class="apg-badge" style="background:#1A7A7A;">نقد أدبي</span><div class="apg-title">رواية "خوف": حين يجرؤ الأدب العربي على الظلام</div><div class="apg-excerpt">في روايته يأخذنا أسامة المسلم إلى عوالم مظلمة...</div><div class="apg-footer"><span class="apg-author">فريق التحرير</span><span class="apg-date">أبريل ٢٠٢٥</span></div></div>
   <div class="apg-card" id="ap2" data-aid="s2"><span class="apg-badge" style="background:#412402;">مقالة أدبية</span><div class="apg-title">الرواية العربية والخيال العلمي</div><div class="apg-excerpt">موجة جديدة من الكتاب العرب تكسر التصور السائد...</div><div class="apg-footer"><span class="apg-author">د. سارة الأحمد</span><span class="apg-date">أبريل ٢٠٢٥</span></div></div>
@@ -613,7 +613,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 
 <!-- ARCHIVE -->
 <div class="view" id="v-archive">
-<div class="page-header"><div class="ph-in"><button class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات جريدة وَرَق</div></div></div>
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات جريدة وَرَق</div></div></div>
 <div class="arch-page"><div class="arch-pg-grid" id="arch-pg">
   <div class="arch-pg-card" data-goissue="1" id="archpg1" data-goissue="1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
   <div class="arch-pg-card" data-goissue="2"><div class="arch-pg-cover" style="background:#C94B1E;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثاني</div></div><div class="arch-pg-info"><span class="arch-pg-date">مايو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
@@ -627,11 +627,11 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <!-- SINGLE ARTICLE -->
 <div class="view" id="v-art-single">
 <div class="single-art-wrap">
-  <button class="ph-back" id="art-single-back" style="margin-bottom:18px;">← العودة</button>
+  <button type="button" class="ph-back" id="art-single-back" style="margin-bottom:18px;">← العودة</button>
   <div class="sa-badge" id="sa-badge"></div>
   <h1 class="sa-title" id="sa-title"></h1>
-  <div class="sa-meta"><span class="sa-author" id="sa-author"></span><span class="sa-date" id="sa-date"></span><span class="sa-cat" id="sa-cat"></span><span class="read-time" id="read-time"></span><button class="share-btn" onclick="openShare('art')" aria-label="مشاركة"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>مشاركة</button></div>
-  <div class="font-controls"><button class="font-btn" onclick="changeFontSize(-1)">A-</button><button class="font-btn" onclick="changeFontSize(0)">A</button><button class="font-btn" onclick="changeFontSize(1)">A+</button></div>
+  <div class="sa-meta"><span class="sa-author" id="sa-author"></span><span class="sa-date" id="sa-date"></span><span class="sa-cat" id="sa-cat"></span><span class="read-time" id="read-time"></span><button type="button" class="share-btn" onclick="openShare('art')" aria-label="مشاركة"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>مشاركة</button></div>
+  <div class="font-controls"><button type="button" class="font-btn" onclick="changeFontSize(-1)">A-</button><button type="button" class="font-btn" onclick="changeFontSize(0)">A</button><button type="button" class="font-btn" onclick="changeFontSize(1)">A+</button></div>
   <div class="sa-body" id="sa-body"></div>
 </div>
 <div class="related-sec"><div class="rel-label">مقالات ذات صلة</div><div class="rel-grid" id="rel-arts"></div></div>
@@ -658,7 +658,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
       <textarea class="cf-textarea" id="cf-body" placeholder="اكتب تعليقك هنا..." maxlength="1000"></textarea>
     </div>
     <div class="cf-error" id="cf-error"></div>
-    <button class="cf-submit" id="cf-submit" onclick="submitComment()">إرسال التعليق</button>
+    <button type="button" class="cf-submit" id="cf-submit" onclick="submitComment()">إرسال التعليق</button>
     <div class="cf-success" id="cf-success">شكراً! تعليقك قيد المراجعة وسيظهر بعد موافقة المحررين.</div>
     <div class="cf-note">⚠ التعليقات تُراجع قبل النشر · الاسم مطلوب · لا تشارك معلومات شخصية</div>
   </div>
@@ -671,7 +671,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <!-- SINGLE BOOK -->
 <div class="view" id="v-book-single">
 <div class="single-book-wrap">
-  <button class="ph-back" id="book-single-back" style="margin-bottom:18px;">← العودة</button>
+  <button type="button" class="ph-back" id="book-single-back" style="margin-bottom:18px;">← العودة</button>
   <div class="sb-in">
     <div><div class="sb-cover" id="sb-cover"><span id="sb-cover-t"></span></div></div>
     <div>
@@ -682,7 +682,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
       <div class="sb-pills" id="sb-pills"></div>
       <div class="sb-desc" id="sb-desc"></div>
       <div class="sb-quote"><p id="sb-quote"></p></div>
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;"><button class="sb-buy" id="sb-buy">احصل على الكتاب</button><button class="share-btn" onclick="openShare('book')" aria-label="مشاركة"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>مشاركة</button></div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;"><button type="button" class="sb-buy" id="sb-buy">احصل على الكتاب</button><button type="button" class="share-btn" onclick="openShare('book')" aria-label="مشاركة"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>مشاركة</button></div>
     </div>
   </div>
 </div>
@@ -896,8 +896,8 @@ function renderBooks(books) {
   if (hg) { hg.innerHTML = books.slice(0,4).map(bookCardHTML).join(''); hg.querySelectorAll('.book-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); }); }
   if (pg) {
     pg.innerHTML = books.map(function(b) {
-      var covHTML = b.image ? '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';padding:0;"><img src="' + b.image + '" style="width:100%;height:100%;object-fit:cover;"></div>' : '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';"><span>' + b.title + '</span></div>';
-      return '<div class="bpg-card" data-bid="' + b.id + '">' + covHTML + '<div class="bpg-body"><span class="bpg-badge" style="background:' + (b.color||'#1A7A7A') + ';">' + (b.genre||'') + '</span><div class="bpg-title">' + b.title + '</div><div class="bpg-author">' + (b.author||'') + '</div><div class="bpg-desc">' + (b.description||b.desc||'') + '</div><button class="bpg-btn">اقرأ المزيد</button></div></div>';
+      var covHTML = b.image ? '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';padding:0;"><img alt="" src="' + b.image + '" style="width:100%;height:100%;object-fit:cover;"></div>' : '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';"><span>' + b.title + '</span></div>';
+      return '<div class="bpg-card" data-bid="' + b.id + '">' + covHTML + '<div class="bpg-body"><span class="bpg-badge" style="background:' + (b.color||'#1A7A7A') + ';">' + (b.genre||'') + '</span><div class="bpg-title">' + b.title + '</div><div class="bpg-author">' + (b.author||'') + '</div><div class="bpg-desc">' + (b.description||b.desc||'') + '</div><button type="button" class="bpg-btn">اقرأ المزيد</button></div></div>';
     }).join('');
     pg.querySelectorAll('.bpg-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); });
   }
@@ -964,7 +964,7 @@ function applySettings(rows) {
   if (s.banner && s.banner.url) {
     var bn = document.getElementById('site-banner');
     // Add close button if not already there
-    if (bn && !document.getElementById('banner-close')) {
+    if (bn) { var existingBc = document.getElementById('banner-close'); if(existingBc) existingBc.remove(); if (true) {
       var bc = document.createElement('button');
       bc.id = 'banner-close';
       bc.innerHTML = '×';
@@ -972,7 +972,7 @@ function applySettings(rows) {
       bc.onclick = function() { bn.style.display = 'none'; };
       bn.style.position = 'relative';
       bn.appendChild(bc);
-    }
+    }}
     var bi = document.getElementById('banner-img');
     if (bn && bi) { bi.src = s.banner.url; bn.style.display = 'block';
       if (s.banner.link) {
@@ -995,6 +995,11 @@ function applySettings(rows) {
     } else {
       if (li) li.style.display = 'none';
       if (lt) { lt.style.display = 'block'; lt.textContent = g.name || 'وَرَق'; }
+    }
+    // Always update site name text instances
+    if (g.name) {
+      var nt = document.getElementById('header-logo-text');
+      if (nt && !g.logo_url) nt.textContent = g.name;
     }
 
     // ② Masthead big name
@@ -1592,25 +1597,25 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="share-box">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
       <h3 style="margin:0;">مشاركة</h3>
-      <button class="share-close" onclick="closeShare()">×</button>
+      <button type="button" class="share-close" onclick="closeShare()">×</button>
     </div>
     <div class="share-options">
-      <button class="share-opt" onclick="shareX()">
+      <button type="button" class="share-opt" onclick="shareX()">
         <div class="share-opt-icon" style="background:#000;color:#fff;">𝕏</div>
         <span>مشاركة على X / Twitter</span>
       </button>
-      <button class="share-opt" onclick="shareWA()">
+      <button type="button" class="share-opt" onclick="shareWA()">
         <div class="share-opt-icon" style="background:#25D366;color:#fff;">📱</div>
         <span>مشاركة عبر WhatsApp</span>
       </button>
-      <button class="share-opt" onclick="shareNative()">
+      <button type="button" class="share-opt" onclick="shareNative()">
         <div class="share-opt-icon" style="background:var(--teal);color:#fff;">↑</div>
         <span>مشاركة...</span>
       </button>
     </div>
     <div class="share-url">
       <input type="text" id="share-url-input" readonly>
-      <button onclick="copyShareUrl()">نسخ</button>
+      <button type="button" onclick="copyShareUrl()">نسخ</button>
     </div>
   </div>
 </div>
