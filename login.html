@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://*.supabase.co; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://*.supabase.co; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co;">
 <title>وَرَق | الدخول</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&family=Felfel&display=swap&display=swap" rel="stylesheet">
 <style>
@@ -114,15 +114,25 @@ input[aria-invalid="true"]{border-color:#C94B1E;}
   </div>
 </div>
 
+<script>window._configMissing = true;</script>
+<script src="config.js" onload="window._configMissing=false;"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
 <script>
 // ── INIT ──
-var sb;
+var sb = null;
 try {
-  sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  if (window._configMissing || typeof SUPABASE_URL === 'undefined' || !SUPABASE_URL) {
+    console.warn('config.js not loaded');
+  } else if (typeof supabase !== 'undefined' && supabase.createClient) {
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  }
 } catch(e) {
-  showErr('خطأ في تهيئة النظام — تحققي من ملف الإعدادات');
+  console.warn('Supabase init failed:', e.message);
+}
+if (!sb) {
+  document.addEventListener('DOMContentLoaded', function() {
+    showErr('خطأ في تهيئة النظام — تحققي من ملف config.js');
+  });
 }
 
 // Rate limiting
@@ -132,7 +142,7 @@ var MAX_ATTEMPTS = 5;
 var COOLDOWN_MS = 60000; // 1 minute
 
 // Check existing session
-if (sb) {
+if (sb && !window._configMissing) {
   sb.auth.getSession().then(function(res) {
     if (res && res.data && res.data.session) {
       redirect(res.data.session.user);
@@ -144,6 +154,7 @@ if (sb) {
 
 // ── LOGIN ──
 async function doLogin() {
+  if (!sb) { showErr('خطأ في الاتصال — تحققي من ملف config.js'); return; }
   var email = document.getElementById('email').value.trim();
   var pass = document.getElementById('pass').value;
   var remember = document.getElementById('remember').checked;
@@ -202,6 +213,7 @@ async function doLogin() {
 // ── REDIRECT ──
 async function redirect(user) {
   try {
+    if (!sb) { showErr('خطأ في الاتصال'); return; }
     var res = await sb.from('profiles').select('role').eq('id', user.id).single();
     // Only navigate to known safe pages
     var ALLOWED = { 'admin': 'admin.html', 'writer': 'writer.html' };
@@ -216,6 +228,7 @@ async function redirect(user) {
 
 // ── RESET PASSWORD ──
 async function doReset() {
+  if (!sb) { document.getElementById('reset-err-text').textContent = 'خطأ في الاتصال'; document.getElementById('reset-err').classList.add('show'); return; }
   var email = document.getElementById('reset-email').value.trim();
   if (!email || !email.includes('@')) {
     document.getElementById('reset-err-text').textContent = 'يرجى إدخال بريد إلكتروني صالح';
