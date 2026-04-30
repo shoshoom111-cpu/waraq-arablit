@@ -1417,7 +1417,8 @@ function initSearch() {
         Object.keys(lB).forEach(function(k) { if (!SB[k]) { var b = lB[k]; if ((b.title||'').toLowerCase().indexOf(qq)>-1) hits.push({type:'book',id:k,cat:b.genre||'كتاب',title:b.title}); } });
         if (!hits.length) { mobResults.innerHTML = '<div class="sr-empty">لا توجد نتائج</div>'; mobResults.style.display = 'block'; return; }
         mobResults.innerHTML = hits.slice(0,5).map(function(h) {
-          return '<div class="sr-item" data-'+(h.type==='art'?'aid':'bid')+'="'+h.id+'"><div class="sr-cat">'+h.cat+'</div><div class="sr-title">'+h.title+'</div></div>';
+          var dtype2 = h.type==='art' ? 'aid' : 'bid';
+          return '<div class=sr-item data-'+dtype2+'='+h.id+'><div class=sr-cat>'+h.cat+'</div><div class=sr-title>'+h.title+'</div></div>';
         }).join('');
         mobResults.style.display = 'block';
         mobResults.querySelectorAll('.sr-item').forEach(function(item) {
@@ -1476,7 +1477,8 @@ function doSearch(q) {
     return;
   }
   results.innerHTML = hits.slice(0,6).map(function(h) {
-    return '<div class="sr-item" data-' + (h.type==='art'?'aid':'bid') + '="' + h.id + '"><div class="sr-cat">' + h.cat + '</div><div class="sr-title">' + h.title + '</div></div>';
+    var dtype = h.type==='art' ? 'aid' : 'bid';
+    return '<div class=sr-item data-' + dtype + '=' + escHtml(h.id) + '><div class=sr-cat>' + escHtml(h.cat) + '</div><div class=sr-title>' + escHtml(h.title) + '</div></div>';
   }).join('');
   results.classList.add('show');
   // Close search bar on result click (delegation handles the openArt/openBook)
