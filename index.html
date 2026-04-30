@@ -722,7 +722,6 @@ initSupabase();
 var lA = {}, lB = {}, prevView = 'home';
 
 var SA = {
-  s1:{id:'s1',badge:'نقد أدبي',category:'نقد أدبي',title:'رواية "خوف": حين يجرؤ الأدب العربي على الظلام',author_name:'فريق التحرير',date:'أبريل ٢٠٢٥',body:'<p>في مشهد أدبي يتجدد، يأتي أسامة المسلم بروايته خوف لتكون بياناً أدبياً صريحاً.</p><h2>قصة لا تنسى</h2><p>تدور الأحداث في قرية معزولة تحتضن أسراراً مدفونة منذ عقود.</p><div class="sa-quote"><p>الخوف ليس ضعفاً، بل الاعتراف بأن ثمة ما يستحق الدفاع عنه.</p></div>'},
   s2:{id:'s2',badge:'مقالة أدبية',category:'مقالات أدبية',title:'الرواية العربية والخيال العلمي',author_name:'د. سارة الأحمد',date:'أبريل ٢٠٢٥',body:'<p>موجة جديدة من الكتاب العرب تكسر التصور السائد حول الخيال العلمي.</p><div class="sa-quote"><p>الخيال العلمي العربي استعادة لروح الاستكشاف.</p></div>'},
   s3:{id:'s3',badge:'حوار',category:'حوار',title:'حوار مع فاطمة النجار',author_name:'ليلى المنصور',date:'أبريل ٢٠٢٥',body:'<p>التقينا بالكاتبة فاطمة النجار للحديث عن الفانتازيا العربية.</p><div class="sa-quote"><p>أردت أن أكتب الفانتازيا التي كنت أتمنى أن أجدها.</p></div>'}
 };
@@ -1111,8 +1110,8 @@ function initNav() {
   nav('book-single-back', goBack);
   // am1/archpg1 handled by data-goissue delegation
   nav('nl-btn', doSub);
-  nav('hero-title', function() { openArt('s1'); });
-  nav('hero-cta', function() { openArt('s1'); });
+  nav('hero-title', function() { openArt('s2'); });
+  nav('hero-cta', function() { openArt('s2'); });
   // Static items handled by event delegation (data-aid/data-bid attributes)
 }
 
