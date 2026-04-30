@@ -500,7 +500,6 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
     <div class="hero-rule"></div>
     <div class="hero-body" id="hero-body"></div>
     <div class="hero-byline" id="hero-by"></div>
-    <div class="hero-cta" id="hero-cta">اقرأ المقالة كاملة ←</div>
   </div>
   <div class="hero-side">
     <div class="side-hd">جديد المركز</div>
@@ -714,17 +713,13 @@ function goView(name) {
   } else if (!prevView) {
     prevView = 'home';
   }
-  if (name === 'art-single' && _currentShareId) {
-    try { history.pushState({view:'art-single', id:_currentShareId}, '', '#art/' + _currentShareId); } catch(e) {}
-  } else if (name === 'book-single' && _currentShareBookId) {
-    try { history.pushState({view:'book-single', id:_currentShareBookId}, '', '#book/' + _currentShareBookId); } catch(e) {}
-  }
+  // art-single and book-single push their own state after setting IDs
 }
 window.addEventListener('popstate', function(e) {
   if (e.state && e.state.view) {
-    if (e.state.view === 'art-single' && e.state.id) { prevView = prevView || 'home'; openArt(e.state.id); }
-    else if (e.state.view === 'book-single' && e.state.id) { prevView = prevView || 'home'; openBook(e.state.id); }
-    else goView(e.state.view);
+    if (e.state.view === 'art-single' && e.state.id) { openArt(e.state.id); }
+    else if (e.state.view === 'book-single' && e.state.id) { openBook(e.state.id); }
+    else { goView(e.state.view); }
   } else {
     goView(prevView || 'home');
   }
@@ -839,6 +834,7 @@ function openBook(id) {
     });
   }
   _currentShareBookId = id;
+  try { history.pushState({view:'book-single', id:id}, '', '#book/' + id); } catch(e) {}
   goView('book-single');
 }
 
@@ -1078,7 +1074,8 @@ function initNav() {
   nav('book-single-back', goBack);
   // am1/archpg1 handled by data-goissue delegation
   nav('nl-btn', doSub);
-  // hero nav handled by applySettings
+  nav('hero-title', function() { openArt('s1'); });
+  nav('hero-cta', function() { openArt('s1'); });
   // Static items handled by event delegation (data-aid/data-bid attributes)
 }
 
@@ -1108,6 +1105,7 @@ openArt = function(id) {
   changeFontSize(_fontSize); // Apply saved font size
   initReadProgress();
   _currentShareId = id;
+  try { history.pushState({view:'art-single', id:id}, '', '#art/' + id); } catch(e) {}
   // Load comments
   loadComments(id);
   var errEl = document.getElementById('cf-error');
