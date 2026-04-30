@@ -964,7 +964,7 @@ function applySettings(rows) {
   if (s.banner && s.banner.url) {
     var bn = document.getElementById('site-banner');
     // Add close button if not already there
-    if (bn) { var existingBc = document.getElementById('banner-close'); if(existingBc) existingBc.remove(); if (true) {
+    if (bn && !document.getElementById('banner-close')) {
       var bc = document.createElement('button');
       bc.id = 'banner-close';
       bc.innerHTML = '×';
@@ -972,7 +972,7 @@ function applySettings(rows) {
       bc.onclick = function() { bn.style.display = 'none'; };
       bn.style.position = 'relative';
       bn.appendChild(bc);
-    }}
+    }
     var bi = document.getElementById('banner-img');
     if (bn && bi) { bi.src = s.banner.url; bn.style.display = 'block';
       if (s.banner.link) {
