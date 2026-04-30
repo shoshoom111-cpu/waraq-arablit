@@ -1477,7 +1477,7 @@ function doSearch(q) {
     }
   });
   if (!hits.length) {
-    results.innerHTML = '<div class="sr-empty">لا توجد نتائج لـ "' + q + '"</div>';
+    results.innerHTML = '<div class=sr-empty>لا توجد نتائج لـ &ldquo;' + q + '&rdquo;</div>';
     results.classList.add('show');
     return;
   }
