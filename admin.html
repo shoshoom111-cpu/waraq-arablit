@@ -742,7 +742,7 @@ var _cache = {};
 function showLoad(){var o=document.getElementById('loading-overlay');if(o)o.classList.add('on');}
 function hideLoad(){var o=document.getElementById('loading-overlay');if(o)o.classList.remove('on');}
 async function cachedFetch(key, fn){if(_cache[key])return _cache[key];var result=await fn();_cache[key]=result;return result;}
-function invalidateCache(){_cache={};}
+function invalidateCache(){_cache={};_settingsCache=null;}
 
 var me=null;
 
@@ -775,7 +775,16 @@ async function init(){
     }
   });
 }
-init();
+// Only call init if Supabase is ready
+if (_supabaseReady) {
+  init();
+} else {
+  document.addEventListener('DOMContentLoaded', function() {
+    if (initSupabase()) {
+      init();
+    }
+  });
+}
 
 // ── NAVIGATION ──
 function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/`/g,'&#96;');}
@@ -808,6 +817,7 @@ function syncHero(){
 async function loadSettings(){
   var {data}=await sb.from('settings').select('*');
   if(!data)return;
+  _settingsCache = data; // Cache for loadHomepageSettings
   var s={};data.forEach(r=>s[r.key]=r.value);
   if(s.design){
     if(s.design.teal){pvc('teal',s.design.teal);sv('c-teal',s.design.teal);sv('ct-teal',s.design.teal);}
@@ -1080,10 +1090,12 @@ async function delUser(id){
 async function saveGeneral(){
   var cur=await getCurSettings('general')||{};
   await sb.from('settings').upsert({key:'general',value:{...cur,name:v('s-name'),tagline:v('s-tag'),topbar:v('s-topbar')}});
+  _settingsCache=null;
   toast('تم حفظ معلومات الجريدة!');syncPv();
 }
 async function saveIssue(){
   await sb.from('settings').upsert({key:'issue',value:{num:v('s-inum'),date:v('s-idate'),hero_title:v('s-htitle'),hero_body:v('s-hbody'),hero_badge:v('s-hbadge'),hero_by:v('s-hby'),quote:v('s-quote')}});
+  _settingsCache=null;
   toast('تم حفظ الخبر الرئيسي!');syncHero();
 }
 async function saveSideItems(){
@@ -1093,6 +1105,7 @@ async function saveSideItems(){
     return {title:(inputs[0]?inputs[0].value:'')||'',meta:(inputs[1]?inputs[1].value:'')||''};
   }).filter(i=>i.title.trim());
   await sb.from('settings').upsert({key:'side_items',value:items});
+  _settingsCache=null;
   toast('تم حفظ الشريط الجانبي!');
 }
 async function saveDesign(){
@@ -1111,21 +1124,25 @@ async function saveDesign(){
     sv(pfx+'c-orange',orange);sv(pfx+'ct-orange',orange);
     sv(pfx+'c-gold',gold);sv(pfx+'ct-gold',gold);
   });
+  _settingsCache=null;
   toast('تم حفظ التصميم!');
 }
 async function saveSocial(){
   await sb.from('settings').upsert({key:'social',value:{ig:v('s-ig'),tt:v('s-tt'),store:v('s-store'),wa:v('s-wa'),email:v('s-email'),brevo:v('s-brevo')}});
+  _settingsCache=null;
   toast('تم حفظ الروابط!');
 }
 async function saveFooter(){
   var cur=await getCurSettings('general')||{};
   await sb.from('settings').upsert({key:'general',value:{...cur,nl_title:v('s-nltitle'),nl_desc:v('s-nldesc'),footer_tag:v('s-ftag'),copyright:v('s-fcopy')}});
+  _settingsCache=null;
   toast('تم الحفظ!');
 }
 async function saveTicker(){
   var items=Array.from(document.querySelectorAll('#tick-list input[type=text]')).map(i=>i.value).filter(x=>x.trim());
   await sb.from('settings').upsert({key:'ticker',value:items});
   se('lpv-ticker',items.map(t=>'◄ '+t).join('   '));
+  _settingsCache=null;
   toast('تم حفظ الشريط!');
 }
 async function getCurSettings(key){
@@ -1282,6 +1299,7 @@ async function saveLogo() {
   cur.header_bg = v('s-headerbg') || null;
   var res = await sb.from('settings').upsert({key:'general', value:cur});
   if (res.error) { toast('خطأ في الحفظ'); return; }
+  _settingsCache=null;
   toast('تم الحفظ ✓');
 }
 
@@ -1291,6 +1309,7 @@ async function saveBanner() {
   var url = v('s-banner-url');
   var link = v('s-banner-link');
   await sb.from('settings').upsert({key:'banner', value:{url:url||null, link:link||null}});
+  _settingsCache=null;
   toast('تم حفظ البانر!');
 }
 
@@ -1298,6 +1317,7 @@ async function saveMonthPick() {
   var title = v('mp-title');
   if (!title) { toast('أدخلي عنوان الكتاب'); return; }
   await sb.from('settings').upsert({key:'month_pick', value:{title:title, author:v('mp-author'), desc:v('mp-desc'), color:v('mp-color'), url:v('mp-url'), image:(v('mp-img')&&v('mp-img').trim())||null}});
+  _settingsCache=null;
   toast('تم حفظ توصية الشهر!');
 }
 
@@ -1311,6 +1331,7 @@ async function saveSectionsOrder() {
   var order = [];
   items.forEach(function(el) { order.push(el.getAttribute('data-sec')); });
   await sb.from('settings').upsert({key:'sections_order', value:order});
+  _settingsCache=null;
   toast('تم حفظ الترتيب!');
 }
 
@@ -1335,9 +1356,16 @@ async function saveSectionsOrder() {
 })();
 
 // Load homepage settings
+var _settingsCache = null;
 async function loadHomepageSettings() {
-  var {data} = await sb.from('settings').select('*');
-  if (!data) return;
+  // Use cached settings if available
+  var data = _settingsCache;
+  if (!data) {
+    var res = await sb.from('settings').select('*');
+    if (!res.data) return;
+    data = res.data;
+    _settingsCache = data;
+  }
   var s = {};
   data.forEach(function(r) { s[r.key] = r.value; });
   if (s.general) {
