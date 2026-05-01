@@ -197,6 +197,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
   <div class="ntab" id="nt-comments" onclick="goSec('comments',this)">التعليقات <span id="comments-badge" style="background:var(--orange);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;margin-right:4px;display:none;">0</span></div>
   <div class="ntab" id="nt-add-art" onclick="goSec('add-art',this)">إضافة مقالة</div>
   <div class="ntab" id="nt-arts" onclick="goSec('arts',this)">المقالات <span class="badge" id="pcount">0</span></div>
+  <div class="ntab" id="nt-news" onclick="goSec('news',this)">الأخبار</div>
   <div class="ntab" id="nt-books" onclick="goSec('books',this)">الكتب</div>
   <div class="ntab" id="nt-archive" onclick="goSec('archive',this)">الأرشيف</div>
   <div class="ntab" id="nt-users" onclick="goSec('users',this)">المستخدمون</div>
@@ -211,6 +212,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
     <div class="sb-item" onclick="goSec('comments',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M14 9a5 5 0 01-5 5H4l-3 2V6a5 5 0 015-5h3"/><circle cx="12" cy="4" r="3"/></svg>التعليقات</div>
     <div class="sb-item" onclick="goSec('homepage',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="4" rx="1"/><rect x="1" y="7" width="6" height="8" rx="1"/><rect x="9" y="7" width="6" height="4" rx="1"/></svg>الصفحة الرئيسية</div>
     <div class="sb-sep">المحتوى</div>
+    <div class="sb-item" onclick="goSec('news',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M2 2h12v2H2zM2 6h8v2H2zM2 10h10v2H2z"/></svg>الأخبار</div>
     <div class="sb-item" onclick="goSec('add-art',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12"/></svg>إضافة مقالة</div>
     <div class="sb-item" onclick="goSec('arts',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M2 2h12v12H2zM5 6h6M5 9h4"/></svg>المقالات</div>
     <div class="sb-item" onclick="goSec('books',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><rect x="2" y="1" width="9" height="14" rx="1"/><path d="M11 4h3M11 8h3"/></svg>الكتب</div>
@@ -384,7 +386,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         <div class="art-editor">
           <div class="two">
             <div class="fg"><label>عنوان المقالة *</label><input type="text" id="aa-title" placeholder="عنوان المقالة"></div>
-            <div class="fg"><label>التصنيف</label><select id="aa-cat"><option>نقد أدبي</option><option>مقالات أدبية</option><option>حوار</option><option>ثقافة</option><option>توصية</option><option>تحقيق</option></select></div>
+            <div class="fg"><label>التصنيف</label><select id="aa-cat"><option>نقد أدبي</option><option>مقالات أدبية</option><option>أخبار</option><option>حوار</option><option>ثقافة</option><option>توصية</option><option>تحقيق</option></select></div>
             <div class="fg"><label>اسم القلم / الكاتب</label><input type="text" id="aa-author" placeholder="اسم الكاتب أو القلم"></div>
             <div class="fg"><label>الحالة</label><select id="aa-status"><option value="published">نشر مباشر</option><option value="pending">إرسال للمراجعة</option><option value="draft">مسودة</option></select></div>
           </div>
@@ -406,6 +408,21 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
             <button class="btn p" onclick="addArticle()">نشر المقالة</button>
             <button class="btn o" onclick="clearArtForm()">مسح</button>
           </div>
+        </div>
+      </div>
+
+
+      <!-- ══ NEWS ══ -->
+      <div class="sec" id="sec-news">
+        <div class="pg-title">إدارة الأخبار</div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <button class="btn p" onclick="goSec('add-art',document.getElementById('nt-add-art'));document.getElementById('aa-cat').value='أخبار'">إضافة خبر جديد +</button>
+        </div>
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">كل الأخبار</span>
+          </div>
+          <div class="card-body" id="news-list"><div class="empty">جاري التحميل...</div></div>
         </div>
       </div>
 
@@ -735,7 +752,7 @@ if (!_supabaseReady) {
     // Retry once after DOM ready
     if (!initSupabase()) {
       var ov = document.getElementById('loading-overlay');
-      if (ov) ov.innerHTML = '<div style="text-align:center;color:#C94B1E;padding:40px;"><div style="font-size:28px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">لم يتم الاتصال بقاعدة البيانات</div><div style="font-size:12px;color:#666;">تحقق من:<br>١. وجود ملف config.js<br>٢. صحة SUPABASE_URL و SUPABASE_KEY</div></div>';
+      if (ov) { ov.classList.add('on'); ov.innerHTML = '<div style="text-align:center;color:#C94B1E;padding:40px;"><div style="font-size:28px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">لم يتم الاتصال بقاعدة البيانات</div><div style="font-size:12px;color:#666;">تحقق من:<br>١. وجود ملف config.js<br>٢. صحة SUPABASE_URL و SUPABASE_KEY</div><div style="margin-top:16px;"><button onclick="location.reload()" style="padding:8px 16px;background:#1A7A7A;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:Cairo,sans-serif;">إعادة المحاولة</button></div></div>'; }
     }
   });
 }
@@ -776,7 +793,7 @@ async function init(){
       var badge=document.getElementById('comments-badge');
       if(badge){badge.textContent=r.data.length;badge.style.display='inline';}
     }
-  });
+  }).catch(function(e){console.warn('Comments badge error:',e);});
 }
 // Only call init if Supabase is ready
 if (_supabaseReady) {
@@ -791,7 +808,7 @@ if (_supabaseReady) {
 
 // ── NAVIGATION ──
 function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/`/g,'&#96;');}
-function goSec(name,el){ if(name==='homepage')loadHomepageSettings(); if(name==='comments')loadComments();
+function goSec(name,el){ if(name==='homepage')loadHomepageSettings(); if(name==='comments')loadComments(); if(name==='news')loadNews();
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
   document.getElementById('sec-'+name).classList.add('on');
@@ -863,6 +880,12 @@ async function loadDash(){
 }
 
 // ── ARTICLES ──
+
+async function loadNews() {
+  var { data } = await sb.from('articles').select('*').eq('category', 'أخبار').order('created_at', { ascending: false });
+  renderArtRows(data || [], 'news-list', true);
+}
+
 async function loadArts(){
   var f=v('art-flt');
   var q=sb.from('articles').select('*').order('created_at',{ascending:false});
@@ -877,8 +900,6 @@ function renderArtRows(arts,cid,isAdmin){
   var el=document.getElementById(cid);if(!el)return;
   if(!arts.length){el.innerHTML='<div class="empty">لا توجد مقالات</div>';return;}
   var sl={pending:'قيد المراجعة',published:'منشورة',rejected:'مرفوضة',draft:'مسودة',archived:'مؤرشفة',scheduled:'مجدولة'};
-var sc2 = {scheduled:'sp-pend'};
-
   var sc={pending:'sp-pend',published:'sp-pub',rejected:'sp-rej',draft:'sp-draft',archived:'sp-arch',scheduled:'sp-pend'};
   el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='irow';var pend=a.status==='pending'?'<button class="bsm t" onclick="pubArt(\''+a.id+'\')">نشر</button><button class="bsm r" onclick="rejectArt(\''+a.id+'\')">رفض</button>':'';
     var archBtn=a.status==='archived'?'<button class="bsm t" onclick="unarchiveArt(\''+a.id+'\')">إعادة نشر</button>':'<button class="bsm" style="background:#888" onclick="archiveArt(\''+a.id+'\')">أرشفة</button>';
@@ -1125,7 +1146,7 @@ async function saveSideItems(){
   var items=Array.from(rows).map(r=>{
     var inputs=r.querySelectorAll('input[type=text]');
     return {title:(inputs[0]?inputs[0].value:'')||'',meta:(inputs[1]?inputs[1].value:'')||''};
-  }).filter(i=>i.title.trim());
+  }).filter(i=>i.title && i.title.trim());
   await sb.from('settings').upsert({key:'side_items',value:items});
   _settingsCache=null;
   toast('تم حفظ الشريط الجانبي!');
@@ -1161,7 +1182,7 @@ async function saveFooter(){
   toast('تم الحفظ!');
 }
 async function saveTicker(){
-  var items=Array.from(document.querySelectorAll('#tick-list input[type=text]')).map(i=>i.value).filter(x=>x.trim());
+  var items=Array.from(document.querySelectorAll('#tick-list input[type=text]')).map(i=>i.value.trim()).filter(x=>x);
   await sb.from('settings').upsert({key:'ticker',value:items});
   se('lpv-ticker',items.map(t=>'◄ '+t).join('   '));
   _settingsCache=null;
@@ -1187,8 +1208,8 @@ function applyTheme(t,o,g){
 
 // ── HELPERS ──
 function toggleIF(id){document.getElementById(id).classList.toggle('on');}
-function addSideItem(){var el=document.getElementById('side-list');var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" placeholder="اسم الكتاب" style="margin-bottom:5px;"><input type="text" placeholder="الكاتب · التصنيف"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);}
-function addTick(){var el=document.getElementById('tick-list');var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" placeholder="نص الخبر..." style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);}
+function addSideItem(){var el=document.getElementById('side-list');var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" placeholder="اسم الكتاب" style="margin-bottom:5px;" required><input type="text" placeholder="الكاتب · التصنيف"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);var inp=r.querySelector('input');if(inp)inp.focus();}
+function addTick(){var el=document.getElementById('tick-list');var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" placeholder="نص الخبر..." style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);var inp=r.querySelector('input');if(inp)inp.focus();}
 function v(id){var e=document.getElementById(id);return e?e.value:'';}
 function sv(id,val){if(val!==undefined&&val!==null){var e=document.getElementById(id);if(e)e.value=val;}}
 function se(id,txt){if(txt!==undefined&&txt!==null){var e=document.getElementById(id);if(e)e.textContent=txt;}}
@@ -1504,9 +1525,8 @@ async function checkScheduled() {
   }
 }
 
-// Start scheduler — check immediately and then every 60 seconds
-setTimeout(checkScheduled, 3000);
-setInterval(checkScheduled, 60000);
+// NOTE: Scheduled publishing is handled by GitHub Actions (auto-publish.yml)
+// checkScheduled() is available for manual use if needed
 </script>
 </body>
 </html>
