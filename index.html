@@ -500,6 +500,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
     <div class="hero-rule"></div>
     <div class="hero-body" id="hero-body"></div>
     <div class="hero-byline" id="hero-by"></div>
+    <div class="hero-cta" id="hero-cta">اقرأ المقالة كاملة ←</div>
   </div>
   <div class="hero-side">
     <div class="side-hd">جديد المركز</div>
@@ -563,7 +564,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <!-- ISSUE -->
 <div class="view" id="v-issue">
 <div class="issue-hd"><div class="issue-hd-in">
-  <div><button type="button" class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label"></div></div>
+  <div><button type="button" class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label">العدد الأول · أبريل ٢٠٢٥</div></div>
   <div style="display:flex;gap:8px;align-items:center;"><a id="pdf-dl-btn" href="#" target="_blank" rel="noopener noreferrer" style="display:none;font-size:12px;color:#fff;background:var(--teal);padding:8px 16px;border-radius:6px;text-decoration:none;font-family:'Cairo',sans-serif;">تحميل PDF ↓</a><span id="pdf-no-link" style="font-size:12px;color:#555;font-family:'Cairo',sans-serif;">سيتوفر قريباً</span></div>
 </div></div>
 <div class="issue-pdf-wrap">
@@ -1021,8 +1022,29 @@ function applySettings(rows) {
       mpc.innerHTML = '<img src="' + s.month_pick.image + '" alt="' + s.month_pick.title + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">';
     }
   }
-  // SECTIONS ORDER — disabled (causes layout issues with flex)
-  // if (s.sections_order ...) { ... }
+  // SECTIONS ORDER — reorder home page sections
+  if (s.sections_order && Array.isArray(s.sections_order) && s.sections_order.length) {
+    var homeEl = document.getElementById('v-home');
+    if (homeEl) {
+      var secMap = {
+        'books': homeEl.querySelector('.wrap[data-section="books"]'),
+        'archive': homeEl.querySelector('.arch-strip[data-section="archive"]'),
+        'monthpick': document.getElementById('month-pick'),
+        'newsletter': document.getElementById('newsletter'),
+        'footer': homeEl.querySelector('footer.footer')
+      };
+      var heroSec = homeEl.querySelector('.hero-section');
+      var parent = heroSec ? heroSec.parentElement : homeEl;
+      var anchor = heroSec ? heroSec.nextSibling : null;
+      s.sections_order.forEach(function(sec) {
+        var el = secMap[sec];
+        if (el && el.parentNode) {
+          parent.insertBefore(el, anchor);
+          anchor = el.nextSibling;
+        }
+      });
+    }
+  }
   if (s.archive && s.archive.length) {
     renderArchive(s.archive);
     var latest = s.archive[0];
@@ -1077,7 +1099,8 @@ function initNav() {
   nav('book-single-back', goBack);
   // am1/archpg1 handled by data-goissue delegation
   nav('nl-btn', doSub);
-  // hero nav handled by applySettings
+  nav('hero-title', function() { openArt('s1'); });
+  nav('hero-cta', function() { openArt('s1'); });
   // Static items handled by event delegation (data-aid/data-bid attributes)
 }
 
