@@ -432,6 +432,34 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 .comments-empty{font-size:13px;color:var(--light);text-align:center;padding:20px 0;}
 .comments-loading{font-size:13px;color:var(--mid);text-align:center;padding:16px;}
 @media(max-width:600px){.cf-row{grid-template-columns:1fr;}}
+
+/* ── NEWS SECTION ── */
+.news-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.news-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:all .2s;display:flex;gap:14px;align-items:flex-start;}
+.news-card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.news-card-icon{width:44px;height:44px;border-radius:8px;background:var(--ol);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.news-card-body{flex:1;}
+.news-badge{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--orange);margin-bottom:5px;display:block;}
+.news-title{font-family:'Noto Serif Arabic',serif;font-size:16px;line-height:1.45;color:var(--ink);margin-bottom:6px;}
+.news-card:hover .news-title{color:var(--teal);}
+.news-excerpt{font-size:12px;color:var(--mid);line-height:1.7;}
+.news-meta{font-size:11px;color:var(--light);margin-top:6px;}
+@media(max-width:768px){.news-grid{grid-template-columns:1fr;}}
+body.dark .news-card{background:#111;border-color:#2a2a2a;}
+body.dark .news-card:hover{border-color:var(--teal);}
+body.dark .news-title{color:#F0EFEB;}
+body.dark .news-excerpt{color:#888;}
+body.dark .news-card-icon{background:#1a1a1a;}
+
+/* ── BIGGER SECTION HEADERS ── */
+.sec-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;margin-top:32px;margin-bottom:18px;border-radius:8px;}
+.sec-header.books-hd{background:linear-gradient(135deg,var(--teal),var(--td));border-top:none;}
+.sec-header.arts-hd{background:linear-gradient(135deg,var(--orange),#a33a14);border-top:none;}
+.sec-header.news-hd{background:linear-gradient(135deg,#7B2D8B,#5a1f68);border-top:none;}
+.sec-header.arch-hd{background:linear-gradient(135deg,var(--gd),#1a0e00);border-top:none;}
+.sec-title{font-size:14px;font-weight:700;letter-spacing:.08em;color:#fff;}
+.sec-more{font-size:12px;color:rgba(255,255,255,.85);cursor:pointer;font-weight:500;}
+.sec-more:hover{color:#fff;}
 </style>
 </head>
 <body>
@@ -452,6 +480,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
     <a class="nav-a" id="nav-books">الكتب</a>
     <a class="nav-a" id="nav-articles">مقالات</a>
     <a class="nav-a" id="nav-archive">الأرشيف</a>
+    <a class="nav-a" id="nav-news">أخبار</a>
   </nav>
   <div class="header-actions">
     <button type="button" class="dark-toggle" id="dark-toggle" title="وضع ليلي" aria-label="تبديل الوضع الليلي" style="font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;">🌙</button>
@@ -480,7 +509,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
       style="width:100%;padding:11px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:14px;direction:rtl;background:var(--cream);color:var(--ink);">
     <div id="mob-search-results" style="display:none;background:var(--paper);border:1px solid var(--border);border-radius:10px;margin-top:6px;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.1);"></div>
   </div>
-  <a id="mob-home">الرئيسية</a><a id="mob-issue">العدد الحالي</a><a id="mob-books">الكتب</a><a id="mob-articles">مقالات</a><a id="mob-archive">الأرشيف</a>
+  <a id="mob-home">الرئيسية</a><a id="mob-issue">العدد الحالي</a><a id="mob-books">الكتب</a><a id="mob-articles">مقالات</a><a id="mob-archive">الأرشيف</a><a id="mob-news">أخبار</a>
   <div class="mob-actions"><a class="btn-ghost" href="login.html">دخول المحررين</a><button type="button" class="btn-primary" id="mob-sub">اشترك</button></div>
 </div>
 
@@ -500,7 +529,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
     <div class="hero-rule"></div>
     <div class="hero-body" id="hero-body"></div>
     <div class="hero-byline" id="hero-by"></div>
-    <div class="hero-cta" id="hero-cta">اقرأ المقالة كاملة ←</div>
+
   </div>
   <div class="hero-side">
     <div class="side-hd">جديد المركز</div>
@@ -509,16 +538,21 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
   </div>
 </div></div>
 <div class="wrap" data-section="books">
-  <div class="sec-header"><div class="sec-title">إصدارات المركز</div><div class="sec-more" id="more-books">الكتب كلها ←</div></div>
+  <div class="sec-header books-hd"><div class="sec-title">📚 إصدارات المركز</div><div class="sec-more" id="more-books">الكتب كلها ←</div></div>
   <div class="books-grid" id="home-books"></div>
-  <div class="sec-header"><div class="sec-title">مقالات أدبية</div><div class="sec-more" id="more-arts">كل المقالات ←</div></div>
+  <div class="sec-header arts-hd"><div class="sec-title">✍️ مقالات أدبية</div><div class="sec-more" id="more-arts">كل المقالات ←</div></div>
   <div class="arts-grid">
     <div id="home-arts"></div>
     <div id="home-arts-side"></div>
   </div>
 </div>
+
+<div class="wrap" data-section="news">
+  <div class="sec-header news-hd"><div class="sec-title">📰 أخبار المركز</div><div class="sec-more" id="more-news">كل الأخبار ←</div></div>
+  <div class="news-grid" id="home-news"></div>
+</div>
 <div class="arch-strip" data-section="archive"><div style="max-width:1200px;margin:0 auto;">
-  <div class="sec-header" style="margin-top:0;"><div class="sec-title">أرشيف الأعداد</div><div class="sec-more" id="more-arch">عرض الكل ←</div></div>
+  <div class="sec-header arch-hd" style="margin-top:0;"><div class="sec-title">🗂 أرشيف الأعداد</div><div class="sec-more" id="more-arch">عرض الكل ←</div></div>
   <div class="arch-row" id="home-arch">
     <div class="arch-mini" id="am1" data-goissue="1"><div class="arch-mini-cover" style="background:#1A7A7A;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الأول</div></div><div class="arch-mini-info"><div class="arch-mini-date">أبريل ٢٠٢٥</div><div class="arch-mini-dl">تصفح ←</div></div></div>
     <div class="arch-mini" data-goissue="2"><div class="arch-mini-cover" style="background:#C94B1E;border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد الثاني</div></div><div class="arch-mini-info"><div class="arch-mini-date">مايو ٢٠٢٥</div><div class="arch-mini-dl" style="color:var(--light);">قريباً</div></div></div>
@@ -564,7 +598,7 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <!-- ISSUE -->
 <div class="view" id="v-issue">
 <div class="issue-hd"><div class="issue-hd-in">
-  <div><button type="button" class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label">العدد الأول · أبريل ٢٠٢٥</div></div>
+  <div><button type="button" class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label"></div></div>
   <div style="display:flex;gap:8px;align-items:center;"><a id="pdf-dl-btn" href="#" target="_blank" rel="noopener noreferrer" style="display:none;font-size:12px;color:#fff;background:var(--teal);padding:8px 16px;border-radius:6px;text-decoration:none;font-family:'Cairo',sans-serif;">تحميل PDF ↓</a><span id="pdf-no-link" style="font-size:12px;color:#555;font-family:'Cairo',sans-serif;">سيتوفر قريباً</span></div>
 </div></div>
 <div class="issue-pdf-wrap">
@@ -578,26 +612,31 @@ body.dark #mob-search-results{background:#111;border-color:#2a2a2a;}
 <div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="books-back">← الرئيسية</button><div class="ph-title">الكتب</div><div class="ph-sub">إصدارات مركز الأدب العربي</div></div></div>
 <div class="books-page-grid" id="books-pg"></div>
 </div>
-</div>
 
 <!-- ARTICLES -->
 <div class="view" id="v-articles">
 <div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arts-back">← الرئيسية</button><div class="ph-title">مقالات</div><div class="ph-sub">أحدث المقالات الأدبية</div></div></div>
 <div class="arts-page"><div class="apg-grid" id="arts-pg"></div></div>
-</div></div>
 </div>
 
 <!-- ARCHIVE -->
 <div class="view" id="v-archive">
 <div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات جريدة وَرَق</div></div></div>
 <div class="arch-page"><div class="arch-pg-grid" id="arch-pg">
-  <div class="arch-pg-card" data-goissue="1" id="archpg1" data-goissue="1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
+  <div class="arch-pg-card" data-goissue="1" id="archpg1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
   <div class="arch-pg-card" data-goissue="2"><div class="arch-pg-cover" style="background:#C94B1E;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثاني</div></div><div class="arch-pg-info"><span class="arch-pg-date">مايو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
   <div class="arch-pg-card" data-goissue="3"><div class="arch-pg-cover" style="background:#412402;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثالث</div></div><div class="arch-pg-info"><span class="arch-pg-date">يونيو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
   <div class="arch-pg-card" data-goissue="4"><div class="arch-pg-cover" style="background:#26215C;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الرابع</div></div><div class="arch-pg-info"><span class="arch-pg-date">يوليو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
   <div class="arch-pg-card" data-goissue="5"><div class="arch-pg-cover" style="background:#633806;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الخامس</div></div><div class="arch-pg-info"><span class="arch-pg-date">أغسطس ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
   <div class="arch-pg-card" data-goissue="6"><div class="arch-pg-cover" style="background:#085041;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد السادس</div></div><div class="arch-pg-info"><span class="arch-pg-date">سبتمبر ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
 </div></div>
+</div>
+
+
+<!-- NEWS PAGE -->
+<div class="view" id="v-news">
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="news-back">← الرئيسية</button><div class="ph-title">أخبار المركز</div><div class="ph-sub">آخر أخبار مركز الأدب العربي</div></div></div>
+<div class="arts-page"><div class="apg-grid" id="news-pg"></div></div>
 </div>
 
 <!-- SINGLE ARTICLE -->
@@ -902,10 +941,29 @@ function renderArts(arts) {
   }
 }
 
+
+function renderNews(news) {
+  var hg = document.getElementById('home-news');
+  var pg = document.getElementById('news-pg');
+  var icons = {'أخبار':'📰','إعلان':'📢','حدث':'🎉','جائزة':'🏆','إصدار':'📚','ثقافة':'🎭'};
+  function newsCardHTML(n, full) {
+    var icon = icons[n.category] || '📰';
+    var date = (n.published_at && !isNaN(Date.parse(n.published_at))) ? new Date(n.published_at).toLocaleDateString('ar-SA') : '';
+    if (full) {
+      var imgHTML = n.image ? '<img class="apg-img" src="' + n.image + '" alt="' + n.title + '" loading="lazy">' : '';
+      return '<div class="apg-card" data-nid="' + n.id + '">' + imgHTML + '<span class="apg-badge" style="background:#7B2D8B;">' + (n.category||'أخبار') + '</span><div class="apg-title">' + n.title + '</div><div class="apg-excerpt">' + (n.excerpt||'') + '</div><div class="apg-footer"><span class="apg-author">' + (n.author_name||'') + '</span><span class="apg-date">' + date + '</span></div></div>';
+    }
+    return '<div class="news-card" data-nid="' + n.id + '"><div class="news-card-icon">' + icon + '</div><div class="news-card-body"><span class="news-badge">' + (n.category||'أخبار') + '</span><div class="news-title">' + n.title + '</div><div class="news-excerpt">' + (n.excerpt||'') + '</div><div class="news-meta">' + (n.author_name||'') + (date?' · '+date:'') + '</div></div></div>';
+  }
+  if (hg) { hg.innerHTML = news.slice(0,4).map(function(n){return newsCardHTML(n,false);}).join(''); }
+  if (pg) { pg.innerHTML = news.map(function(n){return newsCardHTML(n,true);}).join(''); pg.querySelectorAll('.apg-card').forEach(function(c){var nid=c.getAttribute('data-nid');c.addEventListener('click',function(){openArt(nid);});}); }
+  if (hg) hg.querySelectorAll('.news-card').forEach(function(c){var nid=c.getAttribute('data-nid');c.addEventListener('click',function(){openArt(nid);});});
+}
+
 function renderArchive(items) {
   var hr = document.getElementById('home-arch');
   var pg = document.getElementById('arch-pg');
-  if (hr) { hr.innerHTML = ''; if (items && items.length) hr.innerHTML = items.slice(0,5).map(function(i) { return '<div class="arch-mini" data-goissue="'+i.id+'"><div class="arch-mini-cover" style="background:' + (i.color||'#1A7A7A') + ';border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد ' + i.num + '</div></div><div class="arch-mini-info"><div class="arch-mini-date">' + (i.date||'') + '</div>' + (i.pdf ? '<a class="arch-mini-dl" href="' + i.pdf + '" target="_blank" rel="noopener noreferrer">تحميل PDF</a>' : '<div class="arch-mini-dl" style="color:var(--light); }">قريباً</div>') + '</div></div>'; }).join(''); }
+  if (hr) { hr.innerHTML = ''; if (items && items.length) hr.innerHTML = items.slice(0,5).map(function(i) { return '<div class="arch-mini" data-goissue="'+i.id+'"><div class="arch-mini-cover" style="background:' + (i.color||'#1A7A7A') + ';border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد ' + i.num + '</div></div><div class="arch-mini-info"><div class="arch-mini-date">' + (i.date||'') + '</div>' + (i.pdf ? '<a class="arch-mini-dl" href="' + i.pdf + '" target="_blank" rel="noopener noreferrer">تحميل PDF</a>' : '<div class="arch-mini-dl" style="color:var(--light);">قريباً</div>') + '</div></div>'; }).join(''); }
   if (pg) pg.innerHTML = items.map(function(i) { return '<div class="arch-pg-card"><div class="arch-pg-cover" style="background:' + (i.color||'#1A7A7A') + ';"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد ' + i.num + '</div></div><div class="arch-pg-info"><span class="arch-pg-date">' + (i.date||'') + '</span>' + (i.pdf ? '<a class="arch-pg-dl" href="' + i.pdf + '" target="_blank" rel="noopener noreferrer">تحميل PDF</a>' : '<span style="font-size:12px;color:var(--light);">قريباً</span>') + '</div></div>'; }).join('');
 }
 
@@ -1062,6 +1120,7 @@ function initNav() {
   nav('ham', toggleMob);
   nav('more-books', function() { goView('books'); });
   nav('more-arts', function() { goView('articles'); });
+  nav('more-news', function() { goView('news'); });
   nav('more-arch', function() { goView('archive'); });
   nav('fl-home', function() { goView('home'); });
   nav('fl-issue', function() { goView('issue'); });
@@ -1074,12 +1133,14 @@ function initNav() {
   nav('books-back', function() { goView('home'); });
   nav('arts-back', function() { goView('home'); });
   nav('arch-back', function() { goView('home'); });
+  nav('news-back', function() { goView('home'); });
+  nav('mob-news', function() { goView('news'); closeMob(); });
+  nav('nav-news', function() { goView('news'); });
   nav('art-single-back', goBack);
   nav('book-single-back', goBack);
   // am1/archpg1 handled by data-goissue delegation
   nav('nl-btn', doSub);
-  nav('hero-title', function() { openArt('s1'); });
-  nav('hero-cta', function() { openArt('s1'); });
+  // hero nav removed (s1 not used)
   // Static items handled by event delegation (data-aid/data-bid attributes)
 }
 
@@ -1208,6 +1269,10 @@ function setupEventDelegation() {
   // Delegate clicks for dynamic article cards
   document.addEventListener('click', function(e) {
     // Only handle dynamic elements — static nav handled by initNav listeners
+    var newsItem = e.target.closest('[data-nid]');
+    if (newsItem && !newsItem.closest('.site-header')) {
+      openArt(newsItem.getAttribute('data-nid')); return;
+    }
     var artItem = e.target.closest('[data-aid]');
     if (artItem && !artItem.closest('.site-header') && !artItem.closest('.mob-menu')) {
       // Close search bar if result clicked from search
@@ -1524,14 +1589,16 @@ document.addEventListener('DOMContentLoaded', function() {
   try {
     if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
       Promise.all([
-        sb.from('articles').select('*').eq('status','published').order('published_at',{ascending:false}),
+        sb.from('articles').select('*').eq('status','published').neq('category','أخبار').order('published_at',{ascending:false}),
+      sb.from('articles').select('*').eq('status','published').eq('category','أخبار').order('published_at',{ascending:false}),
         sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
         sb.from('settings').select('*')
       ]).then(function(results) {
-        var ar = results[0], bk = results[1], st = results[2];
+        var ar = results[0], nw = results[1], bk = results[2], st = results[3];
         if (ar.data && ar.data.length) { ar.data.forEach(function(a) { lA[a.id] = a; }); renderArts(ar.data); }
+        if (nw.data && nw.data.length) { nw.data.forEach(function(n) { lA[n.id] = n; }); renderNews(nw.data); }
         if (bk.data && bk.data.length) { bk.data.forEach(function(b) { lB[b.id] = b; }); renderBooks(bk.data); }
-        if (st.data) applySettings(st.data);
+        if (st.data && st.data.length) applySettings(st.data);
       }).catch(function(err) {
         console.warn('Supabase load failed, using static content');
       });
@@ -1543,7 +1610,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('supabase-ready', function() {
     if (!sb) return;
     Promise.all([
-      sb.from('articles').select('*').eq('status','published').order('published_at',{ascending:false}),
+      sb.from('articles').select('*').eq('status','published').neq('category','أخبار').order('published_at',{ascending:false}),
+      sb.from('articles').select('*').eq('status','published').eq('category','أخبار').order('published_at',{ascending:false}),
       sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
       sb.from('settings').select('*')
     ]).then(function(results) {
