@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وَرَق | جريدة مركز الأدب العربي</title>
+<title>وَرَق | مجلة مركز الأدب العربي</title>
+<meta property="og:title" content="وَرَق | مجلة مركز الأدب العربي">
+<meta property="og:image" content="https://shoshoom111-cpu.github.io/waraq-arablit/waraq-cover.png">
+<meta property="og:url" content="https://waraq-adab.com">
+<meta property="og:type" content="website">
+<meta name="description" content="مجلة مركز الأدب العربي الشهرية">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;500;700&family=Cairo:wght@300;400;500;600&family=Felfel&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -517,7 +522,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <div class="view active" id="v-home">
 <div class="masthead"><div class="mh-in">
   <div class="mh-left" id="mh-left">العدد الأول<br>أبريل ٢٠٢٥<br>مجانية</div>
-  <div><div class="mh-name" id="mh-name" data-text-logo="1">وَرَق</div><div class="mh-tag" id="mh-tag">جريدة مركز الأدب العربي الشهرية</div></div>
+  <div><div class="mh-name" id="mh-name" data-text-logo="1">وَرَق</div><div class="mh-tag" id="mh-tag">مجلة مركز الأدب العربي الشهرية</div></div>
   <div class="mh-right">رقمية<br>شهرية<br>مجانية</div>
 </div></div>
 <div class="ticker"><div class="ticker-track" id="ticker-track">
@@ -583,9 +588,13 @@ body.dark .news-card-icon{background:#1a1a1a;}
   <div class="nl-title" id="nl-title">اشترك في وَرَق مجاناً</div>
   <div class="nl-sub" style="color:rgba(255,255,255,.75);" id="nl-sub">احصل على كل عدد جديد في بريدك الإلكتروني</div>
   <div class="nl-form"><input class="nl-input" type="email" placeholder="بريدك الإلكتروني" id="nl-input"><button type="button" class="nl-btn" id="nl-btn" style="background:var(--gold);color:var(--gd);">اشترك الآن</button></div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.15);">
+    <p style="color:rgba(255,255,255,.75);font-size:13px;margin-bottom:8px;">تريد المشاركة في الأعداد القادمة؟</p>
+    <a href="mailto:waraq.adab@gmail.com" style="color:var(--gold);font-size:14px;font-weight:600;text-decoration:none;">waraq.adab@gmail.com ✉️</a>
+  </div>
 </div>
 <footer class="footer" data-section="footer"><div class="ft">
-  <div><div class="ft-logo" id="ft-logo">وَرَق</div><div class="ft-tag" id="ft-tag">جريدة مركز الأدب العربي<br>شهرية · رقمية · مجانية</div></div>
+  <div><div class="ft-logo" id="ft-logo">وَرَق</div><div class="ft-tag" id="ft-tag">مجلة مركز الأدب العربي<br>شهرية · رقمية · مجانية</div></div>
   <div class="ft-col"><h4>أقسام الموقع</h4><a id="fl-home">الرئيسية</a><a id="fl-issue">العدد الحالي</a><a id="fl-books">الكتب</a><a id="fl-arts">مقالات</a><a id="fl-arch">الأرشيف</a></div>
   <div class="ft-col"><h4>تواصل معنا</h4><a id="ft-ig" href="https://www.instagram.com/servicesbook1" target="_blank" rel="noopener noreferrer">Instagram</a><a id="ft-tt" href="https://www.tiktok.com/@adab_book" target="_blank" rel="noopener noreferrer">TikTok</a><a id="ft-store" href="https://adab-book.com/" target="_blank" rel="noopener noreferrer">المتجر</a></div>
   <div class="ft-col"><h4>المركز</h4><a href="login.html">لوحة التحكم</a></div>
@@ -598,23 +607,11 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <div class="view" id="v-issue">
 <div class="issue-hd"><div class="issue-hd-in">
   <div><button type="button" class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label"></div></div>
-  <div style="display:flex;gap:8px;align-items:center;"><a id="pdf-dl-btn" href="https://pmtraqaflqxmznfoszps.supabase.co/storage/v1/object/public/issues/waraq-issues.pdf" target="_blank" rel="noopener noreferrer" style="display:block;font-size:12px;color:#fff;background:var(--teal);padding:8px 16px;border-radius:6px;text-decoration:none;font-family:'Cairo',sans-serif;">تحميل PDF ↓</a><span id="pdf-no-link" style="font-size:12px;color:#555;font-family:'Cairo',sans-serif;">سيتوفر قريباً</span></div>
+  <div style="display:flex;gap:8px;align-items:center;"><a id="pdf-dl-btn" href="#" target="_blank" rel="noopener noreferrer" style="display:none;font-size:12px;color:#fff;background:var(--teal);padding:8px 16px;border-radius:6px;text-decoration:none;font-family:'Cairo',sans-serif;">تحميل PDF ↓</a><span id="pdf-no-link" style="font-size:12px;color:#555;font-family:'Cairo',sans-serif;">سيتوفر قريباً</span></div>
 </div></div>
 <div class="issue-pdf-wrap">
-  <div class="pdf-placeholder" id="pdf-placeholder" style="display:none;"><div class="pdf-placeholder-icon"><svg width="28" height="36" viewBox="0 0 28 36" fill="none"><rect x="2" y="2" width="24" height="32" rx="3" stroke="#888" stroke-width="2"/><path d="M7 11h14M7 17h14M7 23h9" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div><div style="font-family:'Noto Serif Arabic',serif;font-size:20px;color:#ccc;margin-bottom:10px;">العدد الحالي</div><div style="font-size:13px;color:#888;line-height:1.8;">سيظهر هنا ملف PDF بعد رفعه من لوحة التحكم</div></div>
-  <div class="pdf-frame-wrap" id="pdf-frame-wrap" style="display:block;"><object id="pdf-frame" data="https://pmtraqaflqxmznfoszps.supabase.co/storage/v1/object/public/issues/waraq-issues.pdf" type="application/pdf" style="width:100%;height:85vh;min-height:500px;border:none;border-radius:8px;"><a href="https://pmtraqaflqxmznfoszps.supabase.co/storage/v1/object/public/issues/waraq-issues.pdf" target="_blank" style="color:#fff;">تحميل PDF</a></object></div>
-</div>
-</div>
-
-<!-- SINGLE ISSUE (أعداد الأرشيف) -->
-<div class="view" id="v-issue-single">
-<div class="issue-hd"><div class="issue-hd-in">
-  <div><button type="button" class="ph-back" id="issue-single-back">← الأرشيف</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="single-issue-label"></div></div>
-  <div style="display:flex;gap:8px;align-items:center;"><a id="single-pdf-dl" href="https://pmtraqaflqxmznfoszps.supabase.co/storage/v1/object/public/issues/waraq-issues.pdf" target="_blank" rel="noopener noreferrer" style="display:block;font-size:12px;color:#fff;background:var(--teal);padding:8px 16px;border-radius:6px;text-decoration:none;font-family:'Cairo',sans-serif;">تحميل PDF ↓</a></div>
-</div></div>
-<div class="issue-pdf-wrap">
-  <div class="pdf-frame-wrap" id="single-pdf-frame-wrap" style="display:none;width:100%;max-width:900px;margin:0 auto;padding:20px 0 40px;"><iframe id="single-pdf-frame" src="" style="width:100%;height:85vh;min-height:500px;border:none;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5);" allowfullscreen></iframe></div>
-  <div class="pdf-placeholder" id="single-pdf-placeholder" style="display:none;max-width:500px;margin:60px auto;text-align:center;padding:0 24px;"><div style="font-size:13px;color:#888;line-height:1.8;">لا يوجد ملف PDF لهذا العدد</div></div>
+  <div class="pdf-placeholder" id="pdf-placeholder"><div class="pdf-placeholder-icon"><svg width="28" height="36" viewBox="0 0 28 36" fill="none"><rect x="2" y="2" width="24" height="32" rx="3" stroke="#888" stroke-width="2"/><path d="M7 11h14M7 17h14M7 23h9" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div><div style="font-family:'Noto Serif Arabic',serif;font-size:20px;color:#ccc;margin-bottom:10px;">العدد الحالي</div><div style="font-size:13px;color:#888;line-height:1.8;">سيظهر هنا ملف PDF بعد رفعه من لوحة التحكم</div></div>
+  <div class="pdf-frame-wrap" id="pdf-frame-wrap" style="display:none;"><iframe id="pdf-frame" src="" style="width:100%;height:90vh;border:none;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5);" allowfullscreen sandbox="allow-scripts allow-popups allow-forms"></iframe></div>
 </div>
 </div>
 
@@ -634,7 +631,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 
 <!-- ARCHIVE -->
 <div class="view" id="v-archive">
-<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات جريدة وَرَق</div></div></div>
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات مجلة وَرَق</div></div></div>
 <div class="arch-page"><div class="arch-pg-grid" id="arch-pg">
   <div class="arch-pg-card" data-goissue="1" id="archpg1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
   <div class="arch-pg-card" data-goissue="2"><div class="arch-pg-cover" style="background:#C94B1E;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثاني</div></div><div class="arch-pg-info"><span class="arch-pg-date">مايو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
@@ -974,7 +971,6 @@ function renderNews(news) {
 }
 
 function renderArchive(items) {
-  window._archiveItems = items || [];
   var hr = document.getElementById('home-arch');
   var pg = document.getElementById('arch-pg');
   if (hr) { hr.innerHTML = ''; if (items && items.length) hr.innerHTML = items.slice(0,5).map(function(i) { return '<div class="arch-mini" data-goissue="'+i.id+'"><div class="arch-mini-cover" style="background:' + (i.color||'#1A7A7A') + ';border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد ' + i.num + '</div></div><div class="arch-mini-info"><div class="arch-mini-date">' + (i.date||'') + '</div>' + (i.pdf ? '<a class="arch-mini-dl" href="' + i.pdf + '" target="_blank" rel="noopener noreferrer">تحميل PDF</a>' : '<div class="arch-mini-dl" style="color:var(--light);">قريباً</div>') + '</div></div>'; }).join(''); }
@@ -1101,12 +1097,11 @@ function applySettings(rows) {
     var latest = s.archive[0];
     if (latest && latest.pdf) {
       var pdfUrl = latest.pdf;
-      var match = pdfUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      var matchOpen = pdfUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-      if (match) pdfUrl = 'https://drive.google.com/file/d/' + match[1] + '/preview';
-      else if (matchOpen) pdfUrl = 'https://drive.google.com/file/d/' + matchOpen[1] + '/preview';
       var frame = document.getElementById('pdf-frame');
-      if (frame) frame.src = pdfUrl;
+      if (frame) {
+        if (frame.tagName === 'OBJECT') frame.data = pdfUrl;
+        else frame.src = pdfUrl;
+      }
       var fw = document.getElementById('pdf-frame-wrap'); if (fw) fw.style.display = 'block';
       var pp = document.getElementById('pdf-placeholder'); if (pp) pp.style.display = 'none';
       var dl = document.getElementById('pdf-dl-btn'); if (dl) { dl.href = latest.pdf; dl.style.display = 'block'; }
@@ -1266,37 +1261,6 @@ async function submitComment() {
   }
 }
 
-// ── OPEN ARCHIVE ISSUE ──
-function openIssue(issueData) {
-  var label = document.getElementById('single-issue-label');
-  var frame = document.getElementById('single-pdf-frame');
-  var frameWrap = document.getElementById('single-pdf-frame-wrap');
-  var placeholder = document.getElementById('single-pdf-placeholder');
-  var dlBtn = document.getElementById('single-pdf-dl');
-
-  if (label) label.textContent = 'العدد ' + (issueData.num||'') + ' · ' + (issueData.date||'');
-
-  if (issueData.pdf) {
-    var pdfUrl = issueData.pdf;
-    var match = pdfUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    var matchOpen = pdfUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (match) pdfUrl = 'https://drive.google.com/file/d/' + match[1] + '/preview';
-    else if (matchOpen) pdfUrl = 'https://drive.google.com/file/d/' + matchOpen[1] + '/preview';
-    if (frame) frame.src = pdfUrl;
-    if (frameWrap) frameWrap.style.display = 'block';
-    if (placeholder) placeholder.style.display = 'none';
-    if (dlBtn) { dlBtn.href = issueData.pdf; dlBtn.style.display = 'block'; }
-  } else {
-    if (frameWrap) frameWrap.style.display = 'none';
-    if (placeholder) placeholder.style.display = 'block';
-    if (dlBtn) dlBtn.style.display = 'none';
-  }
-
-  var _prev = prevView || 'archive';
-  goView('issue-single');
-  prevView = _prev;
-}
-
 // ── EVENT DELEGATION ──
 // Handles clicks on dynamically rendered elements
 function setupEventDelegation() {
@@ -1337,19 +1301,7 @@ function setupEventDelegation() {
 
     // Archive cards with goissue flag
     var archCard = e.target.closest('[data-goissue]');
-    if (archCard && !archCard.closest('.site-header')) {
-      var issueId = archCard.getAttribute('data-goissue');
-      // ابحث عن بيانات العدد في الأرشيف
-      var archiveItems = window._archiveItems || [];
-      var found = archiveItems.filter(function(i){ return String(i.id) === String(issueId); })[0];
-      if (found) {
-        openIssue(found);
-      } else if (issueId === '1') {
-        // العدد الأول = العدد الحالي
-        goView('issue');
-      }
-      return;
-    }
+    if (archCard && !archCard.closest('.site-header')) { goView('issue'); return; }
   });
 
   // Close search on result click (one global listener)
@@ -1368,7 +1320,7 @@ function setupEventDelegation() {
   }
   // Fix iframe title for PDF accessibility
   var iframe = document.getElementById('pdf-frame');
-  if (iframe) iframe.setAttribute('title', 'عارض PDF لعدد الجريدة الحالي');
+  if (iframe) iframe.setAttribute('title', 'عارض PDF لعدد المجلة الحالي');
 
   // Fix hamburger accessibility
   var ham = document.getElementById('ham');
@@ -1673,8 +1625,9 @@ document.addEventListener('DOMContentLoaded', function() {
       sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
       sb.from('settings').select('*')
     ]).then(function(results) {
-      var ar=results[0], bk=results[1], st=results[2];
+      var ar=results[0], nw=results[1], bk=results[2], st=results[3];
       if (ar.data && ar.data.length) { ar.data.forEach(function(a){lA[a.id]=a;}); renderArts(ar.data); }
+      if (nw && nw.data && nw.data.length) { nw.data.forEach(function(n){lA[n.id]=n;}); renderNews(nw.data); }
       if (bk.data && bk.data.length) { bk.data.forEach(function(b){lB[b.id]=b;}); renderBooks(bk.data); }
       if (st.data && st.data.length) applySettings(st.data);
     }).catch(function(e){ console.warn('Data load failed:', e.message||e); });
