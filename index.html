@@ -3,7 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وَرَق | مجلة مركز الأدب العربي</title>
+<title>وَرَق | جريدة مركز الأدب العربي</title>
+<!-- Open Graph -->
+<meta property="og:title" content="وَرَق | مجلة مركز الأدب العربي">
+<meta property="og:description" content="مجلة مركز الأدب العربي ">
+<meta property="og:image" content="https://shoshoom111-cpu.github.io/waraq-arablit/waraq-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://waraq-adab.com">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_SA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="وَرَق | ملجة مركز الأدب العربي">
+<meta name="twitter:description" content="مجلة مركز الأدب العربي الشهرية — أدب · ثقافة · إصدارات">
+<meta name="twitter:image" content="https://shoshoom111-cpu.github.io/waraq-arablit/waraq-cover.png">
+<meta name="description" content="مجلة مركز الأدب العربي الشهرية — أدب · ثقافة · إصدارات">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;500;700&family=Cairo:wght@300;400;500;600&family=Felfel&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -516,8 +530,8 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <!-- HOME -->
 <div class="view active" id="v-home">
 <div class="masthead"><div class="mh-in">
-  <div class="mh-left" id="mh-left">العدد الأول<br>أبريل ٢٠٢٥<br>مجانية</div>
-  <div><div class="mh-name" id="mh-name" data-text-logo="1">وَرَق</div><div class="mh-tag" id="mh-tag">جريدة مركز الأدب العربي الشهرية</div></div>
+  <div class="mh-left" id="mh-left">العدد الأول<br>مايو ٢٠٢٦<br>مجانية</div>
+  <div><div class="mh-name" id="mh-name" data-text-logo="1">وَرَق</div><div class="mh-tag" id="mh-tag">مجلة مركز الأدب العربي الشهرية</div></div>
   <div class="mh-right">رقمية<br>شهرية<br>مجانية</div>
 </div></div>
 <div class="ticker"><div class="ticker-track" id="ticker-track">
@@ -617,7 +631,6 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <div class="view" id="v-articles">
 <div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arts-back">← الرئيسية</button><div class="ph-title">مقالات</div><div class="ph-sub">أحدث المقالات الأدبية</div></div></div>
 <div class="arts-page"><div class="apg-grid" id="arts-pg"></div></div>
-</div></div>
 </div>
 
 <!-- ARCHIVE -->
@@ -711,13 +724,13 @@ body.dark .news-card-icon{background:#1a1a1a;}
     <div class="comment-form-title">اترك تعليقاً على الكتاب</div>
     <div class="cf-row">
       <div class="cf-field"><label for="bcf-name">الاسم <span>*</span></label><input class="cf-input" type="text" id="bcf-name" placeholder="اسمك" maxlength="60"></div>
-      <div class="cf-field"><label for="bcf-email">البريد الإلكتروني (اختياري)</label><input class="cf-input" type="email" id="bcf-email" placeholder="لن يُنشر"></div>
+      <div class="cf-field"><label for="bcf-email">البريد (اختياري)</label><input class="cf-input" type="email" id="bcf-email" placeholder="لن يُنشر"></div>
     </div>
     <div class="cf-field"><label for="bcf-body">التعليق <span>*</span></label><textarea class="cf-textarea" id="bcf-body" placeholder="اكتب رأيك في الكتاب..." maxlength="1000"></textarea></div>
     <div class="cf-error" id="bcf-error"></div>
     <button type="button" class="cf-submit" id="bcf-submit" onclick="submitBookComment()">إرسال التعليق</button>
     <div class="cf-success" id="bcf-success">شكراً! تعليقك قيد المراجعة وسيظهر بعد موافقة المحررين.</div>
-    <div class="cf-note">⚠ التعليقات تُراجع قبل النشر · الاسم مطلوب · لا تشارك معلومات شخصية</div>
+    <div class="cf-note">⚠ التعليقات تُراجع قبل النشر · الاسم مطلوب</div>
   </div>
   <div id="book-comments-list"><div class="comments-loading">جاري تحميل التعليقات...</div></div>
 </div>
@@ -898,9 +911,6 @@ function openBook(id) {
   }
   _currentShareBookId = id;
   goView('book-single');
-  loadBookComments(id);
-  var bcfErr=document.getElementById('bcf-error');if(bcfErr)bcfErr.style.display='none';
-  var bcfSucc=document.getElementById('bcf-success');if(bcfSucc)bcfSucc.style.display='none';
 }
 
 function doSub() {
@@ -1683,8 +1693,9 @@ document.addEventListener('DOMContentLoaded', function() {
       sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
       sb.from('settings').select('*')
     ]).then(function(results) {
-      var ar=results[0], bk=results[1], st=results[2];
+      var ar=results[0], nw=results[1], bk=results[2], st=results[3];
       if (ar.data && ar.data.length) { ar.data.forEach(function(a){lA[a.id]=a;}); renderArts(ar.data); }
+      if (nw.data && nw.data.length) { nw.data.forEach(function(n){lA[n.id]=n;}); renderNews(nw.data); }
       if (bk.data && bk.data.length) { bk.data.forEach(function(b){lB[b.id]=b;}); renderBooks(bk.data); }
       if (st.data && st.data.length) applySettings(st.data);
     }).catch(function(e){ console.warn('Data load failed:', e.message||e); });
