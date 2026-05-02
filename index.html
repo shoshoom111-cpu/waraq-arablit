@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وَرَق | جريدة مركز الأدب العربي</title>
+<title>وَرَق | مجلة مركز الأدب العربي</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;500;700&family=Cairo:wght@300;400;500;600&family=Felfel&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -529,7 +529,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
     <div class="hero-rule"></div>
     <div class="hero-body" id="hero-body"></div>
     <div class="hero-byline" id="hero-by"></div>
-
+    <div class="hero-cta" id="hero-cta">اقرأ المقالة كاملة ←</div>
   </div>
   <div class="hero-side">
     <div class="side-hd">جديد المركز</div>
@@ -598,7 +598,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <!-- ISSUE -->
 <div class="view" id="v-issue">
 <div class="issue-hd"><div class="issue-hd-in">
-  <div><button type="button" class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label"></div></div>
+  <div><button type="button" class="ph-back" id="issue-back">← الرئيسية</button><div style="font-family:'Felfel',serif;font-size:28px;color:#fff;margin-top:8px;">وَرَق</div><div style="font-size:11px;color:#666;margin-top:4px;" id="pdf-issue-label">العدد الأول · أبريل ٢٠٢٥</div></div>
   <div style="display:flex;gap:8px;align-items:center;"><a id="pdf-dl-btn" href="#" target="_blank" rel="noopener noreferrer" style="display:none;font-size:12px;color:#fff;background:var(--teal);padding:8px 16px;border-radius:6px;text-decoration:none;font-family:'Cairo',sans-serif;">تحميل PDF ↓</a><span id="pdf-no-link" style="font-size:12px;color:#555;font-family:'Cairo',sans-serif;">سيتوفر قريباً</span></div>
 </div></div>
 <div class="issue-pdf-wrap">
@@ -612,18 +612,20 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="books-back">← الرئيسية</button><div class="ph-title">الكتب</div><div class="ph-sub">إصدارات مركز الأدب العربي</div></div></div>
 <div class="books-page-grid" id="books-pg"></div>
 </div>
+</div>
 
 <!-- ARTICLES -->
 <div class="view" id="v-articles">
 <div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arts-back">← الرئيسية</button><div class="ph-title">مقالات</div><div class="ph-sub">أحدث المقالات الأدبية</div></div></div>
 <div class="arts-page"><div class="apg-grid" id="arts-pg"></div></div>
+</div></div>
 </div>
 
 <!-- ARCHIVE -->
 <div class="view" id="v-archive">
 <div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات جريدة وَرَق</div></div></div>
 <div class="arch-page"><div class="arch-pg-grid" id="arch-pg">
-  <div class="arch-pg-card" data-goissue="1" id="archpg1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
+  <div class="arch-pg-card" data-goissue="1" id="archpg1" data-goissue="1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
   <div class="arch-pg-card" data-goissue="2"><div class="arch-pg-cover" style="background:#C94B1E;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثاني</div></div><div class="arch-pg-info"><span class="arch-pg-date">مايو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
   <div class="arch-pg-card" data-goissue="3"><div class="arch-pg-cover" style="background:#412402;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثالث</div></div><div class="arch-pg-info"><span class="arch-pg-date">يونيو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
   <div class="arch-pg-card" data-goissue="4"><div class="arch-pg-cover" style="background:#26215C;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الرابع</div></div><div class="arch-pg-info"><span class="arch-pg-date">يوليو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
@@ -702,6 +704,24 @@ body.dark .news-card-icon{background:#1a1a1a;}
   </div>
 </div>
 <div class="related-sec" style="max-width:860px;"><div class="rel-label">كتب مشابهة</div><div class="rel-grid" id="rel-books"></div></div>
+
+<!-- BOOK COMMENTS -->
+<div class="comments-sec" id="book-comments-sec" style="max-width:860px;">
+  <div class="comments-title">التعليقات (<span id="book-comments-count">٠</span>)</div>
+  <div class="comment-form">
+    <div class="comment-form-title">اترك تعليقاً على الكتاب</div>
+    <div class="cf-row">
+      <div class="cf-field"><label for="bcf-name">الاسم <span>*</span></label><input class="cf-input" type="text" id="bcf-name" placeholder="اسمك" maxlength="60"></div>
+      <div class="cf-field"><label for="bcf-email">البريد (اختياري)</label><input class="cf-input" type="email" id="bcf-email" placeholder="لن يُنشر"></div>
+    </div>
+    <div class="cf-field"><label for="bcf-body">التعليق <span>*</span></label><textarea class="cf-textarea" id="bcf-body" placeholder="اكتب رأيك في الكتاب..." maxlength="1000"></textarea></div>
+    <div class="cf-error" id="bcf-error"></div>
+    <button type="button" class="cf-submit" id="bcf-submit" onclick="submitBookComment()">إرسال التعليق</button>
+    <div class="cf-success" id="bcf-success">شكراً! تعليقك قيد المراجعة وسيظهر بعد موافقة المحررين.</div>
+    <div class="cf-note">⚠ التعليقات تُراجع قبل النشر · الاسم مطلوب</div>
+  </div>
+  <div id="book-comments-list"><div class="comments-loading">جاري تحميل التعليقات...</div></div>
+</div>
 </div>
 
 <script>window._configMissing=true;</script>
@@ -749,7 +769,7 @@ function goView(name) {
   window.scrollTo(0, 0);
   if (name !== 'art-single' && name !== 'book-single') {
     prevView = name;
-    try { history.pushState({view:name}, '', '#' + name); } catch(e) {}
+    try { history.pushState({view:name}, '', name === 'home' ? window.location.pathname : '#' + name); } catch(e) {}
   } else if (!prevView) {
     prevView = 'home';
   }
@@ -879,6 +899,9 @@ function openBook(id) {
   }
   _currentShareBookId = id;
   goView('book-single');
+  loadBookComments(id);
+  var bcfErr=document.getElementById('bcf-error');if(bcfErr)bcfErr.style.display='none';
+  var bcfSucc=document.getElementById('bcf-success');if(bcfSucc)bcfSucc.style.display='none';
 }
 
 function doSub() {
@@ -963,7 +986,7 @@ function renderNews(news) {
 function renderArchive(items) {
   var hr = document.getElementById('home-arch');
   var pg = document.getElementById('arch-pg');
-  if (hr) { hr.innerHTML = ''; if (items && items.length) hr.innerHTML = items.slice(0,5).map(function(i) { return '<div class="arch-mini" data-goissue="'+i.id+'"><div class="arch-mini-cover" style="background:' + (i.color||'#1A7A7A') + ';border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد ' + i.num + '</div></div><div class="arch-mini-info"><div class="arch-mini-date">' + (i.date||'') + '</div>' + (i.pdf ? '<a class="arch-mini-dl" href="' + i.pdf + '" target="_blank" rel="noopener noreferrer">تحميل PDF</a>' : '<div class="arch-mini-dl" style="color:var(--light);">قريباً</div>') + '</div></div>'; }).join(''); }
+  if (hr) { hr.innerHTML = ''; if (items && items.length) hr.innerHTML = items.slice(0,5).map(function(i) { return '<div class="arch-mini" data-goissue="'+i.id+'"><div class="arch-mini-cover" style="background:' + (i.color||'#1A7A7A') + ';border-radius:6px 6px 0 0;"><div class="arch-mini-name">وَرَق</div><div class="arch-mini-num">العدد ' + i.num + '</div></div><div class="arch-mini-info"><div class="arch-mini-date">' + (i.date||'') + '</div>' + (i.pdf ? '<a class="arch-mini-dl" href="' + i.pdf + '" target="_blank" rel="noopener noreferrer">تحميل PDF</a>' : '<div class="arch-mini-dl" style="color:var(--light); }">قريباً</div>') + '</div></div>'; }).join(''); }
   if (pg) pg.innerHTML = items.map(function(i) { return '<div class="arch-pg-card"><div class="arch-pg-cover" style="background:' + (i.color||'#1A7A7A') + ';"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد ' + i.num + '</div></div><div class="arch-pg-info"><span class="arch-pg-date">' + (i.date||'') + '</span>' + (i.pdf ? '<a class="arch-pg-dl" href="' + i.pdf + '" target="_blank" rel="noopener noreferrer">تحميل PDF</a>' : '<span style="font-size:12px;color:var(--light);">قريباً</span>') + '</div></div>'; }).join('');
 }
 
@@ -1140,7 +1163,8 @@ function initNav() {
   nav('book-single-back', goBack);
   // am1/archpg1 handled by data-goissue delegation
   nav('nl-btn', doSub);
-  // hero nav removed (s1 not used)
+  nav('hero-title', function() { openArt('s1'); });
+  nav('hero-cta', function() { openArt('s1'); });
   // Static items handled by event delegation (data-aid/data-bid attributes)
 }
 
@@ -1252,6 +1276,51 @@ async function submitComment() {
   }
 }
 
+
+// ── BOOK COMMENTS ──
+var _currentBookId = null;
+function loadBookComments(bookId) {
+  _currentBookId = bookId;
+  var list = document.getElementById('book-comments-list');
+  var countEl = document.getElementById('book-comments-count');
+  if (!list) return;
+  if (!sb) { list.innerHTML = '<div class="comments-empty">التعليقات غير متاحة</div>'; return; }
+  list.innerHTML = '<div class="comments-loading">جاري تحميل التعليقات...</div>';
+  sb.from('comments').select('*').eq('article_id','book_'+String(bookId)).eq('status','approved').order('created_at',{ascending:true})
+    .then(function(res) {
+      if (res.error || !res.data) { list.innerHTML = '<div class="comments-empty">تعذر تحميل التعليقات</div>'; return; }
+      var data = res.data;
+      if (countEl) countEl.textContent = data.length;
+      if (!data.length) { list.innerHTML = '<div class="comments-empty">لا توجد تعليقات بعد — كن أول من يعلق!</div>'; return; }
+      list.innerHTML = '';
+      data.forEach(function(c) {
+        var d = document.createElement('div'); d.className = 'comment-item';
+        var date = new Date(c.created_at).toLocaleDateString('ar-SA');
+        d.innerHTML = '<div class="ci-header"><span class="ci-name">'+escHtml(c.name)+'</span><span class="ci-date">'+date+'</span></div><div class="ci-body">'+escHtml(c.body)+'</div>';
+        list.appendChild(d);
+      });
+    }).catch(function() { list.innerHTML = '<div class="comments-empty">تعذر تحميل التعليقات</div>'; });
+}
+async function submitBookComment() {
+  var name = document.getElementById('bcf-name')?document.getElementById('bcf-name').value.trim():'';
+  var body = document.getElementById('bcf-body')?document.getElementById('bcf-body').value.trim():'';
+  var errEl = document.getElementById('bcf-error');
+  var btn = document.getElementById('bcf-submit');
+  var successEl = document.getElementById('bcf-success');
+  if (errEl) errEl.style.display='none';
+  if (successEl) successEl.style.display='none';
+  if (!name) { if(errEl){errEl.textContent='الاسم مطلوب';errEl.style.display='block';} return; }
+  if (!body||body.length<3) { if(errEl){errEl.textContent=!body?'التعليق مطلوب':'التعليق قصير جداً';errEl.style.display='block';} return; }
+  if (!_currentBookId||!sb) { if(errEl){errEl.textContent='خطأ في الاتصال';errEl.style.display='block';} return; }
+  if (btn) { if(btn.disabled)return; btn.disabled=true; btn.textContent='جاري الإرسال...'; }
+  try {
+    var res = await sb.from('comments').insert({article_id:'book_'+String(_currentBookId),name:name,body:body,status:'pending'});
+    if (res.error) { if(errEl){errEl.textContent=res.error.message||'حدث خطأ';errEl.style.display='block';} }
+    else { if(successEl)successEl.style.display='block'; if(document.getElementById('bcf-name'))document.getElementById('bcf-name').value=''; if(document.getElementById('bcf-body'))document.getElementById('bcf-body').value=''; }
+  } catch(e) { if(errEl){errEl.textContent='خطأ في الاتصال';errEl.style.display='block';} }
+  finally { if(btn){btn.disabled=false;btn.textContent='إرسال التعليق';} }
+}
+
 // ── EVENT DELEGATION ──
 // Handles clicks on dynamically rendered elements
 function setupEventDelegation() {
@@ -1269,10 +1338,6 @@ function setupEventDelegation() {
   // Delegate clicks for dynamic article cards
   document.addEventListener('click', function(e) {
     // Only handle dynamic elements — static nav handled by initNav listeners
-    var newsItem = e.target.closest('[data-nid]');
-    if (newsItem && !newsItem.closest('.site-header')) {
-      openArt(newsItem.getAttribute('data-nid')); return;
-    }
     var artItem = e.target.closest('[data-aid]');
     if (artItem && !artItem.closest('.site-header') && !artItem.closest('.mob-menu')) {
       // Close search bar if result clicked from search
@@ -1552,9 +1617,12 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
 // ── INIT FEATURES ──
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Clean URL — remove /index.html from address bar
+  // Clean URL — remove /index.html and #home from address bar
   if (window.location.pathname.indexOf('index.html') > -1) {
     window.history.replaceState({}, '', window.location.pathname.replace(/\/index\.html$/, '/') || '/');
+  }
+  if (window.location.hash === '#home') {
+    window.history.replaceState({}, '', window.location.pathname);
   }
   // Retry Supabase if not ready yet
   if (!_supabaseReady) {
@@ -1594,11 +1662,10 @@ document.addEventListener('DOMContentLoaded', function() {
         sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
         sb.from('settings').select('*')
       ]).then(function(results) {
-        var ar = results[0], nw = results[1], bk = results[2], st = results[3];
+        var ar = results[0], bk = results[1], st = results[2];
         if (ar.data && ar.data.length) { ar.data.forEach(function(a) { lA[a.id] = a; }); renderArts(ar.data); }
-        if (nw.data && nw.data.length) { nw.data.forEach(function(n) { lA[n.id] = n; }); renderNews(nw.data); }
         if (bk.data && bk.data.length) { bk.data.forEach(function(b) { lB[b.id] = b; }); renderBooks(bk.data); }
-        if (st.data && st.data.length) applySettings(st.data);
+        if (st.data) applySettings(st.data);
       }).catch(function(err) {
         console.warn('Supabase load failed, using static content');
       });
@@ -1615,8 +1682,9 @@ document.addEventListener('DOMContentLoaded', function() {
       sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
       sb.from('settings').select('*')
     ]).then(function(results) {
-      var ar=results[0], bk=results[1], st=results[2];
+      var ar=results[0], nw=results[1], bk=results[2], st=results[3];
       if (ar.data && ar.data.length) { ar.data.forEach(function(a){lA[a.id]=a;}); renderArts(ar.data); }
+      if (nw.data && nw.data.length) { nw.data.forEach(function(n){lA[n.id]=n;}); renderNews(nw.data); }
       if (bk.data && bk.data.length) { bk.data.forEach(function(b){lB[b.id]=b;}); renderBooks(bk.data); }
       if (st.data && st.data.length) applySettings(st.data);
     }).catch(function(e){ console.warn('Data load failed:', e.message||e); });
