@@ -602,7 +602,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 </div></div>
 <div class="issue-pdf-wrap">
   <div class="pdf-placeholder" id="pdf-placeholder"><div class="pdf-placeholder-icon"><svg width="28" height="36" viewBox="0 0 28 36" fill="none"><rect x="2" y="2" width="24" height="32" rx="3" stroke="#888" stroke-width="2"/><path d="M7 11h14M7 17h14M7 23h9" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div><div style="font-family:'Noto Serif Arabic',serif;font-size:20px;color:#ccc;margin-bottom:10px;">العدد الحالي</div><div style="font-size:13px;color:#888;line-height:1.8;">سيظهر هنا ملف PDF بعد رفعه من لوحة التحكم</div></div>
-  <div class="pdf-frame-wrap" id="pdf-frame-wrap" style="display:none;"><iframe id="pdf-frame" src="" style="width:100%;height:90vh;border:none;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5);" allowfullscreen sandbox="allow-same-origin allow-popups allow-forms"></iframe></div>
+  <div class="pdf-frame-wrap" id="pdf-frame-wrap" style="display:none;"><iframe id="pdf-frame" src="" style="width:100%;height:90vh;border:none;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5);" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe></div>
 </div>
 </div>
 
@@ -622,7 +622,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 
 <!-- ARCHIVE -->
 <div class="view" id="v-archive">
-<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات جريدة وَرَق</div></div></div>
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات مجلة وَرَق</div></div></div>
 <div class="arch-page"><div class="arch-pg-grid" id="arch-pg">
   <div class="arch-pg-card" data-goissue="1" id="archpg1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
   <div class="arch-pg-card" data-goissue="2"><div class="arch-pg-cover" style="background:#C94B1E;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثاني</div></div><div class="arch-pg-info"><span class="arch-pg-date">مايو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
@@ -1406,7 +1406,7 @@ function setupEventDelegation() {
   }
   // Fix iframe title for PDF accessibility
   var iframe = document.getElementById('pdf-frame');
-  if (iframe) iframe.setAttribute('title', 'عارض PDF لعدد الجريدة الحالي');
+  if (iframe) iframe.setAttribute('title', 'عارض PDF لعدد المجلة الحالي');
 
   // Fix hamburger accessibility
   var ham = document.getElementById('ham');
