@@ -1098,7 +1098,7 @@ function applySettings(rows) {
       var match = pdfUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
       var matchOpen = pdfUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
       if (match) pdfUrl = 'https://drive.google.com/file/d/' + match[1] + '/preview';
-      else if (matchOpen) pdfUrl = 'https://drive.google.com/file/d/' + matchOpen[1] + '/preview';
+      else if (matchOpen) pdfUrl = 'https://pmtraqaflqxmznfoszps.supabase.co/storage/v1/object/public/issues/waraq-issues.pdf' + matchOpen[1] + '/preview';
       var frame = document.getElementById('pdf-frame');
       if (frame) frame.src = pdfUrl;
       var fw = document.getElementById('pdf-frame-wrap'); if (fw) fw.style.display = 'block';
