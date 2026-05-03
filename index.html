@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وَرَق | جريدة مركز الأدب العربي</title>
+<title>وَرَق | مجلة مركز الأدب العربي</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;500;700&family=Cairo:wght@300;400;500;600&family=Felfel&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -209,10 +209,22 @@ button,a{cursor:pointer;}
 .rel-meta{font-size:11px;color:var(--light);}
 .issue-hd{background:var(--ink);padding:20px 24px;}
 .issue-hd-in{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.issue-pdf-wrap{background:#3a3a3a;min-height:80vh;display:flex;flex-direction:column;align-items:center;}
+.issue-pdf-wrap{background:#2a2a2a;min-height:80vh;display:flex;flex-direction:column;align-items:center;}
 .pdf-placeholder{max-width:500px;margin:60px auto;text-align:center;padding:0 24px;}
 .pdf-placeholder-icon{width:70px;height:90px;background:#4a4a4a;border-radius:6px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;}
-.pdf-frame-wrap{width:100%;max-width:900px;margin:0 auto;padding:20px 0 40px;}
+.pdf-frame-wrap{width:100%;padding:0 0 40px;}
+/* PDF.js viewer */
+#pdf-viewer-wrap{width:100%;display:flex;flex-direction:column;align-items:center;gap:0;background:#2a2a2a;padding-bottom:40px;}
+#pdf-controls{width:100%;max-width:860px;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px 20px;background:#1a1a1a;border-bottom:1px solid #444;position:sticky;top:60px;z-index:100;flex-wrap:wrap;}
+.pdf-ctrl-btn{background:#333;color:#fff;border:1px solid #555;border-radius:6px;padding:6px 14px;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
+.pdf-ctrl-btn:hover{background:#444;border-color:#888;}
+.pdf-ctrl-btn:disabled{opacity:.4;cursor:not-allowed;}
+#pdf-page-info{font-size:12px;color:#aaa;font-family:'Cairo',sans-serif;min-width:80px;text-align:center;}
+#pdf-zoom-info{font-size:11px;color:#888;font-family:'Cairo',sans-serif;}
+#pdf-canvas-wrap{width:100%;max-width:860px;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 16px;}
+.pdf-page-canvas{display:block;box-shadow:0 4px 24px rgba(0,0,0,.5);border-radius:4px;max-width:100%;height:auto;cursor:grab;touch-action:pan-y;}
+.pdf-page-canvas:active{cursor:grabbing;}
+#pdf-loading{color:#888;font-family:'Cairo',sans-serif;font-size:14px;padding:60px 0;text-align:center;}
 @media(max-width:1024px){
   .hero-grid{grid-template-columns:1fr;}
   .hero-main{border-left:none;border-bottom:1px solid var(--border);padding-left:0;}
@@ -598,7 +610,22 @@ body.dark .news-card-icon{background:#1a1a1a;}
 </div></div>
 <div class="issue-pdf-wrap">
   <div class="pdf-placeholder" id="pdf-placeholder"><div class="pdf-placeholder-icon"><svg width="28" height="36" viewBox="0 0 28 36" fill="none"><rect x="2" y="2" width="24" height="32" rx="3" stroke="#888" stroke-width="2"/><path d="M7 11h14M7 17h14M7 23h9" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div><div style="font-family:'Noto Serif Arabic',serif;font-size:20px;color:#ccc;margin-bottom:10px;">العدد الحالي</div><div style="font-size:13px;color:#888;line-height:1.8;">سيظهر هنا ملف PDF بعد رفعه من لوحة التحكم</div></div>
-  <div class="pdf-frame-wrap" id="pdf-frame-wrap" style="display:none;"><iframe id="pdf-frame" src="" style="width:100%;height:90vh;border:none;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5);" allowfullscreen sandbox="allow-scripts allow-popups allow-forms"></iframe></div>
+  <div id="pdf-viewer-wrap" style="display:none;width:100%;">
+    <div id="pdf-controls">
+      <button type="button" class="pdf-ctrl-btn" id="pdf-prev" onclick="pdfPrevPage()">◄ السابقة</button>
+      <span id="pdf-page-info">-- / --</span>
+      <button type="button" class="pdf-ctrl-btn" id="pdf-next" onclick="pdfNextPage()">التالية ►</button>
+      <span style="color:#555;font-size:12px;">|</span>
+      <button type="button" class="pdf-ctrl-btn" id="pdf-zoom-out" onclick="pdfZoom(-0.2)">−</button>
+      <span id="pdf-zoom-info">100%</span>
+      <button type="button" class="pdf-ctrl-btn" id="pdf-zoom-in" onclick="pdfZoom(0.2)">+</button>
+      <span style="color:#555;font-size:12px;">|</span>
+      <button type="button" class="pdf-ctrl-btn" onclick="pdfZoomFit()">ملاءمة</button>
+    </div>
+    <div id="pdf-canvas-wrap">
+      <div id="pdf-loading">جاري تحميل الملف...</div>
+    </div>
+  </div>
 </div>
 </div>
 
@@ -1017,18 +1044,13 @@ function applySettings(rows) {
     renderArchive(s.archive);
     var latest = s.archive[0];
     if (latest && latest.pdf) {
-      var pdfUrl = latest.pdf;
-      var match = pdfUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      var matchOpen = pdfUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-      if (match) pdfUrl = 'https://drive.google.com/file/d/' + match[1] + '/preview';
-      else if (matchOpen) pdfUrl = 'https://drive.google.com/file/d/' + matchOpen[1] + '/preview';
-      var frame = document.getElementById('pdf-frame');
-      if (frame) frame.src = pdfUrl;
-      var fw = document.getElementById('pdf-frame-wrap'); if (fw) fw.style.display = 'block';
+      var rawPdfUrl = latest.pdf;
       var pp = document.getElementById('pdf-placeholder'); if (pp) pp.style.display = 'none';
-      var dl = document.getElementById('pdf-dl-btn'); if (dl) { dl.href = latest.pdf; dl.style.display = 'block'; }
+      var vw = document.getElementById('pdf-viewer-wrap'); if (vw) vw.style.display = 'block';
+      var dl = document.getElementById('pdf-dl-btn'); if (dl) { dl.href = rawPdfUrl; dl.style.display = 'block'; }
       var nl = document.getElementById('pdf-no-link'); if (nl) nl.style.display = 'none';
       var lbl = document.getElementById('pdf-issue-label'); if (lbl) lbl.textContent = 'العدد ' + latest.num + ' · ' + (latest.date||'');
+      loadPdfJs(rawPdfUrl);
     }
   }
 }
@@ -1151,7 +1173,7 @@ function setupEventDelegation() {
       if (item) { var sb2 = document.getElementById('search-bar'); if (sb2) sb2.classList.remove('show'); searchRes.classList.remove('show'); var si = document.getElementById('search-input'); if (si) si.value = ''; }
     });
   }
-  var iframe = document.getElementById('pdf-frame'); if (iframe) iframe.setAttribute('title', 'عارض PDF لعدد الجريدة الحالي');
+  // pdf-frame removed — using PDF.js viewer
   var ham = document.getElementById('ham'); if (ham) { ham.setAttribute('aria-label', 'فتح القائمة'); ham.setAttribute('aria-expanded', 'false'); }
 }
 
@@ -1343,5 +1365,158 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </div>
+
+<!-- PDF.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+// ── PDF.js VIEWER ──
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+var _pdfDoc = null;
+var _pdfPage = 1;
+var _pdfTotal = 0;
+var _pdfScale = 1.2;
+var _pdfRendering = false;
+var _pdfUrl = '';
+
+function loadPdfJs(url) {
+  if (typeof pdfjsLib === 'undefined') {
+    document.getElementById('pdf-loading').textContent = 'تعذر تحميل المكتبة — حاول تحديث الصفحة';
+    return;
+  }
+  _pdfUrl = url;
+  _pdfPage = 1;
+  _pdfScale = window.innerWidth < 600 ? 0.8 : 1.2;
+  var wrap = document.getElementById('pdf-canvas-wrap');
+  if (wrap) wrap.innerHTML = '<div id="pdf-loading">جاري تحميل الملف...</div>';
+  pdfjsLib.getDocument({ url: url, cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/', cMapPacked: true })
+    .promise.then(function(doc) {
+      _pdfDoc = doc;
+      _pdfTotal = doc.numPages;
+      updatePdfInfo();
+      renderAllPages();
+    }).catch(function(err) {
+      var lo = document.getElementById('pdf-loading');
+      if (lo) lo.textContent = 'تعذر تحميل الملف — ' + (err.message || '');
+    });
+}
+
+function renderAllPages() {
+  if (!_pdfDoc) return;
+  var wrap = document.getElementById('pdf-canvas-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  var promises = [];
+  for (var i = 1; i <= _pdfTotal; i++) {
+    (function(pageNum) {
+      var canvas = document.createElement('canvas');
+      canvas.className = 'pdf-page-canvas';
+      canvas.id = 'pdf-canvas-' + pageNum;
+      wrap.appendChild(canvas);
+      var p = _pdfDoc.getPage(pageNum).then(function(page) {
+        var vp = page.getViewport({ scale: _pdfScale });
+        canvas.width = vp.width;
+        canvas.height = vp.height;
+        return page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+      });
+      promises.push(p);
+    })(i);
+  }
+  Promise.all(promises).then(function() {
+    updatePdfInfo();
+    setupScrollSpy();
+  });
+}
+
+function renderSinglePage(pageNum) {
+  if (!_pdfDoc) return;
+  var canvas = document.getElementById('pdf-canvas-' + pageNum);
+  if (!canvas) return;
+  _pdfDoc.getPage(pageNum).then(function(page) {
+    var vp = page.getViewport({ scale: _pdfScale });
+    canvas.width = vp.width;
+    canvas.height = vp.height;
+    page.render({ canvasContext: canvas.getContext('2d'), viewport: vp });
+  });
+}
+
+function setupScrollSpy() {
+  var wrap = document.getElementById('pdf-canvas-wrap');
+  if (!wrap) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        var num = parseInt(id.replace('pdf-canvas-', ''));
+        if (num && num !== _pdfPage) { _pdfPage = num; updatePdfInfo(); }
+      }
+    });
+  }, { threshold: 0.4 });
+  wrap.querySelectorAll('.pdf-page-canvas').forEach(function(c) { observer.observe(c); });
+}
+
+function updatePdfInfo() {
+  var el = document.getElementById('pdf-page-info');
+  if (el) el.textContent = _pdfPage + ' / ' + _pdfTotal;
+  var zi = document.getElementById('pdf-zoom-info');
+  if (zi) zi.textContent = Math.round(_pdfScale * 100) + '%';
+  var prev = document.getElementById('pdf-prev');
+  var next = document.getElementById('pdf-next');
+  if (prev) prev.disabled = (_pdfPage <= 1);
+  if (next) next.disabled = (_pdfPage >= _pdfTotal);
+}
+
+function pdfPrevPage() {
+  if (_pdfPage <= 1) return;
+  _pdfPage--;
+  var c = document.getElementById('pdf-canvas-' + _pdfPage);
+  if (c) c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  updatePdfInfo();
+}
+
+function pdfNextPage() {
+  if (_pdfPage >= _pdfTotal) return;
+  _pdfPage++;
+  var c = document.getElementById('pdf-canvas-' + _pdfPage);
+  if (c) c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  updatePdfInfo();
+}
+
+function pdfZoom(delta) {
+  _pdfScale = Math.max(0.5, Math.min(3, _pdfScale + delta));
+  renderAllPages();
+}
+
+function pdfZoomFit() {
+  var wrap = document.getElementById('pdf-canvas-wrap');
+  if (!wrap || !_pdfDoc) return;
+  _pdfDoc.getPage(1).then(function(page) {
+    var vp = page.getViewport({ scale: 1 });
+    var w = wrap.clientWidth - 32;
+    _pdfScale = Math.max(0.4, w / vp.width);
+    renderAllPages();
+  });
+}
+
+// Touch/swipe support
+(function() {
+  var startX = 0, startY = 0;
+  document.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    if (!_pdfDoc) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    var dy = Math.abs(e.changedTouches[0].clientY - startY);
+    if (Math.abs(dx) > 60 && dy < 60) {
+      if (dx < 0) pdfNextPage(); else pdfPrevPage();
+    }
+  }, { passive: true });
+})();
+</script>
+
 </body>
 </html>
