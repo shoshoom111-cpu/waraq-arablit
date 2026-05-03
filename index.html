@@ -868,7 +868,7 @@ function openBook(id) {
           var c = document.createElement('div');
           c.className = 'rel-card';
           c.setAttribute('data-bid', rb.id);
-          c.innerHTML = '<div style="height:40px;background:'+(rb.color||'#1A7A7A')+';border-radius:5px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;"><span style="font-size:12px;color:#fff;">'+rb.title+'</span></div><div class="rel-title">'+rb.title+'</div><div class="rel-meta">'+(rb.author||'')+'</div>';
+          c.innerHTML = '<div style="height:40px;background:'+(rb.color||'#1A7A7A')+';border-radius:5px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;"><span style="font-size:12px;color:#fff;">'+escHtml(rb.title)+'</span></div><div class="rel-title">'+escHtml(rb.title)+'</div><div class="rel-meta">'+escHtml(rb.author||'')+'</div>';
           rel.appendChild(c);
         });
       });
@@ -881,7 +881,7 @@ function openBook(id) {
       var c = document.createElement('div');
       c.className = 'rel-card';
       c.setAttribute('data-bid', pair[0]);
-      c.innerHTML = '<div style="height:40px;background:'+(pair[1].color||'#1A7A7A')+';border-radius:5px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;"><span style="font-size:12px;color:#fff;">'+pair[1].title+'</span></div><div class="rel-title">'+pair[1].title+'</div><div class="rel-meta">'+(pair[1].author||'')+'</div>';
+      c.innerHTML = '<div style="height:40px;background:'+(pair[1].color||'#1A7A7A')+';border-radius:5px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;"><span style="font-size:12px;color:#fff;">'+escHtml(pair[1].title)+'</span></div><div class="rel-title">'+escHtml(pair[1].title)+'</div><div class="rel-meta">'+escHtml(pair[1].author||'')+'</div>';
       rel.appendChild(c);
     });
   }
@@ -905,18 +905,18 @@ function renderBooks(books) {
   var si = document.getElementById('side-items');
   function bookCardHTML(b) {
     var imgHTML = (b.image&&b.image.trim()) ? '<img style="width:100%;height:180px;object-fit:cover;display:block;" src="' + b.image + '" alt="' + b.title + '" loading="lazy">' : '<div class="book-card-strip" style="background:' + (b.color||'#1A7A7A') + ';"></div>';
-    return '<div class="book-card" data-bid="' + b.id + '">' + imgHTML + '<div class="book-card-body"><div class="book-genre">' + (b.genre||'') + '</div><div class="book-title">' + b.title + '</div><div class="book-author">' + (b.author||'') + '</div><div class="book-desc">' + (b.description||b.desc||'') + '</div><div class="book-cta">اقرأ المزيد</div></div></div>';
+    return '<div class="book-card" data-bid="' + b.id + '">' + imgHTML + '<div class="book-card-body"><div class="book-genre">' + (b.genre||'') + '</div><div class="book-title">' + escHtml(b.title) + '</div><div class="book-author">' + escHtml(b.author||'') + '</div><div class="book-desc">' + (b.description||b.desc||'') + '</div><div class="book-cta">اقرأ المزيد</div></div></div>';
   }
   if (hg) { hg.innerHTML = books.slice(0,4).map(bookCardHTML).join(''); hg.querySelectorAll('.book-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); }); }
   if (pg) {
     pg.innerHTML = books.map(function(b) {
-      var covHTML = b.image ? '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';padding:0;"><img alt="" src="' + b.image + '" style="width:100%;height:100%;object-fit:cover;"></div>' : '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';"><span>' + b.title + '</span></div>';
-      return '<div class="bpg-card" data-bid="' + b.id + '">' + covHTML + '<div class="bpg-body"><span class="bpg-badge" style="background:' + (b.color||'#1A7A7A') + ';">' + (b.genre||'') + '</span><div class="bpg-title">' + b.title + '</div><div class="bpg-author">' + (b.author||'') + '</div><div class="bpg-desc">' + (b.description||b.desc||'') + '</div><button type="button" class="bpg-btn">اقرأ المزيد</button></div></div>';
+      var covHTML = b.image ? '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';padding:0;"><img alt="" src="' + b.image + '" style="width:100%;height:100%;object-fit:cover;"></div>' : '<div class="bpg-cover" style="background:' + (b.color||'#1A7A7A') + ';"><span>' + escHtml(b.title) + '</span></div>';
+      return '<div class="bpg-card" data-bid="' + b.id + '">' + covHTML + '<div class="bpg-body"><span class="bpg-badge" style="background:' + (b.color||'#1A7A7A') + ';">' + (b.genre||'') + '</span><div class="bpg-title">' + escHtml(b.title) + '</div><div class="bpg-author">' + escHtml(b.author||'') + '</div><div class="bpg-desc">' + (b.description||b.desc||'') + '</div><button type="button" class="bpg-btn">اقرأ المزيد</button></div></div>';
     }).join('');
     pg.querySelectorAll('.bpg-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); });
   }
   if (si && books.length) {
-    si.innerHTML = books.slice(0,4).map(function(b) { return '<div class="side-item" data-bid="' + b.id + '"><div class="si-badge">' + (b.genre||'') + '</div><div class="si-title">' + b.title + '</div><div class="si-meta">' + (b.author||'') + '</div></div>'; }).join('');
+    si.innerHTML = books.slice(0,4).map(function(b) { return '<div class="side-item" data-bid="' + b.id + '"><div class="si-badge">' + (b.genre||'') + '</div><div class="si-title">' + escHtml(b.title) + '</div><div class="si-meta">' + escHtml(b.author||'') + '</div></div>'; }).join('');
     si.querySelectorAll('.side-item').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); });
   }
 }
@@ -929,21 +929,21 @@ function renderArts(arts) {
   if (hMain) {
     hMain.innerHTML = arts.slice(0,2).map(function(a, i) {
       var left = a.image ? '<img class="art-item-img" src="' + a.image + '" alt="' + a.title + '" loading="lazy">' : '<div class="art-num">' + nums[i] + '</div>';
-      return '<div class="art-item' + (a.image ? ' has-img' : '') + '" data-aid="' + a.id + '">' + left + '<div><div class="ai-badge">' + (a.category||'') + '</div><div class="ai-title">' + a.title + '</div><div class="ai-excerpt">' + (a.excerpt||'') + '</div><div class="ai-meta">' + (a.author_name||'') + '</div></div></div>';
+      return '<div class="art-item' + (a.image ? ' has-img' : '') + '" data-aid="' + a.id + '">' + left + '<div><div class="ai-badge">' + (a.category||'') + '</div><div class="ai-title">' + escHtml(a.title) + '</div><div class="ai-excerpt">' + (a.excerpt||'') + '</div><div class="ai-meta">' + escHtml(a.author_name||'') + '</div></div></div>';
     }).join('');
     hMain.querySelectorAll('.art-item').forEach(function(c) { var aid = c.getAttribute('data-aid'); c.addEventListener('click', function() { openArt(aid); }); });
   }
   if (hSide) {
     hSide.innerHTML = arts.slice(2,5).map(function(a) {
       var imgHTML = a.image ? '<img src="' + a.image + '" alt="' + a.title + '" style="width:100%;height:80px;object-fit:cover;border-radius:5px;margin-bottom:8px;" loading="lazy">' : '';
-      return '<div class="art-side-item" data-aid="' + a.id + '">' + imgHTML + '<div class="asi-badge">' + (a.category||'') + '</div><div class="asi-title">' + a.title + '</div><div class="asi-meta">' + (a.author_name||'') + '</div></div>';
+      return '<div class="art-side-item" data-aid="' + a.id + '">' + imgHTML + '<div class="asi-badge">' + (a.category||'') + '</div><div class="asi-title">' + escHtml(a.title) + '</div><div class="asi-meta">' + escHtml(a.author_name||'') + '</div></div>';
     }).join('');
     hSide.querySelectorAll('.art-side-item').forEach(function(c) { var aid = c.getAttribute('data-aid'); c.addEventListener('click', function() { openArt(aid); }); });
   }
   if (pg) {
     pg.innerHTML = arts.map(function(a) {
       var imgHTML = a.image ? '<img class="apg-img" src="' + a.image + '" alt="' + a.title + '" loading="lazy">' : '';
-      return '<div class="apg-card" data-aid="' + a.id + '">' + imgHTML + '<span class="apg-badge" style="background:var(--teal);">' + (a.category||'') + '</span><div class="apg-title">' + a.title + '</div><div class="apg-excerpt">' + (a.excerpt||'') + '</div><div class="apg-footer"><span class="apg-author">' + (a.author_name||'') + '</span><span class="apg-date">' + (a.published_at && !isNaN(Date.parse(a.published_at)) ? new Date(a.published_at).toLocaleDateString('ar-SA') : '') + '</span></div></div>';
+      return '<div class="apg-card" data-aid="' + a.id + '">' + imgHTML + '<span class="apg-badge" style="background:var(--teal);">' + (a.category||'') + '</span><div class="apg-title">' + escHtml(a.title) + '</div><div class="apg-excerpt">' + (a.excerpt||'') + '</div><div class="apg-footer"><span class="apg-author">' + escHtml(a.author_name||'') + '</span><span class="apg-date">' + (a.published_at && !isNaN(Date.parse(a.published_at)) ? new Date(a.published_at).toLocaleDateString('ar-SA') : '') + '</span></div></div>';
     }).join('');
     pg.querySelectorAll('.apg-card').forEach(function(c) { var aid = c.getAttribute('data-aid'); c.addEventListener('click', function() { openArt(aid); }); });
   }
@@ -959,9 +959,9 @@ function renderNews(news) {
     var date = (n.published_at && !isNaN(Date.parse(n.published_at))) ? new Date(n.published_at).toLocaleDateString('ar-SA') : '';
     if (full) {
       var imgHTML = n.image ? '<img class="apg-img" src="' + n.image + '" alt="' + n.title + '" loading="lazy">' : '';
-      return '<div class="apg-card" data-nid="' + n.id + '">' + imgHTML + '<span class="apg-badge" style="background:#7B2D8B;">' + (n.category||'أخبار') + '</span><div class="apg-title">' + n.title + '</div><div class="apg-excerpt">' + (n.excerpt||'') + '</div><div class="apg-footer"><span class="apg-author">' + (n.author_name||'') + '</span><span class="apg-date">' + date + '</span></div></div>';
+      return '<div class="apg-card" data-nid="' + n.id + '">' + imgHTML + '<span class="apg-badge" style="background:#7B2D8B;">' + (n.category||'أخبار') + '</span><div class="apg-title">' + escHtml(n.title) + '</div><div class="apg-excerpt">' + (n.excerpt||'') + '</div><div class="apg-footer"><span class="apg-author">' + escHtml(n.author_name||'') + '</span><span class="apg-date">' + date + '</span></div></div>';
     }
-    return '<div class="news-card" data-nid="' + n.id + '"><div class="news-card-icon">' + icon + '</div><div class="news-card-body"><span class="news-badge">' + (n.category||'أخبار') + '</span><div class="news-title">' + n.title + '</div><div class="news-excerpt">' + (n.excerpt||'') + '</div><div class="news-meta">' + (n.author_name||'') + (date?' · '+date:'') + '</div></div></div>';
+    return '<div class="news-card" data-nid="' + n.id + '"><div class="news-card-icon">' + icon + '</div><div class="news-card-body"><span class="news-badge">' + (n.category||'أخبار') + '</span><div class="news-title">' + escHtml(n.title) + '</div><div class="news-excerpt">' + (n.excerpt||'') + '</div><div class="news-meta">' + escHtml(n.author_name||'') + (date?' · '+date:'') + '</div></div></div>';
   }
   if (hg) { hg.innerHTML = news.slice(0,4).map(function(n){return newsCardHTML(n,false);}).join(''); }
   if (pg) { pg.innerHTML = news.map(function(n){return newsCardHTML(n,true);}).join(''); pg.querySelectorAll('.apg-card').forEach(function(c){var nid=c.getAttribute('data-nid');c.addEventListener('click',function(){openArt(nid);});}); }
@@ -983,7 +983,6 @@ function applySettings(rows) {
   if (s.design) { var R = document.documentElement.style; if (s.design.teal) R.setProperty('--teal', s.design.teal); if (s.design.orange) R.setProperty('--orange', s.design.orange); if (s.design.gold) R.setProperty('--gold', s.design.gold); }
   if (s.issue) { se('hero-title', s.issue.hero_title); se('hero-body', s.issue.hero_body); se('hero-by', s.issue.hero_by); if (s.issue.hero_badge) { var hb = document.getElementById('hero-badge'); if (hb) hb.textContent = s.issue.hero_badge; } if (s.issue.quote) { var qt = document.getElementById('quote-t'); if (qt) qt.textContent = '"' + s.issue.quote + '"'; } if (s.issue.num && s.issue.date) { var ml = document.getElementById('mh-left'); if (ml) ml.innerHTML = 'العدد ' + s.issue.num + '<br>' + s.issue.date + '<br>مجانية'; } }
   if (s.general) {
-    // Site name — update all text instances
     if (s.general.name) {
       var nameEls = document.querySelectorAll('#mh-name[data-text-logo], .header-logo-text, #ft-logo-text, .nl-logo-text');
       nameEls.forEach(function(el){ if(el) el.textContent = s.general.name; });
@@ -993,10 +992,8 @@ function applySettings(rows) {
   if (s.social) { if (s.social.ig) { document.getElementById('ig-lnk').href = s.social.ig; document.getElementById('ft-ig').href = s.social.ig; } if (s.social.tt) { document.getElementById('tt-lnk').href = s.social.tt; document.getElementById('ft-tt').href = s.social.tt; } if (s.social.store) { document.getElementById('store-lnk').href = s.social.store; document.getElementById('ft-store').href = s.social.store; } if (s.social.brevo) window._brevoUrl = s.social.brevo; }
   if (s.ticker && s.ticker.length) { var t = document.getElementById('ticker-track'); if (t) t.innerHTML = s.ticker.concat(s.ticker).map(function(x) { return '<span>' + x + '</span>'; }).join(''); }
   if (s.side_items && s.side_items.length) { var si = document.getElementById('side-items'); if (si) si.innerHTML = s.side_items.map(function(i) { return '<div class="side-item" data-bid="'+(i.id||'')+'"><div class="si-badge"></div><div class="si-title">' + (i.title||'') + '</div><div class="si-meta">' + (i.meta||'') + '</div></div>'; }).join(''); }
-  // BANNER
   if (s.banner && s.banner.url) {
     var bn = document.getElementById('site-banner');
-    // Add close button if not already there
     if (bn && !document.getElementById('banner-close')) {
       var bc = document.createElement('button');
       bc.id = 'banner-close';
@@ -1015,11 +1012,8 @@ function applySettings(rows) {
       }
     }
   }
-  // LOGOS — each location has its own image
   if (s.general) {
     var g = s.general;
-
-    // ① Header corner logo
     var li = document.getElementById('header-logo-img');
     var lt = document.getElementById('header-logo-text');
     if (g.logo_url) {
@@ -1029,13 +1023,10 @@ function applySettings(rows) {
       if (li) li.style.display = 'none';
       if (lt) { lt.style.display = 'block'; lt.textContent = g.name || 'وَرَق'; }
     }
-    // Always update site name text instances
     if (g.name) {
       var nt = document.getElementById('header-logo-text');
       if (nt && !g.logo_url) nt.textContent = g.name;
     }
-
-    // ② Masthead big name
     var mhName = document.getElementById('mh-name');
     if (mhName) {
       if (g.masthead_logo_url) {
@@ -1045,8 +1036,6 @@ function applySettings(rows) {
         mhName.textContent = g.name || 'وَرَق';
       }
     }
-
-    // ③ Footer logo
     var ftLogo = document.getElementById('ft-logo');
     if (ftLogo) {
       if (g.footer_logo_url) {
@@ -1056,8 +1045,6 @@ function applySettings(rows) {
         ftLogo.textContent = g.name || 'وَرَق';
       }
     }
-
-    // Newsletter uses footer logo or header logo as fallback
     var nlLogo = document.querySelector('.nl-logo');
     if (nlLogo) {
       var nlUrl = g.footer_logo_url || g.logo_url;
@@ -1068,7 +1055,6 @@ function applySettings(rows) {
       }
     }
   }
-  // MONTH PICK
   if (s.month_pick && s.month_pick.title) {
     var mp = document.getElementById('month-pick');
     if (mp) mp.style.display = 'block';
@@ -1088,24 +1074,23 @@ function applySettings(rows) {
       mpc.innerHTML = '<img src="' + s.month_pick.image + '" alt="' + s.month_pick.title + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">';
     }
   }
-  // SECTIONS ORDER — disabled (causes layout issues with flex)
-  // if (s.sections_order ...) { ... }
   if (s.archive && s.archive.length) {
     renderArchive(s.archive);
     var latest = s.archive[0];
-    if (latest && latest.pdf) {
-      var pdfUrl = latest.pdf;
-      var match = pdfUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      var matchOpen = pdfUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-      if (match) pdfUrl = 'https://drive.google.com/file/d/' + match[1] + '/preview';
-      else if (matchOpen) pdfUrl = 'https://pmtraqaflqxmznfoszps.supabase.co/storage/v1/object/public/issues/waraq-issues.pdf' + matchOpen[1] + '/preview';
+    if (latest && latest.pdf && latest.pdf.trim()) {
+      var pdfUrl = latest.pdf.trim();
       var frame = document.getElementById('pdf-frame');
-      if (frame) frame.src = pdfUrl;
-      var fw = document.getElementById('pdf-frame-wrap'); if (fw) fw.style.display = 'block';
-      var pp = document.getElementById('pdf-placeholder'); if (pp) pp.style.display = 'none';
-      var dl = document.getElementById('pdf-dl-btn'); if (dl) { dl.href = latest.pdf; dl.style.display = 'block'; }
-      var nl = document.getElementById('pdf-no-link'); if (nl) nl.style.display = 'none';
-      var lbl = document.getElementById('pdf-issue-label'); if (lbl) lbl.textContent = 'العدد ' + latest.num + ' · ' + (latest.date||'');
+      var fw = document.getElementById('pdf-frame-wrap');
+      var pp = document.getElementById('pdf-placeholder');
+      var dl = document.getElementById('pdf-dl-btn');
+      var nl = document.getElementById('pdf-no-link');
+      var lbl = document.getElementById('pdf-issue-label');
+      if (frame) { frame.src = pdfUrl; }
+      if (fw) fw.style.display = 'block';
+      if (pp) pp.style.display = 'none';
+      if (dl) { dl.href = pdfUrl; dl.style.display = 'inline-block'; }
+      if (nl) nl.style.display = 'none';
+      if (lbl) lbl.textContent = 'العدد ' + (latest.num || '') + ' · ' + (latest.date || '');
     }
   }
 }
@@ -1146,39 +1131,31 @@ function initNav() {
   nav('nav-news', function() { goView('news'); });
   nav('art-single-back', goBack);
   nav('book-single-back', goBack);
-  // am1/archpg1 handled by data-goissue delegation
   nav('nl-btn', doSub);
-  // hero nav (s1 not used)
-  // Static items handled by event delegation (data-aid/data-bid attributes)
 }
 
 
-// ── OVERRIDE goView to update progress bar ──
 var _shareTitle = '', _shareUrl = '', _currentShareId = null, _currentShareBookId = null;
 var _origGoView = goView;
 goView = function(name) {
   try { _origGoView(name); } catch(e) { console.warn('goView error:', e); }
-  // Reset progress bar
   var prog = document.getElementById('read-progress');
   if (prog) prog.style.display = (name === 'art-single') ? 'block' : 'none';
   if (name === 'book-single' && prog) prog.style.display = 'none';
   var bar = document.getElementById('read-bar');
   if (bar) bar.style.width = '0%';
-  // Reset reading progress flag when leaving article
   if (name !== 'art-single') _progressInited = false;
 };
 
-// ── OVERRIDE openArt to add read time + font size ──
 var _origOpenArt = openArt;
 openArt = function(id) {
   _origOpenArt(id);
   var body = document.getElementById('sa-body');
   var rt = document.getElementById('read-time');
   if (body && rt) rt.textContent = '⏱ ' + calcReadTime(body.innerHTML);
-  changeFontSize(_fontSize); // Apply saved font size
+  changeFontSize(_fontSize);
   initReadProgress();
   _currentShareId = id;
-  // Load comments
   loadComments(id);
   var errEl = document.getElementById('cf-error');
   var succ = document.getElementById('cf-success');
@@ -1187,7 +1164,6 @@ openArt = function(id) {
 };
 
 
-// ── COMMENTS FUNCTIONS ──
 var _currentArticleId = null;
 function escHtml(str) {
   return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -1260,10 +1236,7 @@ async function submitComment() {
   }
 }
 
-// ── EVENT DELEGATION ──
-// Handles clicks on dynamically rendered elements
 function setupEventDelegation() {
-  // Close mobile menu when clicking outside
   document.addEventListener('click', function(e) {
     var mob = document.getElementById('mob-menu');
     var ham = document.getElementById('ham');
@@ -1274,14 +1247,11 @@ function setupEventDelegation() {
     }
   });
 
-  // Delegate clicks for dynamic article cards
   document.addEventListener('click', function(e) {
-    // Only handle dynamic elements — static nav handled by initNav listeners
     var newsItem = e.target.closest('[data-nid]');
     if (newsItem && !newsItem.closest('.site-header')) { openArt(newsItem.getAttribute('data-nid')); return; }
     var artItem = e.target.closest('[data-aid]');
     if (artItem && !artItem.closest('.site-header') && !artItem.closest('.mob-menu')) {
-      // Close search bar if result clicked from search
       var bar = document.getElementById('search-bar');
       var results = document.getElementById('search-results');
       if (bar) bar.classList.remove('show');
@@ -1298,12 +1268,10 @@ function setupEventDelegation() {
       openBook(bookItem.getAttribute('data-bid')); return;
     }
 
-    // Archive cards with goissue flag
     var archCard = e.target.closest('[data-goissue]');
     if (archCard && !archCard.closest('.site-header')) { goView('issue'); return; }
   });
 
-  // Close search on result click (one global listener)
   var searchRes = document.getElementById('search-results');
   if (searchRes) {
     searchRes.addEventListener('click', function(e) {
@@ -1317,11 +1285,9 @@ function setupEventDelegation() {
       }
     });
   }
-  // Fix iframe title for PDF accessibility
   var iframe = document.getElementById('pdf-frame');
   if (iframe) iframe.setAttribute('title', 'عارض PDF لعدد الجريدة الحالي');
 
-  // Fix hamburger accessibility
   var ham = document.getElementById('ham');
   if (ham) {
     ham.setAttribute('aria-label', 'فتح القائمة');
@@ -1330,7 +1296,6 @@ function setupEventDelegation() {
 }
 
 
-// ── DARK MODE ──
 var _dark = (function(){ try { return localStorage.getItem('waraq-dark') === '1'; } catch(e) { return false; } })();
 function applyDark(on) {
   document.body.classList.toggle('dark', on);
@@ -1341,7 +1306,6 @@ function applyDark(on) {
 }
 applyDark(_dark);
 
-// ── FONT SIZE ──
 var _fontSize = (function(){ try { return parseInt(localStorage.getItem('waraq-font') || '0'); } catch(e) { return 0; } })();
 function changeFontSize(dir) {
   if (dir === 0) _fontSize = 0;
@@ -1355,14 +1319,12 @@ function changeFontSize(dir) {
   try { localStorage.setItem('waraq-font', _fontSize); } catch(e) {}
 }
 
-// ── READ TIME ──
 function calcReadTime(text) {
   var clean = (text||'').replace(/<[^>]*>/g,'').replace(/&[a-z]+;/gi,' ').trim(); var words = clean ? clean.split(/\s+/).filter(Boolean).length : 0;
   var mins = words > 0 ? Math.max(1, Math.ceil(words / 130)) : 1;
   return mins + (mins === 1 ? ' دقيقة قراءة' : ' دقائق قراءة');
 }
 
-// ── READING PROGRESS ──
 var _progressInited = false;
 function _onReadScroll() {
   var fill = document.getElementById('read-bar');
@@ -1378,13 +1340,11 @@ function initReadProgress() {
   window.addEventListener('scroll', _onReadScroll, {passive:true});
 }
 
-// ── BACK TO TOP ──
 window.addEventListener('scroll', function() {
   var btn = document.getElementById('back-top');
   if (btn) btn.classList.toggle('show', window.scrollY > 400);
 });
 
-// ── SEARCH ──
 var _searchTimer = null;
 function clearSearch() {
   var input = document.getElementById('search-input');
@@ -1439,7 +1399,6 @@ function initSearch() {
     }
   });
 
-  // Mobile search
   var mobInput = document.getElementById('mob-search-input');
   var mobResults = document.getElementById('mob-search-results');
   if (mobInput && mobResults) {
@@ -1484,7 +1443,6 @@ function doSearch(q) {
   var results = document.getElementById('search-results');
   var qq = q.toLowerCase();
   var hits = [];
-  // Search articles
   Object.keys(lA).forEach(function(k) {
     var a = lA[k];
     if ((a.title||'').toLowerCase().indexOf(qq) > -1 || (a.excerpt||'').toLowerCase().indexOf(qq) > -1) {
@@ -1499,7 +1457,6 @@ function doSearch(q) {
       }
     }
   });
-  // Search books
   Object.keys(lB).forEach(function(k) {
     var b = lB[k];
     if ((b.title||'').toLowerCase().indexOf(qq) > -1 || (b.author||'').toLowerCase().indexOf(qq) > -1) {
@@ -1524,11 +1481,7 @@ function doSearch(q) {
     return '<div class=sr-item data-' + dtype + '=' + escHtml(h.id) + '><div class=sr-cat>' + escHtml(h.cat) + '</div><div class=sr-title>' + escHtml(h.title) + '</div></div>';
   }).join('');
   results.classList.add('show');
-  // Close search bar on result click (delegation handles the openArt/openBook)
-  // click handled by global delegation below
 }
-
-// ── SHARE ──
 
 function openShare(type) {
   var title = type === 'art'
@@ -1555,21 +1508,16 @@ function copyShareUrl() {
 }
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeShare(); });
 
-// ── INIT FEATURES ──
-
 document.addEventListener('DOMContentLoaded', function() {
-  // Clean URL — remove /index.html from address bar
   if (window.location.pathname.indexOf('index.html') > -1) {
     window.history.replaceState({}, '', window.location.pathname.replace(/\/index\.html$/, '/') || '/');
   }
   if (window.location.hash === '#home') {
     window.history.replaceState({}, '', window.location.pathname);
   }
-  // Retry Supabase if not ready yet
   if (!_supabaseReady) {
     setTimeout(function() {
       if (initSupabase()) {
-        // Re-trigger data load if Supabase connected on retry
         var evt = new Event('supabase-ready');
         document.dispatchEvent(evt);
       }
@@ -1577,7 +1525,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   initNav();
   setupEventDelegation();
-  // Handle direct URL with hash
   var hash = window.location.hash.replace('#', '');
   var validViews = ['home','issue','books','articles','archive'];
   if (hash.indexOf('art/') === 0) {
@@ -1590,11 +1537,9 @@ document.addEventListener('DOMContentLoaded', function() {
     goView(hash);
   }
 
-  // Show warning if config.js missing
   if (window._configMissing) {
     console.warn('config.js not loaded — static content only');
   }
-  // Try loading from Supabase with error handling
   try {
     if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
       Promise.all([
@@ -1615,7 +1560,6 @@ document.addEventListener('DOMContentLoaded', function() {
   } catch(e) {
     console.warn('Config error, using static content');
   }
-  // Also load when Supabase connects via retry
   document.addEventListener('supabase-ready', function() {
     if (!sb) return;
     Promise.all([
@@ -1633,10 +1577,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   var bt = document.getElementById('back-top');
   if (bt) bt.addEventListener('click', function() { window.scrollTo({top:0,behavior:'smooth'}); });
-  // Dark mode toggle
   var dt = document.getElementById('dark-toggle');
   if (dt) dt.addEventListener('click', function() { applyDark(!_dark); });
-  // Search
   initSearch();
 });
 </script>
