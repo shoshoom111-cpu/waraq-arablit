@@ -482,6 +482,9 @@ body.dark .news-card-icon{background:#1a1a1a;}
   <img id="header-logo-img" src="" alt="وَرَق" class="header-logo-img" style="display:none;">
   <span id="header-logo-text">وَرَق</span>
 </a>
+<div id="site-views-badge" style="display:none;align-items:center;gap:4px;font-size:11px;color:var(--mid);background:var(--cream);padding:4px 10px;border-radius:20px;border:1px solid var(--border);font-family:'Cairo',sans-serif;">
+  <span>👁</span><span id="site-views-count">٠</span><span>زيارة</span>
+</div>
   <nav class="header-nav">
     <a class="nav-a on" id="nav-home">الرئيسية</a>
     <a class="nav-a" id="nav-issue">العدد الحالي</a>
@@ -1184,6 +1187,16 @@ openArt = function(id) {
   changeFontSize(_fontSize); // Apply saved font size
   initReadProgress();
   _currentShareId = id;
+  // تسجيل وعرض المشاهدات
+  trackView(id).then(function() {
+    getViews(id).then(function(v) {
+      var rt = document.getElementById('read-time');
+      if (rt && v > 0) {
+        var vText = ' · 👁 ' + v.toLocaleString('ar-SA') + ' مشاهدة';
+        if (rt.textContent.indexOf('مشاهدة') === -1) rt.textContent += vText;
+      }
+    });
+  });
   // Load comments
   loadComments(id);
   var errEl = document.getElementById('cf-error');
@@ -1192,6 +1205,55 @@ openArt = function(id) {
   if (succ) succ.style.display = 'none';
 };
 
+
+// ── SITE VISITS ──
+async function trackSiteVisit() {
+  if (!sb) return;
+  try {
+    var today = new Date().toISOString().split('T')[0];
+    var sessionKey = 'waraq_visit_' + today;
+    var visited = false;
+    try { visited = sessionStorage.getItem(sessionKey); } catch(e) {}
+    if (!visited) {
+      try { sessionStorage.setItem(sessionKey, '1'); } catch(e) {}
+      await sb.from('site_visits').upsert({ visit_date: today, count: 1 }, { onConflict: 'visit_date', ignoreDuplicates: false });
+    }
+    // اعرض الإجمالي
+    var res = await sb.from('site_visits').select('count');
+    if (res.data && res.data.length) {
+      var total = res.data.reduce(function(s, r) { return s + (r.count || 0); }, 0);
+      var badge = document.getElementById('site-views-badge');
+      var countEl = document.getElementById('site-views-count');
+      if (badge && countEl && total > 0) {
+        countEl.textContent = total.toLocaleString('ar-SA');
+        badge.style.display = 'flex';
+      }
+    }
+  } catch(e) {}
+}
+
+// ── ARTICLE VIEWS ──
+async function trackView(articleId) {
+  if (!sb) return;
+  try {
+    // أضف مشاهدة أو زد العداد
+    var res = await sb.rpc('increment_view', { aid: String(articleId) });
+    if (res.error) {
+      // إذا ما شغل rpc، استخدم upsert
+      var cur = await sb.from('article_views').select('views').eq('article_id', String(articleId)).single();
+      var newViews = ((cur.data && cur.data.views) || 0) + 1;
+      await sb.from('article_views').upsert({ article_id: String(articleId), views: newViews });
+    }
+  } catch(e) {}
+}
+
+async function getViews(articleId) {
+  if (!sb) return 0;
+  try {
+    var res = await sb.from('article_views').select('views').eq('article_id', String(articleId)).single();
+    return (res.data && res.data.views) || 0;
+  } catch(e) { return 0; }
+}
 
 // ── COMMENTS FUNCTIONS ──
 var _currentArticleId = null;
@@ -1311,17 +1373,21 @@ function setupEventDelegation() {
       var archiveItems = window._archiveItems || [];
       var found = archiveItems.filter(function(i){ return String(i.id) === String(issueId); })[0];
       if (found && found.pdf) {
-        // فتح العدد المحدد
+        // فتح العدد من Supabase
         var frame = document.getElementById('pdf-frame');
         if (frame) { if (frame.tagName === 'OBJECT') frame.data = found.pdf; else frame.src = found.pdf; }
         var dl = document.getElementById('pdf-dl-btn'); if (dl) { dl.href = found.pdf; dl.style.display = 'block'; }
+        var fdl = document.getElementById('pdf-fallback-dl'); if (fdl) fdl.href = found.pdf;
         var lbl = document.getElementById('pdf-issue-label'); if (lbl) lbl.textContent = 'العدد ' + found.num + ' · ' + (found.date||'');
         var fw = document.getElementById('pdf-frame-wrap'); if (fw) fw.style.display = 'block';
         var pp = document.getElementById('pdf-placeholder'); if (pp) pp.style.display = 'none';
+        var nl = document.getElementById('pdf-no-link'); if (nl) nl.style.display = 'none';
         goView('issue');
-      } else {
+      } else if (issueId === '1') {
+        // العدد الأول — افتح العدد الحالي
         goView('issue');
       }
+      // الأعداد القادمة — ما نفتح شيء
       return;
     }
   });
@@ -1655,6 +1721,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   var bt = document.getElementById('back-top');
   if (bt) bt.addEventListener('click', function() { window.scrollTo({top:0,behavior:'smooth'}); });
+  // تتبع زيارة الموقع
+  setTimeout(trackSiteVisit, 1000);
   // Dark mode toggle
   var dt = document.getElementById('dark-toggle');
   if (dt) dt.addEventListener('click', function() { applyDark(!_dark); });
