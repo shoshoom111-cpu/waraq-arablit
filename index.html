@@ -709,6 +709,37 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <script src="config.js" onload="window._configMissing=false;"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  // ✅ FIX: منع أخطاء localStorage و PDF
+(function() {
+  try {
+    localStorage.setItem('__test__', '1');
+    localStorage.removeItem('__test__');
+  } catch(e) {
+    window.localStorage = {
+      _data: {},
+      getItem: function(key) { return this._data[key] || null; },
+      setItem: function(key, value) { this._data[key] = value; },
+      removeItem: function(key) { delete this._data[key]; },
+      clear: function() { this._data = {}; }
+    };
+  }
+})();
+
+// منع أخطاء Promise
+window.addEventListener('unhandledrejection', function(e) {
+  console.warn('Error:', e.reason);
+  e.preventDefault();
+});
+
+// دعم PDF من Supabase
+if (typeof chrome !== 'undefined' && chrome.runtime) {
+  try {
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+      if (sendResponse) sendResponse({ ok: true });
+      return true;
+    });
+  } catch(e) {}
+}
 var sb = null;
 var _supabaseReady = false;
 function initSupabase() {
