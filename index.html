@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وَرَق | مجلة مركز الأدب العربي</title>
+<title>وَرَق | جريدة مركز الأدب العربي</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;500;700&family=Cairo:wght@300;400;500;600&family=Felfel&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -706,7 +706,12 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <div class="single-book-wrap">
   <button type="button" class="ph-back" id="book-single-back" style="margin-bottom:18px;">← العودة</button>
   <div class="sb-in">
-    <div><div class="sb-cover" id="sb-cover"><span id="sb-cover-t"></span></div></div>
+    <div>
+      <div class="sb-cover" id="sb-cover" style="overflow:hidden;padding:0;position:relative;">
+        <img id="sb-cover-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:10px;">
+        <span id="sb-cover-t" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;font-family:Noto Serif Arabic,serif;font-size:22px;color:#fff;text-align:center;"></span>
+      </div>
+    </div>
     <div>
       <div class="sb-badge" id="sb-badge"></div>
       <div class="sb-title" id="sb-title"></div>
@@ -719,6 +724,23 @@ body.dark .news-card-icon{background:#1a1a1a;}
   </div>
 </div>
 <div class="related-sec" style="max-width:860px;"><div class="rel-label">كتب مشابهة</div><div class="rel-grid" id="rel-books"></div></div>
+
+<div class="comments-sec" style="max-width:860px;">
+  <div class="comments-title">التعليقات (<span id="book-comments-count">٠</span>)</div>
+  <div class="comment-form">
+    <div class="comment-form-title">اترك تعليقاً على الكتاب</div>
+    <div class="cf-row">
+      <div class="cf-field"><label for="bcf-name">الاسم <span>*</span></label><input class="cf-input" type="text" id="bcf-name" placeholder="اسمك" maxlength="60"></div>
+      <div class="cf-field"><label for="bcf-email">البريد <span style="font-weight:400;color:var(--mid);">(اختياري)</span></label><input class="cf-input" type="email" id="bcf-email" placeholder="لن يُنشر"></div>
+    </div>
+    <div class="cf-field"><label for="bcf-body">التعليق <span>*</span></label><textarea class="cf-textarea" id="bcf-body" placeholder="اكتب تعليقك هنا..." maxlength="1000"></textarea></div>
+    <div class="cf-error" id="bcf-error"></div>
+    <button type="button" class="cf-submit" id="bcf-submit" onclick="submitBookComment()">إرسال التعليق</button>
+    <div class="cf-success" id="bcf-success">شكراً! تعليقك قيد المراجعة وسيظهر بعد موافقة المحررين.</div>
+    <div class="cf-note">⚠ التعليقات تُراجع قبل النشر · الاسم مطلوب</div>
+  </div>
+  <div id="book-comments-list"><div class="comments-loading">جاري تحميل التعليقات...</div></div>
+</div>
 </div>
 
 <script>window._configMissing=true;</script>
@@ -841,8 +863,20 @@ function openBook(id) {
   if (!b) { console.warn('Book not found:', id); goView('books'); return; }
   document.getElementById('sb-badge').textContent = b.genre || 'كتاب';
   document.getElementById('sb-badge').style.background = b.color || '#1A7A7A';
-  document.getElementById('sb-cover').style.background = b.color || '#1A7A7A';
-  se('sb-cover-t', b.title);
+  var sbCover = document.getElementById('sb-cover');
+  var sbImg = document.getElementById('sb-cover-img');
+  var sbCoverT = document.getElementById('sb-cover-t');
+  if (sbCover) sbCover.style.background = b.color || '#1A7A7A';
+  var bImg = b.image && b.image.trim();
+  if (bImg && sbImg) {
+    sbImg.src = bImg;
+    sbImg.style.display = 'block';
+    if (sbCoverT) { sbCoverT.textContent = ''; sbCoverT.style.display = 'none'; }
+  } else {
+    if (sbImg) sbImg.style.display = 'none';
+    if (sbCoverT) sbCoverT.style.display = 'flex';
+    se('sb-cover-t', b.title);
+  }
   se('sb-title', b.title);
   se('sb-author', b.author || '');
   se('sb-desc', b.desc || b.description || '');
@@ -879,6 +913,9 @@ function openBook(id) {
     });
   }
   _currentShareBookId = id;
+  loadBookComments(id);
+  var bcErr=document.getElementById('bcf-error'); if(bcErr) bcErr.style.display='none';
+  var bcSucc=document.getElementById('bcf-success'); if(bcSucc) bcSucc.style.display='none';
   goView('book-single');
 }
 
@@ -1155,6 +1192,48 @@ async function submitComment() {
   finally { if (btn) { btn.disabled = false; btn.textContent = 'إرسال التعليق'; } }
 }
 
+// ── BOOK COMMENTS ──
+var _currentBookId = null;
+
+function loadBookComments(bookId) {
+  _currentBookId = bookId;
+  var list = document.getElementById('book-comments-list');
+  var countEl = document.getElementById('book-comments-count');
+  if (!list) return;
+  if (!sb) { list.innerHTML = '<div class="comments-empty">التعليقات غير متاحة</div>'; return; }
+  list.innerHTML = '<div class="comments-loading">جاري تحميل التعليقات...</div>';
+  sb.from('comments').select('*').eq('article_id','book_'+String(bookId)).eq('status','approved').order('created_at',{ascending:true})
+    .then(function(res) {
+      if (res.error || !res.data) { list.innerHTML = '<div class="comments-empty">تعذر تحميل التعليقات</div>'; return; }
+      var data = res.data;
+      if (countEl) countEl.textContent = data.length;
+      if (!data.length) { list.innerHTML = '<div class="comments-empty">لا توجد تعليقات بعد — كن أول من يعلق!</div>'; return; }
+      list.innerHTML = '';
+      data.forEach(function(c) {
+        var d = document.createElement('div'); d.className = 'comment-item';
+        d.innerHTML = '<div class="ci-header"><span class="ci-name">'+escHtml(c.name)+'</span><span class="ci-date">'+new Date(c.created_at).toLocaleDateString('ar-SA')+'</span></div><div class="ci-body">'+escHtml(c.body)+'</div>';
+        list.appendChild(d);
+      });
+    }).catch(function() { list.innerHTML = '<div class="comments-empty">تعذر تحميل التعليقات</div>'; });
+}
+
+async function submitBookComment() {
+  var name=(document.getElementById('bcf-name')||{value:''}).value.trim();
+  var body=(document.getElementById('bcf-body')||{value:''}).value.trim();
+  var errEl=document.getElementById('bcf-error'),btn=document.getElementById('bcf-submit'),successEl=document.getElementById('bcf-success');
+  if(errEl)errEl.style.display='none';if(successEl)successEl.style.display='none';
+  if(!name){if(errEl){errEl.textContent='الاسم مطلوب';errEl.style.display='block';}return;}
+  if(!body||body.length<3){if(errEl){errEl.textContent=!body?'التعليق مطلوب':'التعليق قصير جداً';errEl.style.display='block';}return;}
+  if(!_currentBookId||!sb){if(errEl){errEl.textContent='خطأ في الاتصال';errEl.style.display='block';}return;}
+  if(btn){if(btn.disabled)return;btn.disabled=true;btn.textContent='جاري الإرسال...';}
+  try{
+    var res=await sb.from('comments').insert({article_id:'book_'+String(_currentBookId),name,body,status:'pending'});
+    if(res.error){if(errEl){errEl.textContent=res.error.message||'حدث خطأ';errEl.style.display='block';}}
+    else{if(successEl)successEl.style.display='block';['bcf-name','bcf-body','bcf-email'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
+  }catch(e){if(errEl){errEl.textContent='خطأ في الاتصال';errEl.style.display='block';}}
+  finally{if(btn){btn.disabled=false;btn.textContent='إرسال التعليق';}}
+}
+
 function setupEventDelegation() {
   document.addEventListener('click', function(e) {
     var mob = document.getElementById('mob-menu'); var ham = document.getElementById('ham');
@@ -1322,24 +1401,12 @@ document.addEventListener('DOMContentLoaded', function() {
   else if (hash.indexOf('book/') === 0) { var bookId = hash.replace('book/', ''); if (bookId) setTimeout(function() { openBook(bookId); }, 500); }
   else if (hash && validViews.indexOf(hash) > -1) { goView(hash); }
   if (window._configMissing) { console.warn('config.js not loaded — static content only'); }
-  try {
-    if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
-      Promise.all([
-        sb.from('articles').select('*').eq('status','published').neq('category','أخبار').order('published_at',{ascending:false}),
-        sb.from('articles').select('*').eq('status','published').eq('category','أخبار').order('published_at',{ascending:false}),
-        sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
-        sb.from('settings').select('*')
-      ]).then(function(results) {
-        var ar = results[0], nw = results[1], bk = results[2], st = results[3];
-        if (ar.data && ar.data.length) { ar.data.forEach(function(a) { lA[a.id] = a; }); renderArts(ar.data); }
-        if (nw.data && nw.data.length) { nw.data.forEach(function(n) { lA[n.id] = n; }); renderNews(nw.data); }
-        if (bk.data && bk.data.length) { bk.data.forEach(function(b) { lB[b.id] = b; }); renderBooks(bk.data); }
-        if (st.data && st.data.length) applySettings(st.data);
-      }).catch(function(err) { console.warn('Supabase load failed, using static content'); });
-    }
-  } catch(e) { console.warn('Config error, using static content'); }
-  document.addEventListener('supabase-ready', function() {
+  // تحميل البيانات — مرة واحدة فقط بـ flag لمنع التكرار
+  var _dataLoaded = false;
+  function loadAllData() {
+    if (_dataLoaded) return;
     if (!sb) return;
+    _dataLoaded = true;
     Promise.all([
       sb.from('articles').select('*').eq('status','published').neq('category','أخبار').order('published_at',{ascending:false}),
       sb.from('articles').select('*').eq('status','published').eq('category','أخبار').order('published_at',{ascending:false}),
@@ -1351,8 +1418,14 @@ document.addEventListener('DOMContentLoaded', function() {
       if (nw && nw.data && nw.data.length) { nw.data.forEach(function(n){lA[n.id]=n;}); renderNews(nw.data); }
       if (bk.data && bk.data.length) { bk.data.forEach(function(b){lB[b.id]=b;}); renderBooks(bk.data); }
       if (st.data && st.data.length) applySettings(st.data);
-    }).catch(function(e){ console.warn('Data load failed:', e.message||e); });
-  });
+    }).catch(function(e){ _dataLoaded=false; console.warn('Data load failed:', e.message||e); });
+  }
+  try {
+    if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
+      loadAllData();
+    }
+  } catch(e) { console.warn('Config error, using static content'); }
+  document.addEventListener('supabase-ready', function() { loadAllData(); });
   var bt = document.getElementById('back-top'); if (bt) bt.addEventListener('click', function() { window.scrollTo({top:0,behavior:'smooth'}); });
   var dt = document.getElementById('dark-toggle'); if (dt) dt.addEventListener('click', function() { applyDark(!_dark); });
   initSearch();
