@@ -209,20 +209,20 @@ button,a{cursor:pointer;}
 .rel-meta{font-size:11px;color:var(--light);}
 .issue-hd{background:var(--ink);padding:20px 24px;}
 .issue-hd-in{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.issue-pdf-wrap{background:#2a2a2a;min-height:80vh;display:flex;flex-direction:column;align-items:center;}
-.pdf-placeholder{max-width:500px;margin:60px auto;text-align:center;padding:0 24px;}
+.issue-pdf-wrap{background:#2a2a2a;min-height:80vh;display:flex;flex-direction:column;align-items:center;direction:ltr;}
+.pdf-placeholder{max-width:500px;margin:60px auto;text-align:center;padding:0 24px;direction:rtl;}
 .pdf-placeholder-icon{width:70px;height:90px;background:#4a4a4a;border-radius:6px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;}
 .pdf-frame-wrap{width:100%;padding:0 0 40px;}
 /* PDF.js viewer */
 #pdf-viewer-wrap{width:100%;display:flex;flex-direction:column;align-items:center;gap:0;background:#2a2a2a;padding-bottom:40px;}
-#pdf-controls{width:100%;max-width:860px;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px 20px;background:#1a1a1a;border-bottom:1px solid #444;position:sticky;top:60px;z-index:100;flex-wrap:wrap;}
+#pdf-controls{width:100%;max-width:100%;display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px;background:#1a1a1a;border-bottom:1px solid #444;position:sticky;top:0;z-index:100;flex-wrap:wrap;box-shadow:0 2px 12px rgba(0,0,0,.4);}
 .pdf-ctrl-btn{background:#333;color:#fff;border:1px solid #555;border-radius:6px;padding:6px 14px;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
 .pdf-ctrl-btn:hover{background:#444;border-color:#888;}
 .pdf-ctrl-btn:disabled{opacity:.4;cursor:not-allowed;}
 #pdf-page-info{font-size:12px;color:#aaa;font-family:'Cairo',sans-serif;min-width:80px;text-align:center;}
 #pdf-zoom-info{font-size:11px;color:#888;font-family:'Cairo',sans-serif;}
-#pdf-canvas-wrap{width:100%;max-width:860px;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 16px;}
-.pdf-page-canvas{display:block;box-shadow:0 4px 24px rgba(0,0,0,.5);border-radius:4px;max-width:100%;height:auto;cursor:grab;touch-action:pan-y;}
+#pdf-canvas-wrap{width:100%;max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 16px;}
+.pdf-page-canvas{display:block;box-shadow:0 4px 24px rgba(0,0,0,.5);border-radius:4px;max-width:100%;width:100%;height:auto;cursor:grab;touch-action:pan-y;}
 .pdf-page-canvas:active{cursor:grabbing;}
 #pdf-loading{color:#888;font-family:'Cairo',sans-serif;font-size:14px;padding:60px 0;text-align:center;}
 @media(max-width:1024px){
@@ -1043,14 +1043,26 @@ function applySettings(rows) {
   if (s.archive && s.archive.length) {
     renderArchive(s.archive);
     var latest = s.archive[0];
-    if (latest && latest.pdf) {
-      var rawPdfUrl = latest.pdf;
-      var pp = document.getElementById('pdf-placeholder'); if (pp) pp.style.display = 'none';
-      var vw = document.getElementById('pdf-viewer-wrap'); if (vw) vw.style.display = 'block';
-      var dl = document.getElementById('pdf-dl-btn'); if (dl) { dl.href = rawPdfUrl; dl.style.display = 'block'; }
-      var nl = document.getElementById('pdf-no-link'); if (nl) nl.style.display = 'none';
-      var lbl = document.getElementById('pdf-issue-label'); if (lbl) lbl.textContent = 'العدد ' + latest.num + ' · ' + (latest.date||'');
-      loadPdfJs(rawPdfUrl);
+    if (latest) {
+      // دائماً حدّث عنوان العدد في الهيدر
+      var lbl = document.getElementById('pdf-issue-label');
+      if (lbl) lbl.textContent = 'العدد ' + (latest.num||'') + (latest.date ? ' · ' + latest.date : '');
+
+      if (latest.pdf && latest.pdf.trim()) {
+        // عدد فيه PDF — شغّل العارض
+        var rawPdfUrl = latest.pdf.trim();
+        var pp = document.getElementById('pdf-placeholder'); if (pp) pp.style.display = 'none';
+        var vw = document.getElementById('pdf-viewer-wrap'); if (vw) vw.style.display = 'block';
+        var dl = document.getElementById('pdf-dl-btn'); if (dl) { dl.href = rawPdfUrl; dl.style.display = 'block'; }
+        var nl = document.getElementById('pdf-no-link'); if (nl) nl.style.display = 'none';
+        loadPdfJs(rawPdfUrl);
+      } else {
+        // عدد بدون PDF — اعرض الـ placeholder مع رسالة واضحة
+        var pp = document.getElementById('pdf-placeholder'); if (pp) pp.style.display = 'block';
+        var vw = document.getElementById('pdf-viewer-wrap'); if (vw) vw.style.display = 'none';
+        var dl = document.getElementById('pdf-dl-btn'); if (dl) dl.style.display = 'none';
+        var nl = document.getElementById('pdf-no-link'); if (nl) { nl.style.display = 'block'; nl.textContent = 'العدد ' + (latest.num||'') + ' — سيتوفر PDF قريباً'; }
+      }
     }
   }
 }
@@ -1388,7 +1400,11 @@ function loadPdfJs(url) {
   }
   _pdfUrl = url;
   _pdfPage = 1;
-  _pdfScale = window.innerWidth < 600 ? 0.8 : 1.2;
+  var _initWrap = document.getElementById('pdf-canvas-wrap');
+  var _initW = (_initWrap && _initWrap.clientWidth > 0) ? _initWrap.clientWidth : window.innerWidth;
+  _initW = Math.min(_initW, 860) - 32;
+  // سيتم تعديله تلقائياً بعد تحميل الصفحة الأولى
+  _pdfScale = Math.max(0.8, Math.min(1.5, _initW / 595));
   var wrap = document.getElementById('pdf-canvas-wrap');
   if (wrap) wrap.innerHTML = '<div id="pdf-loading">جاري تحميل الملف...</div>';
   pdfjsLib.getDocument({ url: url, cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/', cMapPacked: true })
@@ -1396,7 +1412,14 @@ function loadPdfJs(url) {
       _pdfDoc = doc;
       _pdfTotal = doc.numPages;
       updatePdfInfo();
-      renderAllPages();
+      // ملاءمة تلقائية للعرض عند أول تحميل
+      doc.getPage(1).then(function(pg) {
+        var wrap = document.getElementById('pdf-canvas-wrap');
+        var w = (wrap && wrap.clientWidth > 0) ? wrap.clientWidth - 32 : window.innerWidth - 32;
+        var vp0 = pg.getViewport({ scale: 1 });
+        _pdfScale = Math.max(0.5, Math.min(2, w / vp0.width));
+        renderAllPages();
+      });
     }).catch(function(err) {
       var lo = document.getElementById('pdf-loading');
       if (lo) lo.textContent = 'تعذر تحميل الملف — ' + (err.message || '');
@@ -1408,6 +1431,7 @@ function renderAllPages() {
   var wrap = document.getElementById('pdf-canvas-wrap');
   if (!wrap) return;
   wrap.innerHTML = '';
+  var dpr = Math.min(window.devicePixelRatio || 1, 2); // max 2x للأداء
   var promises = [];
   for (var i = 1; i <= _pdfTotal; i++) {
     (function(pageNum) {
@@ -1416,10 +1440,15 @@ function renderAllPages() {
       canvas.id = 'pdf-canvas-' + pageNum;
       wrap.appendChild(canvas);
       var p = _pdfDoc.getPage(pageNum).then(function(page) {
-        var vp = page.getViewport({ scale: _pdfScale });
+        var vp = page.getViewport({ scale: _pdfScale * dpr });
+        // الحجم الفعلي للـ canvas بدقة عالية
         canvas.width = vp.width;
         canvas.height = vp.height;
-        return page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+        // الحجم المعروض بـ CSS — أصغر بنسبة dpr فتبدو حادة
+        canvas.style.width = Math.floor(vp.width / dpr) + 'px';
+        canvas.style.height = Math.floor(vp.height / dpr) + 'px';
+        var ctx = canvas.getContext('2d');
+        return page.render({ canvasContext: ctx, viewport: vp }).promise;
       });
       promises.push(p);
     })(i);
@@ -1434,10 +1463,13 @@ function renderSinglePage(pageNum) {
   if (!_pdfDoc) return;
   var canvas = document.getElementById('pdf-canvas-' + pageNum);
   if (!canvas) return;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
   _pdfDoc.getPage(pageNum).then(function(page) {
-    var vp = page.getViewport({ scale: _pdfScale });
+    var vp = page.getViewport({ scale: _pdfScale * dpr });
     canvas.width = vp.width;
     canvas.height = vp.height;
+    canvas.style.width = Math.floor(vp.width / dpr) + 'px';
+    canvas.style.height = Math.floor(vp.height / dpr) + 'px';
     page.render({ canvasContext: canvas.getContext('2d'), viewport: vp });
   });
 }
@@ -1494,8 +1526,8 @@ function pdfZoomFit() {
   if (!wrap || !_pdfDoc) return;
   _pdfDoc.getPage(1).then(function(page) {
     var vp = page.getViewport({ scale: 1 });
-    var w = wrap.clientWidth - 32;
-    _pdfScale = Math.max(0.4, w / vp.width);
+    var w = (wrap.clientWidth || window.innerWidth) - 32;
+    _pdfScale = Math.max(0.4, Math.min(3, w / vp.width));
     renderAllPages();
   });
 }
