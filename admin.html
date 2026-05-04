@@ -9,8 +9,6 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{--teal:#1A7A7A;--td:#0f5555;--tl:#E8F5F2;--orange:#C94B1E;--ol:#FDF0EC;--gold:#D4A843;--gd:#3D2800;--ink:#0E0E0E;--paper:#FAF9F7;--cream:#F4F2EE;--mid:#6B6860;--light:#C8C5BC;--border:#E2DFD8;--bg:#F0EFEB;}
 body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--ink);direction:rtl;min-height:100vh;}
-
-/* TOP BAR */
 .topbar{background:var(--ink);height:52px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
 .tb-left{display:flex;align-items:center;gap:14px;}
 .tb-logo{font-family:'Felfel',serif;font-size:26px;color:#fff;cursor:pointer;text-decoration:none;}
@@ -22,15 +20,11 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--ink);direct
 .tb-link:hover{background:#1a1a1a;color:#fff;}
 .tb-link.accent{color:var(--teal);}
 .tb-link.accent:hover{background:var(--tl);color:var(--teal);}
-
-/* NAV TABS */
 .nav-tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 20px;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .ntab{font-size:12px;color:var(--mid);padding:12px 18px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;font-weight:500;flex-shrink:0;}
 .ntab:hover{color:var(--ink);}
 .ntab.on{color:var(--teal);border-bottom-color:var(--teal);}
 .ntab .badge{background:var(--orange);color:#fff;font-size:10px;padding:1px 6px;border-radius:20px;margin-right:5px;}
-
-/* LAYOUT */
 .layout{display:grid;grid-template-columns:200px 1fr;min-height:calc(100vh - 100px);}
 .sidebar{background:#fff;border-left:1px solid var(--border);padding:10px 0;}
 .sb-item{display:flex;align-items:center;gap:8px;padding:10px 16px;font-size:13px;color:var(--mid);cursor:pointer;border-right:2px solid transparent;transition:all .2s;}
@@ -41,21 +35,15 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--ink);direct
 .sb-foot a{font-size:12px;color:var(--mid);text-decoration:none;display:flex;align-items:center;gap:5px;}
 .sb-foot a:hover{color:var(--teal);}
 .main{overflow:hidden;}
-
-/* CONTENT */
 .content{padding:24px;max-height:calc(100vh - 100px);overflow-y:auto;}
 .sec{display:none;}
 .sec.on{display:block;}
 .pg-title{font-size:18px;font-weight:600;color:var(--ink);margin-bottom:18px;}
-
-/* STATS */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
 .stat{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;}
 .stat-label{font-size:11px;color:var(--mid);margin-bottom:6px;font-weight:500;}
 .stat-val{font-family:'Noto Serif Arabic',serif;font-size:28px;color:var(--ink);}
 .stat-note{font-size:10px;margin-top:3px;}
-
-/* LIVE PREVIEW */
 .live-preview{background:var(--ink);border-radius:12px;overflow:hidden;margin-bottom:20px;}
 .lp-bar{background:#0a0a0a;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;}
 .lp-dots{display:flex;gap:5px;}
@@ -67,18 +55,14 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--ink);direct
 .lp-meta{font-size:9px;color:#444;line-height:2;}
 .lp-meta.right{text-align:left;}
 .lp-tag{font-size:9px;color:var(--teal);text-align:center;letter-spacing:.1em;margin-top:3px;}
-.lp-ticker{background:var(--teal);padding:4px 0;font-size:10px;color:rgba(255,255,255,.7);margin:8px -16px;padding:5px 16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lp-ticker{background:var(--teal);padding:5px 16px;font-size:10px;color:rgba(255,255,255,.7);margin:8px -16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .lp-hero-badge{display:inline-block;font-size:8px;padding:2px 8px;border-radius:2px;color:#fff;margin-bottom:6px;}
 .lp-hero-title{font-family:'Noto Serif Arabic',serif;font-size:14px;color:#fff;line-height:1.5;margin-bottom:5px;}
 .lp-hero-body{font-size:10px;color:#666;line-height:1.7;}
-
-/* CARDS */
 .card{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:14px;}
 .card-hd{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .card-title{font-size:13px;font-weight:600;color:var(--ink);}
 .card-body{padding:18px;}
-
-/* FORMS */
 .fg{display:flex;flex-direction:column;gap:4px;margin-bottom:13px;}
 label{font-size:11px;color:var(--mid);font-weight:600;letter-spacing:.02em;}
 input[type=text],input[type=url],input[type=email],input[type=password],select,textarea{font-family:'Cairo',sans-serif;font-size:13px;padding:9px 13px;border:1px solid var(--border);border-radius:7px;background:var(--paper);color:var(--ink);direction:rtl;width:100%;transition:border-color .2s;}
@@ -94,21 +78,14 @@ textarea{resize:vertical;min-height:90px;line-height:1.7;}
 .btn.o{background:transparent;border:1px solid var(--border);color:var(--ink);}
 .btn.o:hover{background:var(--cream);}
 .btn.sm{font-size:11px;padding:6px 14px;}
-
-/* INLINE FORM */
 .iform{display:none;background:var(--tl);border:1px solid var(--teal);border-radius:10px;padding:18px;margin-bottom:16px;}
 .iform.on{display:block;}
 .iform-title{font-size:12px;font-weight:600;color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
-
-/* ARTICLE EDITOR */
 .art-editor{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:14px;}
-.ae-title{font-size:13px;font-weight:600;margin-bottom:16px;color:var(--ink);}
 .editor-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:8px;background:var(--cream);border:1px solid var(--border);border-bottom:none;border-radius:7px 7px 0 0;}
 .tool{font-size:11px;padding:4px 10px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;transition:all .2s;font-family:'Cairo',sans-serif;}
 .tool:hover{background:var(--tl);border-color:var(--teal);color:var(--teal);}
 .editor-area{border-radius:0 0 7px 7px !important;border-top:none !important;}
-
-/* ROWS */
 .irow{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .icolor{width:36px;height:36px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:600;}
 .iinfo{flex:1;min-width:0;}
@@ -121,23 +98,17 @@ textarea{resize:vertical;min-height:90px;line-height:1.7;}
 .bsm.r{border-color:var(--orange);color:var(--orange);}
 .bsm.r:hover{background:var(--ol);}
 .bsm.g:hover{background:var(--cream);}
-
-/* STATUS */
 .spill{font-size:10px;padding:3px 10px;border-radius:20px;flex-shrink:0;}
 .sp-pend{background:#FFF3CD;color:#856404;}
 .sp-pub{background:var(--tl);color:#085041;}
 .sp-rej{background:var(--ol);color:#712B13;}
 .sp-draft{background:var(--cream);color:var(--mid);}
 .sp-arch{background:#E5E5E5;color:#666;}
-
-/* COLOR */
 .crow{display:flex;align-items:center;gap:8px;}
 input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:pointer;border:1px solid var(--border);}
 .presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .preset{width:26px;height:26px;border-radius:5px;cursor:pointer;border:2px solid transparent;transition:all .2s;}
 .preset:hover,.preset.on{border-color:var(--ink);transform:scale(1.1);}
-
-/* USERS */
 .urow{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
 .uavatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;flex-shrink:0;color:#fff;}
 .uinfo{flex:1;}
@@ -146,8 +117,6 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 .rpill{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;}
 .rp-admin{background:var(--gold);color:var(--gd);}
 .rp-writer{background:var(--tl);color:#085041;}
-
-/* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center;}
 .modal-bg.on{display:flex;}
 .modal{background:#fff;border-radius:14px;width:92%;max-width:720px;max-height:85vh;overflow-y:auto;direction:rtl;}
@@ -155,27 +124,29 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 .modal-hd-title{font-size:15px;font-weight:600;}
 .modal-x{font-size:22px;cursor:pointer;border:none;background:none;color:var(--mid);line-height:1;}
 .modal-body{padding:22px;}
-
-/* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--teal);color:#fff;font-size:13px;padding:11px 22px;border-radius:8px;transition:transform .3s;z-index:9999;font-family:'Cairo',sans-serif;font-weight:500;}
 .toast.on{transform:translateX(-50%) translateY(0);}
-
 .empty{text-align:center;padding:40px;color:var(--mid);font-size:13px;}
-
 @media(max-width:900px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}.stats{grid-template-columns:1fr 1fr;}.two,.three{grid-template-columns:1fr;}}
 @media(max-width:600px){.stats{grid-template-columns:1fr;}.lp-masthead{grid-template-columns:1fr;}.lp-meta{display:none;}}
-
 .loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,.85);z-index:9000;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
 .loading-overlay.on{display:flex;}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:13px;color:var(--mid);}
 .btn:disabled{opacity:.6;cursor:not-allowed;}
+/* ── ANALYTICS ── */
+.an-bar-wrap{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:4px;}
+.an-bar{height:100%;border-radius:3px;transition:width .6s ease;}
+.an-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);}
+.an-row:last-child{border:none;}
+.an-rank{font-size:11px;font-weight:700;color:var(--mid);min-width:18px;text-align:center;}
+.an-name{flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.an-count{font-size:12px;font-weight:700;}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="loading-overlay" id="loading-overlay"><div class="spinner"></div><div class="loading-text">جاري التحميل...</div></div>
 <div class="topbar">
   <div class="tb-left">
@@ -189,7 +160,6 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
   </div>
 </div>
 
-<!-- NAV TABS -->
 <div class="nav-tabs">
   <div class="ntab on" id="nt-dash" onclick="goSec('dash',this)">الرئيسية</div>
   <div class="ntab" id="nt-site" onclick="goSec('site',this)">تحرير الموقع</div>
@@ -201,16 +171,17 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
   <div class="ntab" id="nt-books" onclick="goSec('books',this)">الكتب</div>
   <div class="ntab" id="nt-archive" onclick="goSec('archive',this)">الأرشيف</div>
   <div class="ntab" id="nt-users" onclick="goSec('users',this)">المستخدمون</div>
+  <div class="ntab" id="nt-analytics" onclick="goSec('analytics',this)">📊 إحصائيات</div>
 </div>
 
 <div class="layout">
-  <!-- SIDEBAR -->
   <aside class="sidebar" style="display:flex;flex-direction:column;">
     <div class="sb-sep">عام</div>
     <div class="sb-item on" onclick="goSec('dash',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>الرئيسية</div>
     <div class="sb-item" onclick="goSec('site',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M11 2l3 3-8 8H3v-3l8-8z"/></svg>تحرير الموقع</div>
     <div class="sb-item" onclick="goSec('comments',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M14 9a5 5 0 01-5 5H4l-3 2V6a5 5 0 015-5h3"/><circle cx="12" cy="4" r="3"/></svg>التعليقات</div>
     <div class="sb-item" onclick="goSec('homepage',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="4" rx="1"/><rect x="1" y="7" width="6" height="8" rx="1"/><rect x="9" y="7" width="6" height="4" rx="1"/></svg>الصفحة الرئيسية</div>
+    <div class="sb-item" onclick="goSec('analytics',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M2 12V8M6 12V5M10 12V3M14 12V7"/></svg>إحصائيات</div>
     <div class="sb-sep">المحتوى</div>
     <div class="sb-item" onclick="goSec('news',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M2 2h12v2H2zM2 6h8v2H2zM2 10h10v2H2z"/></svg>الأخبار</div>
     <div class="sb-item" onclick="goSec('add-art',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12"/></svg>إضافة مقالة</div>
@@ -235,8 +206,6 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           <div class="stat"><div class="stat-label">قيد المراجعة</div><div class="stat-val" id="st-pend">—</div><div class="stat-note" style="color:#856404;">تحتاج قرار</div></div>
           <div class="stat"><div class="stat-label">الكتّاب</div><div class="stat-val" id="st-wr">—</div><div class="stat-note" style="color:var(--teal);">مستخدمون</div></div>
         </div>
-
-        <!-- LIVE PREVIEW -->
         <div class="live-preview">
           <div class="lp-bar">
             <div class="lp-dots"><div class="lp-dot" style="background:#ff5f57;"></div><div class="lp-dot" style="background:#febc2e;"></div><div class="lp-dot" style="background:#28c840;"></div></div>
@@ -265,7 +234,6 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
             </div>
           </div>
         </div>
-
         <div class="card">
           <div class="card-hd"><span class="card-title">المقالات بانتظار الموافقة</span><button class="btn p sm" onclick="goSec('arts',document.getElementById('nt-arts'))">عرض الكل</button></div>
           <div class="card-body" id="dash-pend"><div class="empty">لا توجد مقالات بانتظار الموافقة</div></div>
@@ -275,8 +243,6 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
       <!-- ══ SITE EDIT ══ -->
       <div class="sec" id="sec-site">
         <div class="pg-title">تحرير الموقع</div>
-
-        <!-- GENERAL -->
         <div class="card">
           <div class="card-hd"><span class="card-title">معلومات الجريدة والعدد الحالي</span><button class="btn p sm" onclick="saveGeneral()">حفظ</button></div>
           <div class="card-body">
@@ -289,8 +255,6 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
             <div class="fg"><label>نص الشريط العلوي</label><input type="text" id="s-topbar" value="مركز الأدب العربي للنشر والتوزيع"></div>
           </div>
         </div>
-
-        <!-- HERO -->
         <div class="card">
           <div class="card-hd"><span class="card-title">الخبر الرئيسي</span><button class="btn p sm" onclick="saveIssue()">حفظ</button></div>
           <div class="card-body">
@@ -298,36 +262,21 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
               <div class="fg"><label>شارة الخبر</label><input type="text" id="s-hbadge" value="كتاب الشهر" oninput="syncHero()"></div>
               <div class="fg"><label>كاتب الخبر</label><input type="text" id="s-hby" value="فريق التحرير · مركز الأدب العربي"></div>
             </div>
-            <div class="fg"><label>عنوان الخبر الرئيسي</label><input type="text" id="s-htitle" value='رواية "خوف" لأسامة المسلم تعيد رسم حدود الأدب العربي المعاصر' oninput="syncHero()"></div>
-            <div class="fg"><label>نص الخبر</label><textarea id="s-hbody" rows="4" oninput="syncHero()">في روايته الجديدة يأخذنا أسامة المسلم إلى عوالم مظلمة لم يألفها القارئ العربي من قبل، ليثبت أن الأدب العربي قادر على منافسة أعتى روايات الرعب عالمياً.</textarea></div>
-            <div class="fg"><label>اقتباس الشهر</label><input type="text" id="s-quote" value="لا تقرأ لتنهي الكتاب، بل لتبدأ حياة جديدة"></div>
+            <div class="fg"><label>عنوان الخبر الرئيسي</label><input type="text" id="s-htitle" oninput="syncHero()"></div>
+            <div class="fg"><label>نص الخبر</label><textarea id="s-hbody" rows="4" oninput="syncHero()"></textarea></div>
+            <div class="fg"><label>اقتباس الشهر</label><input type="text" id="s-quote"></div>
           </div>
         </div>
-
-        <!-- SIDE ITEMS -->
         <div class="card">
           <div class="card-hd"><span class="card-title">الشريط الجانبي — جديد المركز</span><button class="btn p sm" onclick="addSideItem()">إضافة +</button></div>
-          <div class="card-body" id="side-list">
-            <div class="irow"><div class="iinfo"><input type="text" value="التنين الأسود" style="margin-bottom:5px;"><input type="text" value="فاطمة النجار · فانتازيا"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button></div>
-            <div class="irow"><div class="iinfo"><input type="text" value="جحيم العابرين" style="margin-bottom:5px;"><input type="text" value="رواية · إصدار هذا الشهر"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button></div>
-            <div class="irow"><div class="iinfo"><input type="text" value="ديوان الظل" style="margin-bottom:5px;"><input type="text" value="شعر معاصر · طبعة خاصة"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button></div>
-          </div>
+          <div class="card-body" id="side-list"></div>
           <div style="padding:0 18px 18px;"><button class="btn p sm" onclick="saveSideItems()">حفظ الشريط الجانبي</button></div>
         </div>
-
-        <!-- TICKER -->
         <div class="card">
           <div class="card-hd"><span class="card-title">شريط الأخبار المتحرك</span><button class="btn p sm" onclick="addTick()">إضافة خبر +</button></div>
-          <div class="card-body" id="tick-list">
-            <div class="irow" style="flex-wrap:nowrap;"><div style="flex:1;"><input type="text" value="كتاب الشهر: خوف — أسامة المسلم" style="width:100%;"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button></div>
-            <div class="irow" style="flex-wrap:nowrap;"><div style="flex:1;"><input type="text" value="إصدار جديد: التنين الأسود — فاطمة النجار" style="width:100%;"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button></div>
-            <div class="irow" style="flex-wrap:nowrap;"><div style="flex:1;"><input type="text" value="حوار حصري مع الكاتبة فاطمة النجار" style="width:100%;"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button></div>
-            <div class="irow" style="flex-wrap:nowrap;"><div style="flex:1;"><input type="text" value="مسابقة القراءة الشهرية — اشترك الآن" style="width:100%;"></div><button class="bsm r" onclick="this.closest('.irow').remove()">حذف</button></div>
-          </div>
+          <div class="card-body" id="tick-list"></div>
           <div style="padding:0 18px 18px;"><button class="btn p" onclick="saveTicker()">حفظ الشريط</button></div>
         </div>
-
-        <!-- DESIGN -->
         <div class="card">
           <div class="card-hd"><span class="card-title">الألوان والتصميم</span><button class="btn p sm" onclick="saveDesign()">حفظ</button></div>
           <div class="card-body">
@@ -341,41 +290,36 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
               <div class="fg"><label>لون التمييز</label><div class="crow"><input type="color" id="c-orange" value="#C94B1E" oninput="pvc('orange',this.value);document.getElementById('ct-orange').value=this.value"><input type="text" id="ct-orange" value="#C94B1E" style="flex:1;" oninput="pvc('orange',this.value);document.getElementById('c-orange').value=this.value"></div></div>
               <div class="fg"><label>اللون الذهبي</label><div class="crow"><input type="color" id="c-gold" value="#D4A843" oninput="pvc('gold',this.value);document.getElementById('ct-gold').value=this.value"><input type="text" id="ct-gold" value="#D4A843" style="flex:1;" oninput="pvc('gold',this.value);document.getElementById('c-gold').value=this.value"></div></div>
             </div>
-            <div class="fg"><label>ثيمات جاهزة</label>
-            <div class="presets">
-              <div class="preset" style="background:#1A7A7A;" title="الكلاسيكي" onclick="applyTheme('#1A7A7A','#C94B1E','#D4A843')"></div>
-              <div class="preset" style="background:#26215C;" title="بنفسجي" onclick="applyTheme('#26215C','#7F77DD','#D4A843')"></div>
-              <div class="preset" style="background:#0E0E0E;" title="أسود" onclick="applyTheme('#0E0E0E','#C94B1E','#D4A843')"></div>
-              <div class="preset" style="background:#412402;" title="بني تراثي" onclick="applyTheme('#412402','#C94B1E','#D4A843')"></div>
-              <div class="preset" style="background:#0F6E56;" title="أخضر" onclick="applyTheme('#0F6E56','#C94B1E','#D4A843')"></div>
-              <div class="preset" style="background:#7B2D8B;" title="أرجواني" onclick="applyTheme('#7B2D8B','#C94B1E','#D4A843')"></div>
+            <div class="fg"><label>ثيمات جاهزة</label><div class="presets">
+              <div class="preset" style="background:#1A7A7A;" onclick="applyTheme('#1A7A7A','#C94B1E','#D4A843')"></div>
+              <div class="preset" style="background:#26215C;" onclick="applyTheme('#26215C','#7F77DD','#D4A843')"></div>
+              <div class="preset" style="background:#0E0E0E;" onclick="applyTheme('#0E0E0E','#C94B1E','#D4A843')"></div>
+              <div class="preset" style="background:#412402;" onclick="applyTheme('#412402','#C94B1E','#D4A843')"></div>
+              <div class="preset" style="background:#0F6E56;" onclick="applyTheme('#0F6E56','#C94B1E','#D4A843')"></div>
+              <div class="preset" style="background:#7B2D8B;" onclick="applyTheme('#7B2D8B','#C94B1E','#D4A843')"></div>
             </div></div>
           </div>
         </div>
-
-        <!-- SOCIAL -->
         <div class="card">
           <div class="card-hd"><span class="card-title">روابط التواصل</span><button class="btn p sm" onclick="saveSocial()">حفظ</button></div>
           <div class="card-body">
             <div class="two">
-              <div class="fg"><label>Instagram</label><input type="url" id="s-ig" value="https://www.instagram.com/servicesbook1"></div>
-              <div class="fg"><label>TikTok</label><input type="url" id="s-tt" value="https://www.tiktok.com/@adab_book"></div>
-              <div class="fg"><label>المتجر الإلكتروني</label><input type="url" id="s-store" value="https://adab-book.com/"></div>
-              <div class="fg"><label>WhatsApp</label><input type="url" id="s-wa" placeholder="https://wa.me/966..."></div>
-              <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="s-email" placeholder="waraq@arablit.com"></div>
-              <div class="fg"><label>رابط فورم Brevo للاشتراك</label><input type="url" id="s-brevo" placeholder="https://sibforms.com/..."></div>
+              <div class="fg"><label>Instagram</label><input type="url" id="s-ig"></div>
+              <div class="fg"><label>TikTok</label><input type="url" id="s-tt"></div>
+              <div class="fg"><label>المتجر الإلكتروني</label><input type="url" id="s-store"></div>
+              <div class="fg"><label>WhatsApp</label><input type="url" id="s-wa"></div>
+              <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="s-email"></div>
+              <div class="fg"><label>رابط فورم Brevo للاشتراك</label><input type="url" id="s-brevo"></div>
             </div>
           </div>
         </div>
-
-        <!-- FOOTER/NL -->
         <div class="card">
           <div class="card-hd"><span class="card-title">قسم الاشتراك والفوتر</span><button class="btn p sm" onclick="saveFooter()">حفظ</button></div>
           <div class="card-body">
-            <div class="fg"><label>عنوان الاشتراك</label><input type="text" id="s-nltitle" value="اشترك في وَرَق مجاناً"></div>
-            <div class="fg"><label>وصف الاشتراك</label><input type="text" id="s-nldesc" value="احصل على كل عدد جديد مباشرة في بريدك الإلكتروني"></div>
-            <div class="fg"><label>وصف الجريدة في الفوتر</label><input type="text" id="s-ftag" value="جريدة مركز الأدب العربي للنشر والتوزيع — شهرية · رقمية · مجانية"></div>
-            <div class="fg"><label>نص حقوق النشر</label><input type="text" id="s-fcopy" value="© ٢٠٢٥ مركز الأدب العربي للنشر والتوزيع — جميع الحقوق محفوظة"></div>
+            <div class="fg"><label>عنوان الاشتراك</label><input type="text" id="s-nltitle"></div>
+            <div class="fg"><label>وصف الاشتراك</label><input type="text" id="s-nldesc"></div>
+            <div class="fg"><label>وصف الجريدة في الفوتر</label><input type="text" id="s-ftag"></div>
+            <div class="fg"><label>نص حقوق النشر</label><input type="text" id="s-fcopy"></div>
           </div>
         </div>
       </div>
@@ -387,12 +331,12 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           <div class="two">
             <div class="fg"><label>عنوان المقالة *</label><input type="text" id="aa-title" placeholder="عنوان المقالة"></div>
             <div class="fg"><label>التصنيف</label><select id="aa-cat"><option>نقد أدبي</option><option>مقالات أدبية</option><option>أخبار</option><option>حوار</option><option>ثقافة</option><option>توصية</option><option>تحقيق</option></select></div>
-            <div class="fg"><label>اسم القلم / الكاتب</label><input type="text" id="aa-author" placeholder="اسم الكاتب أو القلم"></div>
+            <div class="fg"><label>اسم القلم / الكاتب</label><input type="text" id="aa-author"></div>
             <div class="fg"><label>الحالة</label><select id="aa-status"><option value="published">نشر مباشر</option><option value="pending">إرسال للمراجعة</option><option value="draft">مسودة</option></select></div>
           </div>
-          <div class="fg"><label>مقتطف (يظهر في الصفحة الرئيسية)</label><input type="text" id="aa-excerpt" placeholder="جملة أو جملتان تصفان المقالة..."></div>
-          <div class="fg"><label>رابط صورة المقالة (اختياري — من Imgur)</label><input type="url" id="aa-img" placeholder="https://i.imgur.com/..."></div>
-          <div class="fg"><label>نشر مجدول <span style="font-weight:400;color:var(--mid);">(اختياري — اتركي فارغاً للنشر الفوري)</span></label><input type="datetime-local" id="aa-pub-at" style="direction:ltr;"></div>
+          <div class="fg"><label>مقتطف</label><input type="text" id="aa-excerpt" placeholder="جملة أو جملتان تصفان المقالة..."></div>
+          <div class="fg"><label>رابط صورة (اختياري)</label><input type="url" id="aa-img" placeholder="https://i.imgur.com/..."></div>
+          <div class="fg"><label>نشر مجدول <span style="font-weight:400;color:var(--mid);">(اختياري)</span></label><input type="datetime-local" id="aa-pub-at" style="direction:ltr;"></div>
           <div class="fg">
             <label>محتوى المقالة *</label>
             <div class="editor-toolbar">
@@ -402,7 +346,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
               <button class="tool" onclick="fmt('\n\n- ','')">قائمة</button>
               <button class="tool" onclick="fmt('\n\n---\n\n','')">فاصل</button>
             </div>
-            <textarea id="aa-body" class="editor-area" rows="16" placeholder="اكتبي المقالة هنا...&#10;&#10;يمكنك استخدام أدوات التنسيق أعلاه"></textarea>
+            <textarea id="aa-body" class="editor-area" rows="16" placeholder="اكتبي المقالة هنا..."></textarea>
           </div>
           <div style="display:flex;gap:8px;margin-top:8px;">
             <button class="btn p" onclick="addArticle()">نشر المقالة</button>
@@ -411,7 +355,6 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         </div>
       </div>
 
-
       <!-- ══ NEWS ══ -->
       <div class="sec" id="sec-news">
         <div class="pg-title">إدارة الأخبار</div>
@@ -419,9 +362,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           <button class="btn p" onclick="goSec('add-art',document.getElementById('nt-add-art'));document.getElementById('aa-cat').value='أخبار'">إضافة خبر جديد +</button>
         </div>
         <div class="card">
-          <div class="card-hd">
-            <span class="card-title">كل الأخبار</span>
-          </div>
+          <div class="card-hd"><span class="card-title">كل الأخبار</span></div>
           <div class="card-body" id="news-list"><div class="empty">جاري التحميل...</div></div>
         </div>
       </div>
@@ -457,10 +398,10 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
             <div class="fg"><label>عنوان الكتاب *</label><input type="text" id="nb-t"></div>
             <div class="fg"><label>اسم الكاتب *</label><input type="text" id="nb-a"></div>
             <div class="fg"><label>التصنيف</label><select id="nb-g"><option>رعب</option><option>فانتازيا</option><option>رواية</option><option>شعر</option><option>قصص قصيرة</option><option>تاريخي</option><option>أدب</option><option>سيرة ذاتية</option></select></div>
-            <div class="fg"><label>التقييم</label><select id="nb-s"><option value="★★★★★">★★★★★</option><option value="★★★★☆">★★★★☆</option><option value="★★★☆☆">★★★☆☆</option><option value="★★☆☆☆">★★☆☆☆</option></select></div>
+            <div class="fg"><label>التقييم</label><select id="nb-s"><option value="★★★★★">★★★★★</option><option value="★★★★☆">★★★★☆</option><option value="★★★☆☆">★★★☆☆</option></select></div>
             <div class="fg"><label>رابط الشراء</label><input type="url" id="nb-u" value="https://adab-book.com/"></div>
             <div class="fg"><label>لون البطاقة</label><select id="nb-c"><option value="#1A7A7A">فيروزي</option><option value="#C94B1E">برتقالي</option><option value="#412402">بني</option><option value="#26215C">بنفسجي</option><option value="#633806">ذهبي داكن</option><option value="#085041">أخضر</option><option value="#0E0E0E">أسود</option><option value="#7B2D8B">أرجواني</option></select></div>
-            <div class="fg" style="grid-column:1/-1;"><label>رابط صورة الغلاف (من Imgur أو Google Drive)</label><input type="url" id="nb-img" placeholder="https://i.imgur.com/..."></div>
+            <div class="fg" style="grid-column:1/-1;"><label>رابط صورة الغلاف</label><input type="url" id="nb-img" placeholder="https://i.imgur.com/..."></div>
           </div>
           <div class="fg"><label>وصف مختصر</label><textarea id="nb-d" rows="2"></textarea></div>
           <div class="fg"><label>اقتباس من الكتاب</label><input type="text" id="nb-q"></div>
@@ -479,10 +420,10 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           <div class="two">
             <div class="fg"><label>رقم العدد</label><input type="text" id="ar-num" placeholder="الخامس"></div>
             <div class="fg"><label>الشهر والسنة</label><input type="text" id="ar-date" placeholder="أغسطس ٢٠٢٥"></div>
-            <div class="fg"><label>رابط PDF (من Google Drive)</label><input type="url" id="ar-pdf" placeholder="https://drive.google.com/..."></div>
+            <div class="fg"><label>رابط PDF</label><input type="url" id="ar-pdf" placeholder="https://..."></div>
             <div class="fg"><label>لون الغلاف</label><select id="ar-color"><option value="#1A7A7A">فيروزي</option><option value="#C94B1E">برتقالي</option><option value="#412402">بني</option><option value="#26215C">بنفسجي</option><option value="#633806">ذهبي</option><option value="#085041">أخضر</option><option value="#0E0E0E">أسود</option></select></div>
           </div>
-          <div class="fg"><label>نشر مجدول <span style="font-weight:400;color:var(--mid);">(اختياري — اتركي فارغاً للنشر الفوري)</span></label><input type="datetime-local" id="ar-pub-at" style="direction:ltr;"></div>
+          <div class="fg"><label>نشر مجدول <span style="font-weight:400;color:var(--mid);">(اختياري)</span></label><input type="datetime-local" id="ar-pub-at" style="direction:ltr;"></div>
           <div style="display:flex;gap:8px;margin-top:8px;"><button class="btn p" onclick="addArchive()">إضافة</button><button class="btn o" onclick="toggleIF('add-arch')">إلغاء</button></div>
         </div>
         <div id="arch-list"><div class="empty">جاري التحميل...</div></div>
@@ -505,8 +446,6 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         <div id="users-list"><div class="empty">جاري التحميل...</div></div>
       </div>
 
-
-
       <!-- ══ COMMENTS ══ -->
       <div class="sec" id="sec-comments">
         <div class="pg-title">إدارة التعليقات</div>
@@ -527,99 +466,69 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           </div>
         </div>
       </div>
+
       <!-- ══ HOMEPAGE ══ -->
       <div class="sec" id="sec-homepage">
         <div class="pg-title">تخصيص الصفحة الرئيسية</div>
-
-        <!-- LOGO -->
         <div class="card">
           <div class="card-hd"><span class="card-title">اللوقو والهوية</span><button class="btn p sm" onclick="saveLogo()">حفظ</button></div>
           <div class="card-body">
-
-            <!-- 1. لوقو الزاوية -->
-            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">① لوقو الزاوية (الهيدر)</div>
-            <div style="font-size:11px;color:var(--mid);margin-bottom:8px;">يظهر في الزاوية العلوية — صورة صغيرة للشعار</div>
+            <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;">① لوقو الزاوية (الهيدر)</div>
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;padding:12px;background:var(--bg);border-radius:8px;">
-              <div id="logo-preview" style="width:80px;height:50px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-                <span style="font-family:Felfel,serif;font-size:22px;color:#fff;">وَرَق</span>
-              </div>
+              <div id="logo-preview" style="width:80px;height:50px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;"><span style="font-family:Felfel,serif;font-size:22px;color:#fff;">وَرَق</span></div>
               <div style="font-size:11px;color:var(--mid);">معاينة</div>
             </div>
-            <div class="fg" style="margin-bottom:4px;"><label>رابط الصورة</label><input type="url" id="s-logo-url" placeholder="https://i.postimg.cc/..." oninput="prevLogo()"></div>
-            <div style="font-size:11px;color:var(--mid);margin-bottom:18px;">اتركي فارغاً لعرض الاسم النصي</div>
-
+            <div class="fg"><label>رابط الصورة</label><input type="url" id="s-logo-url" placeholder="https://i.postimg.cc/..." oninput="prevLogo()"></div>
             <div style="height:1px;background:var(--border);margin:14px 0;"></div>
-
-            <!-- 2. اسم الجريدة الكبير -->
-            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">② الاسم الكبير في المنتصف (Masthead)</div>
-            <div style="font-size:11px;color:var(--mid);margin-bottom:8px;">يظهر في وسط الصفحة الرئيسية — ضعي صورة باسم الجريدة بخط Felfel</div>
-            <div class="fg" style="margin-bottom:4px;"><label>رابط صورة الاسم الكبير</label><input type="url" id="s-masthead-url" placeholder="https://i.postimg.cc/..."></div>
-            <div style="font-size:11px;color:var(--mid);margin-bottom:18px;">اتركي فارغاً لعرض النص: <strong id="s-sitename-preview">وَرَق</strong></div>
-
+            <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;">② الاسم الكبير في المنتصف</div>
+            <div class="fg"><label>رابط صورة الاسم الكبير</label><input type="url" id="s-masthead-url" placeholder="https://i.postimg.cc/..."></div>
             <div style="height:1px;background:var(--border);margin:14px 0;"></div>
-
-            <!-- 3. لوقو الفوتر -->
-            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">③ لوقو الفوتر</div>
-            <div style="font-size:11px;color:var(--mid);margin-bottom:8px;">يظهر في الجزء السفلي من الموقع</div>
-            <div class="fg" style="margin-bottom:18px;"><label>رابط الصورة</label><input type="url" id="s-footer-logo-url" placeholder="https://i.postimg.cc/..."></div>
-
+            <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;">③ لوقو الفوتر</div>
+            <div class="fg"><label>رابط الصورة</label><input type="url" id="s-footer-logo-url" placeholder="https://i.postimg.cc/..."></div>
             <div style="height:1px;background:var(--border);margin:14px 0;"></div>
-
-            <!-- 4. الشعار النصي -->
-            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">④ الشعار النصي</div>
+            <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;">④ الشعار النصي</div>
             <div class="two">
-              <div class="fg"><label>اسم الجريدة <span style="font-weight:400;color:var(--mid);">(يظهر لو ما في صورة)</span></label><input type="text" id="s-sitename" value="وَرَق" oninput="document.getElementById('s-sitename-preview').textContent=this.value||'وَرَق'"></div>
-              <div class="fg"><label>وصف الجريدة</label><input type="text" id="s-sitetag" value="جريدة مركز الأدب العربي الشهرية"></div>
+              <div class="fg"><label>اسم الجريدة</label><input type="text" id="s-sitename" value="وَرَق" oninput="document.getElementById('s-sitename-preview').textContent=this.value||'وَرَق'"></div>
+              <div class="fg"><label>وصف الجريدة</label><input type="text" id="s-sitetag"></div>
             </div>
-
+            <div style="font-size:11px;color:var(--mid);">اتركي فارغاً لعرض النص: <strong id="s-sitename-preview">وَرَق</strong></div>
             <div style="height:1px;background:var(--border);margin:14px 0;"></div>
-
-            <!-- لون الهيدر -->
-            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;margin-bottom:8px;">⑤ لون خلفية الهيدر</div>
-            <div class="fg"><label>اللون <span style="font-weight:400;color:var(--mid);">(اتركي فارغاً للون الافتراضي)</span></label><input type="text" id="s-headerbg" placeholder="#FFFFFF"></div>
+            <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;">⑤ لون خلفية الهيدر</div>
+            <div class="fg"><label>اللون</label><input type="text" id="s-headerbg" placeholder="#FFFFFF"></div>
           </div>
         </div>
-
-        <!-- BANNER -->
         <div class="card">
           <div class="card-hd"><span class="card-title">البانر الإعلاني</span><button class="btn p sm" onclick="saveBanner()">حفظ</button></div>
           <div class="card-body">
-            <div id="banner-preview-wrap" style="display:none;margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid var(--border);">
-              <img id="banner-preview-img" src="" style="width:100%;max-height:200px;object-fit:cover;display:block;">
-            </div>
-            <div class="fg"><label>رابط صورة البانر</label><input type="url" id="s-banner-url" placeholder="https://i.imgur.com/banner.jpg" oninput="prevBanner()"></div>
-            <div class="fg"><label>رابط البانر (يفتح عند الضغط)</label><input type="url" id="s-banner-link" placeholder="https://adab-book.com/"></div>
-            <div style="font-size:11px;color:var(--mid);">يظهر البانر أسفل شريط الأخبار — مناسب للإعلان عن إصدارات جديدة</div>
+            <div id="banner-preview-wrap" style="display:none;margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid var(--border);"><img id="banner-preview-img" src="" style="width:100%;max-height:200px;object-fit:cover;display:block;"></div>
+            <div class="fg"><label>رابط صورة البانر</label><input type="url" id="s-banner-url" placeholder="https://i.imgur.com/..." oninput="prevBanner()"></div>
+            <div class="fg"><label>رابط البانر</label><input type="url" id="s-banner-link" placeholder="https://adab-book.com/"></div>
           </div>
         </div>
-
-        <!-- MONTH PICK -->
         <div class="card">
-          <div class="card-hd"><span class="card-title">توصية الشهر (كتاب مميز)</span><button class="btn p sm" onclick="saveMonthPick()">حفظ</button></div>
+          <div class="card-hd"><span class="card-title">توصية الشهر</span><button class="btn p sm" onclick="saveMonthPick()">حفظ</button></div>
           <div class="card-body">
             <div style="background:var(--ink);border-radius:8px;padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:14px;">
               <div id="mp-prev-cover" style="width:60px;height:90px;border-radius:5px;background:#412402;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:10px;color:#fff;text-align:center;" id="mp-prev-title">الكتاب</span></div>
               <div><div style="font-size:9px;color:var(--gold);letter-spacing:.1em;margin-bottom:4px;">توصية الشهر</div><div style="font-size:14px;color:#fff;font-family:Noto Serif Arabic,serif;" id="mp-prev-t">جحيم العابرين</div><div style="font-size:11px;color:#666;" id="mp-prev-a">مركز الأدب العربي</div></div>
             </div>
             <div class="two">
-              <div class="fg"><label>عنوان الكتاب *</label><input type="text" id="mp-title" placeholder="جحيم العابرين" oninput="syncMpPreview()"></div>
-              <div class="fg"><label>اسم الكاتب</label><input type="text" id="mp-author" placeholder="مركز الأدب العربي" oninput="syncMpPreview()"></div>
-              <div class="fg"><label>لون غلاف الكتاب</label><select id="mp-color" onchange="syncMpPreview()"><option value="#412402">بني</option><option value="#1A7A7A">فيروزي</option><option value="#C94B1E">برتقالي</option><option value="#26215C">بنفسجي</option><option value="#633806">ذهبي</option><option value="#0E0E0E">أسود</option></select></div>
+              <div class="fg"><label>عنوان الكتاب *</label><input type="text" id="mp-title" oninput="syncMpPreview()"></div>
+              <div class="fg"><label>اسم الكاتب</label><input type="text" id="mp-author" oninput="syncMpPreview()"></div>
+              <div class="fg"><label>لون الغلاف</label><select id="mp-color" onchange="syncMpPreview()"><option value="#412402">بني</option><option value="#1A7A7A">فيروزي</option><option value="#C94B1E">برتقالي</option><option value="#26215C">بنفسجي</option><option value="#633806">ذهبي</option><option value="#0E0E0E">أسود</option></select></div>
               <div class="fg"><label>رابط الشراء</label><input type="url" id="mp-url" value="https://adab-book.com/"></div>
             </div>
-            <div class="fg"><label>وصف مختصر</label><textarea id="mp-desc" rows="2" placeholder="وصف مختصر للكتاب..."></textarea></div>
-            <div class="fg"><label>صورة غلاف الكتاب (اختياري)</label><input type="url" id="mp-img" placeholder="https://i.imgur.com/..."></div>
+            <div class="fg"><label>وصف مختصر</label><textarea id="mp-desc" rows="2"></textarea></div>
+            <div class="fg"><label>صورة الغلاف (اختياري)</label><input type="url" id="mp-img" placeholder="https://i.imgur.com/..."></div>
             <div style="display:flex;gap:8px;margin-top:4px;"><button class="btn p" onclick="saveMonthPick()">حفظ التوصية</button><button class="btn o" onclick="clearMonthPick()">إخفاء القسم</button></div>
           </div>
         </div>
-
-        <!-- SECTIONS ORDER -->
         <div class="card">
           <div class="card-hd"><span class="card-title">ترتيب أقسام الصفحة الرئيسية</span><button class="btn p sm" onclick="saveSectionsOrder()">حفظ</button></div>
           <div class="card-body">
-            <div style="font-size:12px;color:var(--mid);margin-bottom:14px;">اسحبي الأقسام لإعادة ترتيبها في الصفحة الرئيسية</div>
+            <div style="font-size:12px;color:var(--mid);margin-bottom:14px;">اسحبي الأقسام لإعادة ترتيبها</div>
             <div id="sections-list" style="display:flex;flex-direction:column;gap:8px;">
-              <div class="irow" draggable="true" data-sec="hero" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">الخبر الرئيسي + جديد المركز</div></div><span style="font-size:11px;color:var(--mid);">ثابت دائماً في الأعلى</span></div>
+              <div class="irow" draggable="true" data-sec="hero" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">الخبر الرئيسي + جديد المركز</div></div><span style="font-size:11px;color:var(--mid);">ثابت دائماً</span></div>
               <div class="irow sec-order-item" draggable="true" data-sec="books" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">إصدارات المركز (الكتب)</div></div></div>
               <div class="irow sec-order-item" draggable="true" data-sec="articles" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">مقالات أدبية</div></div></div>
               <div class="irow sec-order-item" draggable="true" data-sec="archive" style="cursor:grab;"><span style="font-size:16px;margin-left:8px;">⋮⋮</span><div class="iinfo"><div class="ititle">أرشيف الأعداد</div></div></div>
@@ -627,35 +536,95 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
             </div>
           </div>
         </div>
-
-        <!-- FONTS -->
         <div class="card">
           <div class="card-hd"><span class="card-title">الخطوط والألوان</span><button class="btn p sm" onclick="saveDesign()">حفظ</button></div>
           <div class="card-body">
-            <div class="fg"><label>خط العناوين</label>
-              <select id="s-font-title">
-                <option value="Noto Serif Arabic">Noto Serif Arabic (الافتراضي)</option>
-                <option value="Cairo">Cairo</option>
-                <option value="Amiri">Amiri</option>
-              </select>
-            </div>
             <div class="three">
               <div class="fg"><label>اللون الرئيسي</label><div style="display:flex;gap:8px;"><input type="color" id="hp-c-teal" value="#1A7A7A" oninput="pvc('teal',this.value);document.getElementById('hp-ct-teal').value=this.value"><input type="text" id="hp-ct-teal" value="#1A7A7A" style="flex:1;" oninput="pvc('teal',this.value);document.getElementById('hp-c-teal').value=this.value"></div></div>
               <div class="fg"><label>لون التمييز</label><div style="display:flex;gap:8px;"><input type="color" id="hp-c-orange" value="#C94B1E" oninput="pvc('orange',this.value);document.getElementById('hp-ct-orange').value=this.value"><input type="text" id="hp-ct-orange" value="#C94B1E" style="flex:1;" oninput="pvc('orange',this.value);document.getElementById('hp-c-orange').value=this.value"></div></div>
               <div class="fg"><label>اللون الذهبي</label><div style="display:flex;gap:8px;"><input type="color" id="hp-c-gold" value="#D4A843" oninput="pvc('gold',this.value);document.getElementById('hp-ct-gold').value=this.value"><input type="text" id="hp-ct-gold" value="#D4A843" style="flex:1;" oninput="pvc('gold',this.value);document.getElementById('hp-c-gold').value=this.value"></div></div>
             </div>
-            <div class="fg"><label>ثيمات جاهزة</label>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
-              <div style="width:26px;height:26px;border-radius:5px;background:#1A7A7A;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#1A7A7A','#C94B1E','#D4A843')" title="الكلاسيكي"></div>
-              <div style="width:26px;height:26px;border-radius:5px;background:#26215C;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#26215C','#7F77DD','#D4A843')" title="بنفسجي"></div>
-              <div style="width:26px;height:26px;border-radius:5px;background:#0E0E0E;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#0E0E0E','#C94B1E','#D4A843')" title="أسود"></div>
-              <div style="width:26px;height:26px;border-radius:5px;background:#412402;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#412402','#C94B1E','#D4A843')" title="بني"></div>
-              <div style="width:26px;height:26px;border-radius:5px;background:#0F6E56;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#0F6E56','#C94B1E','#D4A843')" title="أخضر"></div>
-              <div style="width:26px;height:26px;border-radius:5px;background:#7B2D8B;cursor:pointer;border:2px solid transparent;" onclick="applyTheme('#7B2D8B','#C94B1E','#D4A843')" title="أرجواني"></div>
-            </div></div>
           </div>
         </div>
       </div>
+
+      <!-- ══ ANALYTICS ══ -->
+      <div class="sec" id="sec-analytics">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+          <div class="pg-title" style="margin:0;">📊 إحصائيات الموقع</div>
+          <button class="btn p sm" onclick="loadAnalytics()">تحديث</button>
+        </div>
+
+        <!-- بطاقات الأرقام -->
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">زيارات اليوم</div>
+            <div class="stat-val" id="an-today">—</div>
+            <div class="stat-note" style="color:var(--teal);">منذ منتصف الليل</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">آخر 7 أيام</div>
+            <div class="stat-val" id="an-week">—</div>
+            <div class="stat-note" style="color:var(--mid);">زيارة</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">آخر 30 يوم</div>
+            <div class="stat-val" id="an-month">—</div>
+            <div class="stat-note" style="color:var(--mid);">زيارة</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">إجمالي الزيارات</div>
+            <div class="stat-val" id="an-total">—</div>
+            <div class="stat-note" style="color:var(--mid);">منذ البداية</div>
+          </div>
+        </div>
+
+        <!-- الأجهزة + الصفحات -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div class="card">
+            <div class="card-hd"><span class="card-title">الأجهزة (آخر 30 يوم)</span></div>
+            <div class="card-body">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+                <span style="font-size:22px;">📱</span>
+                <div style="flex:1;">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-size:12px;color:var(--mid);">جوال</span><span style="font-size:13px;font-weight:700;" id="an-mobile-pct">—%</span></div>
+                  <div class="an-bar-wrap"><div class="an-bar" id="an-mobile-bar" style="background:var(--teal);width:0%;"></div></div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:22px;">💻</span>
+                <div style="flex:1;">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-size:12px;color:var(--mid);">كمبيوتر</span><span style="font-size:13px;font-weight:700;" id="an-desktop-pct">—%</span></div>
+                  <div class="an-bar-wrap"><div class="an-bar" id="an-desktop-bar" style="background:var(--orange);width:0%;"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-hd"><span class="card-title">أكثر الصفحات زيارة</span></div>
+            <div class="card-body" id="an-pages"><div class="empty">جاري التحميل...</div></div>
+          </div>
+        </div>
+
+        <!-- أكثر مقالة وكتاب -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div class="card">
+            <div class="card-hd"><span class="card-title">أكثر المقالات مشاهدة</span></div>
+            <div class="card-body" id="an-top-arts"><div class="empty">جاري التحميل...</div></div>
+          </div>
+          <div class="card">
+            <div class="card-hd"><span class="card-title">أكثر الكتب مشاهدة</span></div>
+            <div class="card-body" id="an-top-books"><div class="empty">جاري التحميل...</div></div>
+          </div>
+        </div>
+
+        <!-- آخر الزيارات -->
+        <div class="card">
+          <div class="card-hd"><span class="card-title">آخر الزيارات</span><span style="font-size:11px;color:var(--mid);">آخر 20 زيارة</span></div>
+          <div class="card-body" id="an-recent"><div class="empty">جاري التحميل...</div></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -664,52 +633,31 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 <div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-hd"><span class="modal-hd-title" id="m-title"></span><button class="modal-x" onclick="closeModal()">×</button></div>
-
-    <!-- preview mode -->
     <div id="modal-preview">
       <div style="padding:8px 22px;font-size:11px;color:var(--mid);" id="m-meta"></div>
       <div class="modal-body" style="white-space:pre-wrap;font-size:14px;line-height:1.9;color:#333;" id="m-body"></div>
       <div style="padding:0 22px 22px;display:flex;gap:8px;flex-wrap:wrap;" id="m-foot"></div>
     </div>
-
-    <!-- edit article mode -->
     <div id="modal-edit-art" style="display:none;padding:16px 22px 22px;">
       <input type="hidden" id="ea-id">
-      <div class="two" style="margin-bottom:10px;">
-        <div class="fg"><label>العنوان *</label><input type="text" id="ea-title"></div>
-        <div class="fg"><label>الكاتب</label><input type="text" id="ea-author"></div>
-      </div>
-      <div class="two" style="margin-bottom:10px;">
-        <div class="fg"><label>التصنيف</label><input type="text" id="ea-cat"></div>
-        <div class="fg"><label>رابط صورة</label><input type="url" id="ea-img"></div>
-      </div>
+      <div class="two" style="margin-bottom:10px;"><div class="fg"><label>العنوان *</label><input type="text" id="ea-title"></div><div class="fg"><label>الكاتب</label><input type="text" id="ea-author"></div></div>
+      <div class="two" style="margin-bottom:10px;"><div class="fg"><label>التصنيف</label><input type="text" id="ea-cat"></div><div class="fg"><label>رابط صورة</label><input type="url" id="ea-img"></div></div>
       <div class="fg" style="margin-bottom:10px;"><label>مقتطف</label><input type="text" id="ea-excerpt"></div>
       <div class="fg" style="margin-bottom:14px;"><label>المحتوى *</label><textarea id="ea-body" rows="8" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;font-family:Cairo,sans-serif;font-size:13px;resize:vertical;direction:rtl;"></textarea></div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn p" onclick="saveEditArt()">حفظ التعديلات</button>
-        <button class="btn o" onclick="closeModal()">إلغاء</button>
-      </div>
+      <div style="display:flex;gap:8px;"><button class="btn p" onclick="saveEditArt()">حفظ</button><button class="btn o" onclick="closeModal()">إلغاء</button></div>
     </div>
-
-    <!-- edit book mode -->
     <div id="modal-edit-book" style="display:none;padding:16px 22px 22px;">
       <input type="hidden" id="eb-id">
-      <div class="two" style="margin-bottom:10px;">
-        <div class="fg"><label>العنوان *</label><input type="text" id="eb-title"></div>
-        <div class="fg"><label>الكاتب *</label><input type="text" id="eb-author"></div>
-      </div>
+      <div class="two" style="margin-bottom:10px;"><div class="fg"><label>العنوان *</label><input type="text" id="eb-title"></div><div class="fg"><label>الكاتب *</label><input type="text" id="eb-author"></div></div>
       <div class="two" style="margin-bottom:10px;">
         <div class="fg"><label>التصنيف</label><select id="eb-genre"><option>رعب</option><option>فانتازيا</option><option>رواية</option><option>شعر</option><option>قصص قصيرة</option><option>تاريخي</option><option>أدب</option><option>سيرة ذاتية</option></select></div>
-        <div class="fg"><label>لون البطاقة</label><select id="eb-color"><option value="#1A7A7A">فيروزي</option><option value="#C94B1E">برتقالي</option><option value="#412402">بني</option><option value="#26215C">بنفسجي</option><option value="#633806">ذهبي داكن</option><option value="#085041">أخضر</option><option value="#0E0E0E">أسود</option><option value="#7B2D8B">أرجواني</option></select></div>
+        <div class="fg"><label>لون البطاقة</label><select id="eb-color"><option value="#1A7A7A">فيروزي</option><option value="#C94B1E">برتقالي</option><option value="#412402">بني</option><option value="#26215C">بنفسجي</option><option value="#633806">ذهبي</option><option value="#085041">أخضر</option><option value="#0E0E0E">أسود</option><option value="#7B2D8B">أرجواني</option></select></div>
       </div>
       <div class="fg" style="margin-bottom:10px;"><label>رابط صورة الغلاف</label><input type="url" id="eb-img"></div>
       <div class="fg" style="margin-bottom:10px;"><label>رابط الشراء</label><input type="url" id="eb-url"></div>
       <div class="fg" style="margin-bottom:10px;"><label>وصف مختصر</label><textarea id="eb-desc" rows="3" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;font-family:Cairo,sans-serif;font-size:13px;resize:vertical;direction:rtl;"></textarea></div>
       <div class="fg" style="margin-bottom:14px;"><label>اقتباس</label><input type="text" id="eb-quote"></div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn p" onclick="saveEditBook()">حفظ التعديلات</button>
-        <button class="btn o" onclick="closeModal()">إلغاء</button>
-      </div>
+      <div style="display:flex;gap:8px;"><button class="btn p" onclick="saveEditBook()">حفظ</button><button class="btn o" onclick="closeModal()">إلغاء</button></div>
     </div>
   </div>
 </div>
@@ -720,95 +668,38 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
 <script src="config.js" onload="window._configMissing=false;"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-var sb = null;
-var _supabaseReady = false;
-function initSupabase() {
-  try {
-    if (typeof SUPABASE_URL === 'undefined' || !SUPABASE_URL || SUPABASE_URL.indexOf('YOUR_PROJECT') >= 0) {
-      console.warn('Supabase URL not configured — check config.js');
-      return false;
-    }
-    if (typeof SUPABASE_KEY === 'undefined' || !SUPABASE_KEY) {
-      console.warn('Supabase KEY not configured — check config.js');
-      return false;
-    }
-    if (typeof supabase !== 'undefined' && supabase.createClient) {
-      sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      _supabaseReady = true;
-      return true;
-    }
-    console.warn('Supabase library not loaded yet');
-    return false;
-  } catch(e) {
-    console.warn('Supabase init failed:', e.message);
-    sb = null;
-    _supabaseReady = false;
-    return false;
-  }
-}
+var sb=null,_supabaseReady=false;
+function initSupabase(){try{if(typeof SUPABASE_URL==='undefined'||!SUPABASE_URL||SUPABASE_URL.indexOf('YOUR_PROJECT')>=0){console.warn('Supabase URL not configured');return false;}if(typeof SUPABASE_KEY==='undefined'||!SUPABASE_KEY){return false;}if(typeof supabase!=='undefined'&&supabase.createClient){sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);_supabaseReady=true;return true;}return false;}catch(e){sb=null;_supabaseReady=false;return false;}}
 initSupabase();
-if (!_supabaseReady) {
-  document.addEventListener('DOMContentLoaded', function() {
-    // Retry once after DOM ready
-    if (!initSupabase()) {
-      var ov = document.getElementById('loading-overlay');
-      if (ov) { ov.classList.add('on'); ov.innerHTML = '<div style="text-align:center;color:#C94B1E;padding:40px;"><div style="font-size:28px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">لم يتم الاتصال بقاعدة البيانات</div><div style="font-size:12px;color:#666;">تحقق من:<br>١. وجود ملف config.js<br>٢. صحة SUPABASE_URL و SUPABASE_KEY</div><div style="margin-top:16px;"><button onclick="location.reload()" style="padding:8px 16px;background:#1A7A7A;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:Cairo,sans-serif;">إعادة المحاولة</button></div></div>'; }
-    }
-  });
-}
+if(!_supabaseReady){document.addEventListener('DOMContentLoaded',function(){if(!initSupabase()){var ov=document.getElementById('loading-overlay');if(ov){ov.classList.add('on');ov.innerHTML='<div style="text-align:center;color:#C94B1E;padding:40px;"><div style="font-size:28px;margin-bottom:12px;">⚠</div><div style="font-size:14px;margin-bottom:8px;">لم يتم الاتصال بقاعدة البيانات</div><div style="font-size:12px;color:#666;">تحقق من config.js</div><div style="margin-top:16px;"><button onclick="location.reload()" style="padding:8px 16px;background:#1A7A7A;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:Cairo,sans-serif;">إعادة المحاولة</button></div></div>';}}}); }
 
-
-var _cache = {};
+var _cache={},_settingsCache=null,me=null;
 function showLoad(){var o=document.getElementById('loading-overlay');if(o)o.classList.add('on');}
 function hideLoad(){var o=document.getElementById('loading-overlay');if(o)o.classList.remove('on');}
-async function cachedFetch(key, fn){if(_cache[key])return _cache[key];var result=await fn();_cache[key]=result;return result;}
 function invalidateCache(){_cache={};_settingsCache=null;}
 
-var me=null;
-
 async function init(){
-  clearRoleCache();
-  showLoad();
-  var _loadTimeout=setTimeout(function(){hideLoad();toast('تعذر الاتصال — تحقق من الإنترنت');},15000);
-  init._clearTimeout=function(){clearTimeout(_loadTimeout);};
+  clearRoleCache();showLoad();
+  var _lt=setTimeout(function(){hideLoad();toast('تعذر الاتصال');},15000);
   var {data:{session}}=await sb.auth.getSession();
   if(!session){location.href='login.html';return;}
   me=session.user;
   var {data:p}=await sb.from('profiles').select('*').eq('id',me.id).single();
-  if(!p || p.role!=='admin'){location.href='writer.html';return;}
-  document.getElementById('admin-name').textContent=(p && p.name ? p.name : me.email);
-  document.getElementById('aa-author').value=(p && p.name ? p.name : '');
-  Promise.all([
-    loadDash(),
-    loadBooks(),
-    loadArchive(),
-    loadUsers(),
-    loadSettings()
-  ]).catch(function(e){console.warn('Init error:',e);}).finally(function(){
-    hideLoad();
-  });
-  // Comments badge
-  sb.from('comments').select('id').eq('status','pending').then(function(r){
-    if(r.data&&r.data.length){
-      var badge=document.getElementById('comments-badge');
-      if(badge){badge.textContent=r.data.length;badge.style.display='inline';}
-    }
-  }).catch(function(e){console.warn('Comments badge error:',e);});
+  if(!p||p.role!=='admin'){location.href='writer.html';return;}
+  clearTimeout(_lt);
+  document.getElementById('admin-name').textContent=(p&&p.name?p.name:me.email);
+  document.getElementById('aa-author').value=(p&&p.name?p.name:'');
+  Promise.all([loadDash(),loadBooks(),loadArchive(),loadUsers(),loadSettings()]).finally(function(){hideLoad();});
+  sb.from('comments').select('id').eq('status','pending').then(function(r){if(r.data&&r.data.length){var b=document.getElementById('comments-badge');if(b){b.textContent=r.data.length;b.style.display='inline';}}}).catch(function(){});
 }
-// Only call init if Supabase is ready
-if (_supabaseReady) {
-  init();
-} else {
-  document.addEventListener('DOMContentLoaded', function() {
-    if (initSupabase()) {
-      init();
-    }
-  });
-}
+if(_supabaseReady){init();}else{document.addEventListener('DOMContentLoaded',function(){if(initSupabase())init();});}
 
-// ── NAVIGATION ──
-function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/`/g,'&#96;');}
-function goSec(name,el){ if(name==='homepage')loadHomepageSettings(); if(name==='comments')loadComments(); if(name==='news')loadNews();
+function escH(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function goSec(name,el){
+  if(name==='homepage')loadHomepageSettings();
+  if(name==='comments')loadComments();
+  if(name==='news')loadNews();
+  if(name==='analytics')loadAnalytics();
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
   document.getElementById('sec-'+name).classList.add('on');
@@ -817,716 +708,201 @@ function goSec(name,el){ if(name==='homepage')loadHomepageSettings(); if(name===
   if(name==='arts')loadArts();
 }
 function setSb(el){document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('on'));el.classList.add('on');}
+function syncPv(){var name=v('s-name')||'وَرَق';var num=v('s-inum')||'الأول';var date=v('s-idate')||'أبريل ٢٠٢٥';se('lpv-name',name);se('lpv-tag',v('s-tag'));var m=document.getElementById('lpv-meta');if(m)m.innerHTML='العدد '+num+'<br>'+date+'<br>مجانية';}
+function syncHero(){se('lpv-title',(v('s-htitle')||'').substring(0,60)+'...');se('lpv-body',(v('s-hbody')||'').substring(0,80)+'...');se('lpv-badge',v('s-hbadge'));}
 
-// ── PREVIEW SYNC ──
-function syncPv(){
-  var name=v('s-name')||'وَرَق';
-  var tag=v('s-tag')||'';
-  var num=v('s-inum')||'الأول';
-  var date=v('s-idate')||'أبريل ٢٠٢٥';
-  se('lpv-name',name);se('lpv-tag',tag);
-  var lpvMeta=document.getElementById('lpv-meta');if(lpvMeta)lpvMeta.innerHTML='العدد '+num+'<br>'+date+'<br>مجانية';
-}
-function syncHero(){
-  se('lpv-title',v('s-htitle').substring(0,60)+'...');
-  se('lpv-body',v('s-hbody').substring(0,80)+'...');
-  se('lpv-badge',v('s-hbadge'));
-}
-
-// ── LOAD SETTINGS ──
 async function loadSettings(){
   var {data}=await sb.from('settings').select('*');
   if(!data)return;
-  _settingsCache = data; // Cache for loadHomepageSettings
+  _settingsCache=data;
   var s={};data.forEach(r=>s[r.key]=r.value);
-  if(s.design){
-    if(s.design.teal){pvc('teal',s.design.teal);sv('c-teal',s.design.teal);sv('ct-teal',s.design.teal);}
-    if(s.design.orange){pvc('orange',s.design.orange);sv('c-orange',s.design.orange);sv('ct-orange',s.design.orange);}
-    if(s.design.gold){pvc('gold',s.design.gold);sv('c-gold',s.design.gold);sv('ct-gold',s.design.gold);}
-  }
+  if(s.design){if(s.design.teal){pvc('teal',s.design.teal);sv('c-teal',s.design.teal);sv('ct-teal',s.design.teal);}if(s.design.orange){pvc('orange',s.design.orange);sv('c-orange',s.design.orange);sv('ct-orange',s.design.orange);}if(s.design.gold){pvc('gold',s.design.gold);sv('c-gold',s.design.gold);sv('ct-gold',s.design.gold);}}
   if(s.issue){sv('s-htitle',s.issue.hero_title);sv('s-hbody',s.issue.hero_body);sv('s-hbadge',s.issue.hero_badge);sv('s-hby',s.issue.hero_by);sv('s-quote',s.issue.quote);sv('s-inum',s.issue.num);sv('s-idate',s.issue.date);syncPv();syncHero();}
   if(s.general){sv('s-name',s.general.name);sv('s-tag',s.general.tagline);sv('s-topbar',s.general.topbar);sv('s-nltitle',s.general.nl_title);sv('s-nldesc',s.general.nl_desc);sv('s-ftag',s.general.footer_tag);sv('s-fcopy',s.general.copyright);syncPv();}
   if(s.social){sv('s-ig',s.social.ig);sv('s-tt',s.social.tt);sv('s-store',s.social.store);if(s.social.wa)sv('s-wa',s.social.wa);if(s.social.email)sv('s-email',s.social.email);if(s.social.brevo)sv('s-brevo',s.social.brevo);}
-  if(s.side_items&&Array.isArray(s.side_items)&&s.side_items.length){
-    var el=document.getElementById('side-list');
-    if(el){el.innerHTML='';s.side_items.forEach(function(i){var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" value="'+( i.title||'').replace(/"/g,'&quot;')+'" style="margin-bottom:5px;"><input type="text" value="'+(i.meta||'').replace(/"/g,'&quot;')+'"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);});}
-  }
-  if(s.ticker&&Array.isArray(s.ticker)&&s.ticker.length){
-    var el=document.getElementById('tick-list');
-    if(el){el.innerHTML='';s.ticker.forEach(function(t){var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" value="'+t.replace(/"/g,'&quot;')+'" style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);});}
-    se('lpv-ticker',s.ticker.map(function(t){return '◄ '+t;}).join('   '));
-  }
+  if(s.side_items&&Array.isArray(s.side_items)){var el=document.getElementById('side-list');if(el){el.innerHTML='';s.side_items.forEach(function(i){var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" value="'+(i.title||'').replace(/"/g,'&quot;')+'" style="margin-bottom:5px;"><input type="text" value="'+(i.meta||'').replace(/"/g,'&quot;')+'"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);});}}
+  if(s.ticker&&Array.isArray(s.ticker)){var el=document.getElementById('tick-list');if(el){el.innerHTML='';s.ticker.forEach(function(t){var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" value="'+t.replace(/"/g,'&quot;')+'" style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);});}se('lpv-ticker',s.ticker.map(function(t){return '◄ '+t;}).join('   '));}
 }
 
-// ── DASHBOARD ──
 async function loadDash(){
-  var [rAll,rWr]=await Promise.all([
-    sb.from('articles').select('*'),
-    sb.from('profiles').select('id').eq('role','writer')
-  ]);
-  var arts=(rAll.data)||[];
-  var pend=arts.filter(function(a){return a.status==='pending';});
-  var wr=rWr.data;
-  se('st-all',arts.length);se('st-pub',arts.filter(function(a){return a.status==='published';}).length);
-  se('st-pend',pend.length);se('st-wr',(wr||[]).length);
+  var [rAll,rWr]=await Promise.all([sb.from('articles').select('*'),sb.from('profiles').select('id').eq('role','writer')]);
+  var arts=(rAll.data)||[];var pend=arts.filter(a=>a.status==='pending');var wr=rWr.data;
+  se('st-all',arts.length);se('st-pub',arts.filter(a=>a.status==='published').length);se('st-pend',pend.length);se('st-wr',(wr||[]).length);
   document.getElementById('pcount').textContent=pend.length;
   renderArtRows(pend.slice(0,5),'dash-pend',true);
-  // Refresh comments badge
-  if(sb) sb.from('comments').select('id').eq('status','pending').then(function(pr){
-    var pcount=(pr.data&&pr.data.length)||0;
-    var badge=document.getElementById('comments-badge');
-    if(badge){badge.textContent=pcount;badge.style.display=pcount?'inline':'none';}
-  });
+  sb.from('comments').select('id').eq('status','pending').then(function(pr){var pc=(pr.data&&pr.data.length)||0;var badge=document.getElementById('comments-badge');if(badge){badge.textContent=pc;badge.style.display=pc?'inline':'none';}});
 }
 
-// ── ARTICLES ──
-
-async function loadNews() {
-  var { data } = await sb.from('articles').select('*').eq('category', 'أخبار').order('created_at', { ascending: false });
-  renderArtRows(data || [], 'news-list', true);
-}
-
-async function loadArts(){
-  var f=v('art-flt');
-  var q=sb.from('articles').select('*').order('created_at',{ascending:false});
-  if(f)q=q.eq('status',f);
-  var {data}=await q;
-  renderArtRows(data||[],'arts-list',true);
-  var {data:pend}=await sb.from('articles').select('*').eq('status','pending').order('created_at',{ascending:false});
-  renderArtRows(pend||[],'pend-list',true);
-}
+async function loadNews(){var{data}=await sb.from('articles').select('*').eq('category','أخبار').order('created_at',{ascending:false});renderArtRows(data||[],'news-list',true);}
+async function loadArts(){var f=v('art-flt');var q=sb.from('articles').select('*').order('created_at',{ascending:false});if(f)q=q.eq('status',f);var{data}=await q;renderArtRows(data||[],'arts-list',true);var{data:pend}=await sb.from('articles').select('*').eq('status','pending').order('created_at',{ascending:false});renderArtRows(pend||[],'pend-list',true);}
 
 function renderArtRows(arts,cid,isAdmin){
   var el=document.getElementById(cid);if(!el)return;
   if(!arts.length){el.innerHTML='<div class="empty">لا توجد مقالات</div>';return;}
   var sl={pending:'قيد المراجعة',published:'منشورة',rejected:'مرفوضة',draft:'مسودة',archived:'مؤرشفة',scheduled:'مجدولة'};
   var sc={pending:'sp-pend',published:'sp-pub',rejected:'sp-rej',draft:'sp-draft',archived:'sp-arch',scheduled:'sp-pend'};
-  el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='irow';var pend=a.status==='pending'?'<button class="bsm t" onclick="pubArt(\''+a.id+'\')">نشر</button><button class="bsm r" onclick="rejectArt(\''+a.id+'\')">رفض</button>':'';
-    var archBtn=a.status==='archived'?'<button class="bsm t" onclick="unarchiveArt(\''+a.id+'\')">إعادة نشر</button>':'<button class="bsm" style="background:#888" onclick="archiveArt(\''+a.id+'\')">أرشفة</button>';
-    d.innerHTML='<span class="spill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="iinfo"><div class="ititle">'+escH(a.title)+'</div><div class="imeta">'+escH(a.author_name||'—')+' · '+escH(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div></div><div class="iacts"><button class="bsm g" onclick="previewArt(\''+a.id+'\')">معاينة</button><button class="bsm" style="background:var(--teal);color:#fff;" onclick="editArt(\''+a.id+'\')">تعديل</button>'+pend+archBtn+'<button class="bsm r" onclick="delArt(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
+  el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='irow';var pend=a.status==='pending'?'<button class="bsm t" onclick="pubArt(\''+a.id+'\')">نشر</button><button class="bsm r" onclick="rejectArt(\''+a.id+'\')">رفض</button>':'';var archBtn=a.status==='archived'?'<button class="bsm t" onclick="unarchiveArt(\''+a.id+'\')">إعادة نشر</button>':'<button class="bsm" style="background:#888" onclick="archiveArt(\''+a.id+'\')">أرشفة</button>';d.innerHTML='<span class="spill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="iinfo"><div class="ititle">'+escH(a.title)+'</div><div class="imeta">'+escH(a.author_name||'—')+' · '+escH(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div></div><div class="iacts"><button class="bsm g" onclick="previewArt(\''+a.id+'\')">معاينة</button><button class="bsm" style="background:var(--teal);color:#fff;" onclick="editArt(\''+a.id+'\')">تعديل</button>'+pend+archBtn+'<button class="bsm r" onclick="delArt(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
 }
 
-async function addArticle(){
-  var title=v('aa-title').trim();var body=v('aa-body').trim();
-  if(!title||!body){toast('يرجى إدخال العنوان والمحتوى');return;}
-  var pubAt = v('aa-pub-at');
-  var finalStatus = v('aa-status');
-  var finalPubAt = null;
-  if (pubAt) {
-    // Scheduled: always set status to 'scheduled' until time arrives
-    finalStatus = 'scheduled';
-    finalPubAt = new Date(pubAt).toISOString();
-  } else if (finalStatus === 'published') {
-    finalPubAt = new Date().toISOString();
-  }
-  var {error}=await sb.from('articles').insert({title,body,excerpt:v('aa-excerpt'),category:v('aa-cat'),author_name:v('aa-author'),author_id:me.id,status:finalStatus,image:v('aa-img')||null,published_at:finalPubAt});
-  if(error){toast('خطأ: '+error.message);return;}
-  toast(finalStatus==='scheduled'?'تم جدولة النشر تلقائياً ✓':(finalStatus==='published'?'تم النشر!':'تم الحفظ!'));
-  clearArtForm();loadDash();loadArts();
-}
-function clearArtForm(){['aa-title','aa-body','aa-excerpt','aa-img'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});}
+async function addArticle(){var title=v('aa-title').trim();var body=v('aa-body').trim();if(!title||!body){toast('يرجى إدخال العنوان والمحتوى');return;}var pubAt=v('aa-pub-at');var finalStatus=v('aa-status');var finalPubAt=null;if(pubAt){finalStatus='scheduled';finalPubAt=new Date(pubAt).toISOString();}else if(finalStatus==='published'){finalPubAt=new Date().toISOString();}var{error}=await sb.from('articles').insert({title,body,excerpt:v('aa-excerpt'),category:v('aa-cat'),author_name:v('aa-author'),author_id:me.id,status:finalStatus,image:v('aa-img')||null,published_at:finalPubAt});if(error){toast('خطأ: '+error.message);return;}toast(finalStatus==='scheduled'?'تم جدولة النشر ✓':(finalStatus==='published'?'تم النشر!':'تم الحفظ!'));clearArtForm();loadDash();loadArts();}
+function clearArtForm(){['aa-title','aa-body','aa-excerpt','aa-img'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';}); }
 function fmt(b,a){var ta=document.getElementById('aa-body');var s=ta.selectionStart,e=ta.selectionEnd;var sel=ta.value.substring(s,e);ta.value=ta.value.substring(0,s)+b+sel+a+ta.value.substring(e);ta.focus();}
-
 async function pubArt(id){await sb.from('articles').update({status:'published',published_at:new Date().toISOString()}).eq('id',id);toast('تم النشر!');invalidateCache();loadDash();loadArts();}
 async function rejectArt(id){var r=prompt('سبب الرفض:');if(r===null)return;await sb.from('articles').update({status:'rejected',reject_reason:r}).eq('id',id);toast('تم الرفض');loadDash();loadArts();}
 async function delArt(id){if(!confirm('حذف هذه المقالة نهائياً؟'))return;await sb.from('articles').delete().eq('id',id);toast('تم الحذف');invalidateCache();loadDash();loadArts();}
-async function previewArt(id){
-  var {data:a}=await sb.from('articles').select('*').eq('id',id).single();if(!a)return;
-  se('m-title',a.title);
-  document.getElementById('m-meta').textContent=(a.author_name||'—')+' · '+(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA');
-  document.getElementById('m-body').textContent=a.body||'';
-  var f=document.getElementById('m-foot');
-  f.innerHTML=a.status==='pending'?'<button class="btn p" onclick="pubArt(\''+a.id+'\');closeModal()">نشر</button><button class="btn danger" onclick="rejectArt(\''+a.id+'\');closeModal()">رفض</button><button class="btn o" onclick="closeModal()">إغلاق</button>':'<button class="btn o" onclick="closeModal()">إغلاق</button>';
-  document.getElementById('modal-bg').classList.add('on');
-}
-function closeModal(){
-  document.getElementById('modal-bg').classList.remove('on');
-  document.getElementById('modal-preview').style.display='';
-  document.getElementById('modal-edit-art').style.display='none';
-  document.getElementById('modal-edit-book').style.display='none';
-}
+async function previewArt(id){var{data:a}=await sb.from('articles').select('*').eq('id',id).single();if(!a)return;se('m-title',a.title);document.getElementById('m-meta').textContent=(a.author_name||'—')+' · '+(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA');document.getElementById('m-body').textContent=a.body||'';var f=document.getElementById('m-foot');f.innerHTML=a.status==='pending'?'<button class="btn p" onclick="pubArt(\''+a.id+'\');closeModal()">نشر</button><button class="btn danger" onclick="rejectArt(\''+a.id+'\');closeModal()">رفض</button><button class="btn o" onclick="closeModal()">إغلاق</button>':'<button class="btn o" onclick="closeModal()">إغلاق</button>';document.getElementById('modal-bg').classList.add('on');}
+function closeModal(){document.getElementById('modal-bg').classList.remove('on');document.getElementById('modal-preview').style.display='';document.getElementById('modal-edit-art').style.display='none';document.getElementById('modal-edit-book').style.display='none';}
+async function editArt(id){var{data:a}=await sb.from('articles').select('*').eq('id',id).single();if(!a)return;document.getElementById('ea-id').value=a.id;document.getElementById('ea-title').value=a.title||'';document.getElementById('ea-author').value=a.author_name||'';document.getElementById('ea-cat').value=a.category||'';document.getElementById('ea-img').value=a.image||'';document.getElementById('ea-excerpt').value=a.excerpt||'';document.getElementById('ea-body').value=a.body||'';document.getElementById('modal-preview').style.display='none';document.getElementById('modal-edit-art').style.display='block';document.getElementById('modal-edit-book').style.display='none';document.getElementById('modal-bg').classList.add('on');}
+async function saveEditArt(){var id=document.getElementById('ea-id').value;var title=document.getElementById('ea-title').value.trim();var body=document.getElementById('ea-body').value.trim();if(!title||!body){toast('العنوان والمحتوى مطلوبان');return;}var{error}=await sb.from('articles').update({title,body,excerpt:document.getElementById('ea-excerpt').value,category:document.getElementById('ea-cat').value,author_name:document.getElementById('ea-author').value,image:document.getElementById('ea-img').value||null}).eq('id',id);if(error){toast('خطأ: '+error.message);return;}toast('تم الحفظ ✓');invalidateCache();closeModal();loadArts();}
+async function editBook(id){var{data:b}=await sb.from('books').select('*').eq('id',id).single();if(!b)return;document.getElementById('eb-id').value=b.id;document.getElementById('eb-title').value=b.title||'';document.getElementById('eb-author').value=b.author||'';document.getElementById('eb-img').value=b.image||'';document.getElementById('eb-url').value=b.url||'';document.getElementById('eb-desc').value=b.description||'';document.getElementById('eb-quote').value=b.quote||'';var g=document.getElementById('eb-genre');for(var i=0;i<g.options.length;i++){if(g.options[i].value===b.genre)g.selectedIndex=i;}var c=document.getElementById('eb-color');for(var i=0;i<c.options.length;i++){if(c.options[i].value===b.color)c.selectedIndex=i;}document.getElementById('modal-preview').style.display='none';document.getElementById('modal-edit-art').style.display='none';document.getElementById('modal-edit-book').style.display='block';document.getElementById('modal-bg').classList.add('on');}
+async function saveEditBook(){var id=document.getElementById('eb-id').value;var title=document.getElementById('eb-title').value.trim();var author=document.getElementById('eb-author').value.trim();if(!title||!author){toast('العنوان واسم الكاتب مطلوبان');return;}var{error}=await sb.from('books').update({title,author,genre:document.getElementById('eb-genre').value,color:document.getElementById('eb-color').value,image:document.getElementById('eb-img').value||null,url:document.getElementById('eb-url').value||null,description:document.getElementById('eb-desc').value,quote:document.getElementById('eb-quote').value}).eq('id',id);if(error){toast('خطأ: '+error.message);return;}toast('تم الحفظ ✓');invalidateCache();closeModal();loadBooks();}
 
-async function editArt(id){
-  var {data:a}=await sb.from('articles').select('*').eq('id',id).single();
-  if(!a)return;
-  document.getElementById('ea-id').value=a.id;
-  document.getElementById('ea-title').value=a.title||'';
-  document.getElementById('ea-author').value=a.author_name||'';
-  document.getElementById('ea-cat').value=a.category||'';
-  document.getElementById('ea-img').value=a.image||'';
-  document.getElementById('ea-excerpt').value=a.excerpt||'';
-  document.getElementById('ea-body').value=a.body||'';
-  document.getElementById('modal-preview').style.display='none';
-  document.getElementById('modal-edit-art').style.display='block';
-  document.getElementById('modal-edit-book').style.display='none';
-  document.getElementById('modal-bg').classList.add('on');
-}
-
-async function saveEditArt(){
-  var id=document.getElementById('ea-id').value;
-  var title=document.getElementById('ea-title').value.trim();
-  var body=document.getElementById('ea-body').value.trim();
-  if(!title||!body){toast('العنوان والمحتوى مطلوبان');return;}
-  var {error}=await sb.from('articles').update({
-    title:title,
-    body:body,
-    excerpt:document.getElementById('ea-excerpt').value,
-    category:document.getElementById('ea-cat').value,
-    author_name:document.getElementById('ea-author').value,
-    image:document.getElementById('ea-img').value||null
-  }).eq('id',id);
-  if(error){toast('خطأ: '+error.message);return;}
-  toast('تم حفظ التعديلات ✓');invalidateCache();closeModal();loadArts();
-}
-
-async function editBook(id){
-  var {data:b}=await sb.from('books').select('*').eq('id',id).single();
-  if(!b)return;
-  document.getElementById('eb-id').value=b.id;
-  document.getElementById('eb-title').value=b.title||'';
-  document.getElementById('eb-author').value=b.author||'';
-  document.getElementById('eb-img').value=b.image||'';
-  document.getElementById('eb-url').value=b.url||'';
-  document.getElementById('eb-desc').value=b.description||'';
-  document.getElementById('eb-quote').value=b.quote||'';
-  var genSel=document.getElementById('eb-genre');
-  for(var i=0;i<genSel.options.length;i++){if(genSel.options[i].value===b.genre)genSel.selectedIndex=i;}
-  var colSel=document.getElementById('eb-color');
-  for(var i=0;i<colSel.options.length;i++){if(colSel.options[i].value===b.color)colSel.selectedIndex=i;}
-  document.getElementById('modal-preview').style.display='none';
-  document.getElementById('modal-edit-art').style.display='none';
-  document.getElementById('modal-edit-book').style.display='block';
-  document.getElementById('modal-bg').classList.add('on');
-}
-
-async function saveEditBook(){
-  var id=document.getElementById('eb-id').value;
-  var title=document.getElementById('eb-title').value.trim();
-  var author=document.getElementById('eb-author').value.trim();
-  if(!title||!author){toast('العنوان واسم الكاتب مطلوبان');return;}
-  var {error}=await sb.from('books').update({
-    title:title,
-    author:author,
-    genre:document.getElementById('eb-genre').value,
-    color:document.getElementById('eb-color').value,
-    image:document.getElementById('eb-img').value||null,
-    url:document.getElementById('eb-url').value||null,
-    description:document.getElementById('eb-desc').value,
-    quote:document.getElementById('eb-quote').value
-  }).eq('id',id);
-  if(error){toast('خطأ: '+error.message);return;}
-  toast('تم حفظ التعديلات ✓');invalidateCache();closeModal();loadBooks();
-}
-
-
-// ── BOOKS ──
-async function loadBooks(){
-  var showArch=document.getElementById('show-archived-books')&&document.getElementById('show-archived-books').checked;
-  var q=sb.from('books').select('*').order('created_at',{ascending:false});
-  if(!showArch) q=q.neq('archived',true);
-  var {data}=await q;
-  var el=document.getElementById('books-list');
-  if(!(data && data.length)){el.innerHTML='<div class="empty">لا توجد كتب — أضيفي كتاباً</div>';return;}
-  el.innerHTML='';data.forEach(function(b){var d=document.createElement('div');d.className='irow';
-    var archBtn=b.archived
-      ?'<button class="bsm t" onclick="unarchiveBook(\''+b.id+'\')">إعادة عرض</button>'
-      :'<button class="bsm" style="background:#888" onclick="archiveBook(\''+b.id+'\')">أرشفة</button>';
-    d.innerHTML='<div class="icolor" style="background:'+(b.color||'#1A7A7A')+';">'+escH((b.genre||'').slice(0,4))+'</div><div class="iinfo"><div class="ititle">'+escH(b.title)+(b.archived?' <span style="font-size:10px;color:#888;">(مؤرشف)</span>':'')+'</div><div class="imeta">'+escH(b.author||'')+' · '+escH(b.genre||'')+'</div></div><div class="iacts"><button class="bsm" style="background:var(--teal);color:#fff;" onclick="editBook(\''+b.id+'\')">تعديل</button>'+archBtn+'<button class="bsm r" onclick="delBook(\''+b.id+'\')">حذف</button></div>';
-    el.appendChild(d);});
-}
-async function addBook(){
-  var t=v('nb-t').trim();if(!t){toast('أدخلي عنوان الكتاب');return;}
-  var a=v('nb-a').trim();if(!a){toast('أدخلي اسم الكاتب');return;}
-  var nbPubAt = v('nb-pub-at');
-  var bookObj = {title:t,author:a,genre:v('nb-g'),stars:v('nb-s'),description:v('nb-d'),quote:v('nb-q'),url:v('nb-u'),color:v('nb-c'),image:v('nb-img')||null};
-  if (nbPubAt) { bookObj.archived = true; bookObj.publish_at = new Date(nbPubAt).toISOString(); }
-  var bookMsg = nbPubAt ? 'تم جدولة نشر الكتاب تلقائياً ✓' : 'تمت إضافة الكتاب!';
-  await sb.from('books').insert(bookObj);
-  toast(bookMsg);loadBooks();toggleIF('add-book');
-  ['nb-t','nb-a','nb-d','nb-q','nb-img'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
-}
+async function loadBooks(){var showArch=document.getElementById('show-archived-books')&&document.getElementById('show-archived-books').checked;var q=sb.from('books').select('*').order('created_at',{ascending:false});if(!showArch)q=q.neq('archived',true);var{data}=await q;var el=document.getElementById('books-list');if(!(data&&data.length)){el.innerHTML='<div class="empty">لا توجد كتب</div>';return;}el.innerHTML='';data.forEach(function(b){var d=document.createElement('div');d.className='irow';var archBtn=b.archived?'<button class="bsm t" onclick="unarchiveBook(\''+b.id+'\')">إعادة عرض</button>':'<button class="bsm" style="background:#888" onclick="archiveBook(\''+b.id+'\')">أرشفة</button>';d.innerHTML='<div class="icolor" style="background:'+(b.color||'#1A7A7A')+';">'+escH((b.genre||'').slice(0,4))+'</div><div class="iinfo"><div class="ititle">'+escH(b.title)+(b.archived?' <span style="font-size:10px;color:#888;">(مؤرشف)</span>':'')+'</div><div class="imeta">'+escH(b.author||'')+' · '+escH(b.genre||'')+'</div></div><div class="iacts"><button class="bsm" style="background:var(--teal);color:#fff;" onclick="editBook(\''+b.id+'\')">تعديل</button>'+archBtn+'<button class="bsm r" onclick="delBook(\''+b.id+'\')">حذف</button></div>';el.appendChild(d);});}
+async function addBook(){var t=v('nb-t').trim();if(!t){toast('أدخلي عنوان الكتاب');return;}var a=v('nb-a').trim();if(!a){toast('أدخلي اسم الكاتب');return;}var nbPubAt=v('nb-pub-at');var bookObj={title:t,author:a,genre:v('nb-g'),stars:v('nb-s'),description:v('nb-d'),quote:v('nb-q'),url:v('nb-u'),color:v('nb-c'),image:v('nb-img')||null};if(nbPubAt){bookObj.archived=true;bookObj.publish_at=new Date(nbPubAt).toISOString();}await sb.from('books').insert(bookObj);toast(nbPubAt?'تم جدولة نشر الكتاب ✓':'تمت إضافة الكتاب!');loadBooks();toggleIF('add-book');['nb-t','nb-a','nb-d','nb-q','nb-img'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});}
 async function delBook(id){if(!confirm('حذف هذا الكتاب؟'))return;await sb.from('books').delete().eq('id',id);toast('تم الحذف');loadBooks();}
+async function archiveBook(id){if(!confirm('أرشفة هذا الكتاب؟'))return;await sb.from('books').update({archived:true}).eq('id',id);toast('تم الأرشفة ✓');loadBooks();}
+async function unarchiveBook(id){await sb.from('books').update({archived:false}).eq('id',id);toast('تم إعادة العرض ✓');loadBooks();}
+async function archiveArt(id){if(!confirm('أرشفة هذه المقالة؟'))return;var res=await sb.from('articles').update({status:'archived'}).eq('id',id);if(res.error){toast('خطأ: '+res.error.message);return;}toast('تم الأرشفة ✓');invalidateCache();loadArts();}
+async function unarchiveArt(id){await sb.from('articles').update({status:'published'}).eq('id',id);toast('تم إعادة النشر ✓');loadArts();}
 
-// ── ARCHIVE ──
-async function loadArchive(){
-  var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;
-  var items=(data && data.value)||[];
-  renderArchiveList(items);
-}
-function renderArchiveList(items){
-  var el=document.getElementById('arch-list');
-  if(!items.length){el.innerHTML='<div class="empty">لا توجد أعداد — أضيفي أول عدد</div>';return;}
-  el.innerHTML='';items.forEach(function(i,idx){var d=document.createElement('div');d.className='irow';var safePdf=i.pdf&&i.pdf.toLowerCase().startsWith('http')?escH(i.pdf):'';var pdfBtn=safePdf?'<button class="bsm t" onclick="window.open(&quot;'+safePdf+'&quot;,&quot;_blank&quot;)">فتح PDF</button>':'';var schedNote = i.publish_at ? ' · 🕐 '+new Date(i.publish_at).toLocaleString('ar-SA') : '';d.innerHTML='<div class="icolor" style="background:'+escH(i.color||'#1A7A7A')+'">وَرَق</div><div class="iinfo"><div class="ititle">العدد '+escH(String(i.num||''))+'</div><div class="imeta">'+escH(i.date||'')+' '+(i.pdf?'· PDF متاح ✓':'· لا يوجد PDF')+schedNote+'</div></div><div class="iacts">'+pdfBtn+'<button class="bsm t" onclick="editArchive('+idx+')">تعديل</button><button class="bsm r" onclick="delArchive('+idx+')">حذف</button></div>';el.appendChild(d);});
-}
-async function addArchive(){
-  var num=v('ar-num'),date=v('ar-date');
-  if(!num||!date){toast('أدخلي رقم العدد والتاريخ');return;}
-  var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;
-  var items=(data && data.value)||[];
-  if(items.find(function(i){return String(i.num)===String(num);})){toast('هذا العدد موجود بالفعل');return;}
-  var arPubAt = v('ar-pub-at');
-  var archItem = {num,date,pdf:v('ar-pdf')||null,color:v('ar-color')||null};
-  if (arPubAt) archItem.publish_at = new Date(arPubAt).toISOString();
-  items.unshift(archItem);
-  await sb.from('settings').upsert({key:'archive',value:items});
-  toast(v('ar-pub-at')?'تم جدولة نشر العدد تلقائياً ✓':'تمت الإضافة!');loadArchive();toggleIF('add-arch');
-  ['ar-num','ar-date','ar-pdf'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
-}
-async function delArchive(idx){
-  if(!confirm('حذف هذا العدد من الأرشيف؟'))return;
-  var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;
-  var items=(data && data.value)||[];items.splice(idx,1);
-  await sb.from('settings').upsert({key:'archive',value:items});
-  toast('تم الحذف');loadArchive();
-}
+async function loadArchive(){var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;var items=(data&&data.value)||[];renderArchiveList(items);}
+function renderArchiveList(items){var el=document.getElementById('arch-list');if(!items.length){el.innerHTML='<div class="empty">لا توجد أعداد — أضيفي أول عدد</div>';return;}el.innerHTML='';items.forEach(function(i,idx){var d=document.createElement('div');d.className='irow';var safePdf=i.pdf&&i.pdf.toLowerCase().startsWith('http')?escH(i.pdf):'';var pdfBtn=safePdf?'<button class="bsm t" onclick="window.open(&quot;'+safePdf+'&quot;,&quot;_blank&quot;)">فتح PDF</button>':'';var sched=i.publish_at?' · 🕐 '+new Date(i.publish_at).toLocaleString('ar-SA'):'';d.innerHTML='<div class="icolor" style="background:'+escH(i.color||'#1A7A7A')+'">وَرَق</div><div class="iinfo"><div class="ititle">العدد '+escH(String(i.num||''))+'</div><div class="imeta">'+escH(i.date||'')+' '+(i.pdf?'· PDF ✓':'· لا يوجد PDF')+sched+'</div></div><div class="iacts">'+pdfBtn+'<button class="bsm t" onclick="editArchive('+idx+')">تعديل</button><button class="bsm r" onclick="delArchive('+idx+')">حذف</button></div>';el.appendChild(d);});}
+async function addArchive(){var num=v('ar-num'),date=v('ar-date');if(!num||!date){toast('أدخلي رقم العدد والتاريخ');return;}var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;var items=(data&&data.value)||[];if(items.find(function(i){return String(i.num)===String(num);})){toast('هذا العدد موجود بالفعل');return;}var arPubAt=v('ar-pub-at');var archItem={num,date,pdf:v('ar-pdf')||null,color:v('ar-color')||null};if(arPubAt)archItem.publish_at=new Date(arPubAt).toISOString();items.unshift(archItem);await sb.from('settings').upsert({key:'archive',value:items});toast(arPubAt?'تم جدولة نشر العدد ✓':'تمت الإضافة!');loadArchive();toggleIF('add-arch');['ar-num','ar-date','ar-pdf'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';}); }
+async function delArchive(idx){if(!confirm('حذف هذا العدد؟'))return;var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var data=res.data;var items=(data&&data.value)||[];items.splice(idx,1);await sb.from('settings').upsert({key:'archive',value:items});toast('تم الحذف');loadArchive();}
+async function editArchive(idx){var res=await sb.from('settings').select('value').eq('key','archive').maybeSingle();var items=(res.data&&res.data.value)||[];var i=items[idx];if(!i)return;var newNum=prompt('رقم العدد:',i.num);if(newNum===null)return;var newDate=prompt('الشهر والسنة:',i.date);if(newDate===null)return;var newPdf=prompt('رابط PDF:',i.pdf||'');if(newPdf===null)return;items[idx]={num:newNum||i.num,date:newDate||i.date,pdf:newPdf||i.pdf||null,color:i.color,publish_at:i.publish_at||null};await sb.from('settings').upsert({key:'archive',value:items});toast('تم التعديل ✓');loadArchive();}
 
-// ── USERS ──
-async function loadUsers(){
-  var {data}=await sb.from('profiles').select('*').order('created_at',{ascending:false});
-  var el=document.getElementById('users-list');
-  if(!(data && data.length)){el.innerHTML='<div class="empty">لا يوجد مستخدمون</div>';return;}
-  var colors=['#1A7A7A','#C94B1E','#412402','#26215C','#633806','#085041'];
-  el.innerHTML='';data.forEach(function(u,i){var d=document.createElement('div');d.className='urow';var btns=(me&&u.id!==me.id)?'<button class="bsm g" onclick="toggleRole(\''+u.id+'\',\''+u.role+'\')">'+'تبديل الصلاحية</button><button class="bsm r" onclick="delUser(\''+u.id+'\')">'+'حذف</button>':'<span style="font-size:11px;color:var(--mid);">أنتِ</span>';d.innerHTML='<div class="uavatar" style="background:'+colors[i%colors.length]+';">'+(u.name||u.email||'?')[0]+'</div><div class="uinfo"><div class="uname">'+(u.name||'—')+'</div><div class="uemail">'+(u.email||'')+'</div></div><span class="rpill '+(u.role==='admin'?'rp-admin':'rp-writer')+'">'+(u.role==='admin'?'مدير':'كاتب')+'</span><div style="display:flex;gap:5px;">'+btns+'</div>';el.appendChild(d);});
-}
-async function createUser(){
-  var email=v('nu-e'),pass=v('nu-p'),name=v('nu-n'),role=v('nu-r');
-  if(!email||!pass){toast('أدخلي البريد وكلمة المرور');return;}
-  if(pass.length<8){toast('كلمة المرور يجب أن تكون ٨ أحرف على الأقل');return;}
-  var {data:sd,error}=await sb.auth.signUp({email,password:pass});
-  if(error){
-    if(error.message&&(error.message.indexOf('already')>-1||error.message.indexOf('registered')>-1)){
-      toast('البريد الإلكتروني مستخدم بالفعل');
-    } else { toast('خطأ: '+error.message); }
-    return;
-  }
-  if(sd && sd.user){
-    var profRes=await sb.from('profiles').upsert({id:sd.user.id,email,name,role});
-    if(profRes.error)console.warn('Profile upsert failed:',profRes.error.message);
-  } else if(!error){
-    console.warn('signUp succeeded but no user returned');
-  }
-  toast('تم إنشاء الحساب بنجاح!');loadUsers();toggleIF('add-user');
-  ['nu-n','nu-e','nu-p'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
-}
-var _myRole = null;
-async function isAdmin(){
-  if(!me)return false;
-  if(_myRole)return _myRole==='admin';
-  var pr=await sb.from('profiles').select('role').eq('id',me.id).single();
-  _myRole = pr.data ? pr.data.role : null;
-  return _myRole==='admin';
-}
-function clearRoleCache(){ _myRole = null; }
-async function toggleRole(id,cur){
-  if(!await isAdmin()){toast('غير مصرح');return;}
-  await sb.from('profiles').update({role:cur==='admin'?'writer':'admin'}).eq('id',id);
-  toast('تم تغيير الصلاحية');loadUsers();
-}
-async function delUser(id){
-  if(!await isAdmin()){toast('غير مصرح');return;}
-  if(!confirm('حذف هذا المستخدم نهائياً؟'))return;
-  await sb.from('profiles').delete().eq('id',id);
-  toast('تم الحذف');loadUsers();
-}
+async function loadUsers(){var{data}=await sb.from('profiles').select('*').order('created_at',{ascending:false});var el=document.getElementById('users-list');if(!(data&&data.length)){el.innerHTML='<div class="empty">لا يوجد مستخدمون</div>';return;}var colors=['#1A7A7A','#C94B1E','#412402','#26215C','#633806','#085041'];el.innerHTML='';data.forEach(function(u,i){var d=document.createElement('div');d.className='urow';var btns=(me&&u.id!==me.id)?'<button class="bsm g" onclick="toggleRole(\''+u.id+'\',\''+u.role+'\')">'+'تبديل الصلاحية</button><button class="bsm r" onclick="delUser(\''+u.id+'\')">'+'حذف</button>':'<span style="font-size:11px;color:var(--mid);">أنتِ</span>';d.innerHTML='<div class="uavatar" style="background:'+colors[i%colors.length]+';">'+(u.name||u.email||'?')[0]+'</div><div class="uinfo"><div class="uname">'+(u.name||'—')+'</div><div class="uemail">'+(u.email||'')+'</div></div><span class="rpill '+(u.role==='admin'?'rp-admin':'rp-writer')+'">'+(u.role==='admin'?'مدير':'كاتب')+'</span><div style="display:flex;gap:5px;">'+btns+'</div>';el.appendChild(d);});}
+async function createUser(){var email=v('nu-e'),pass=v('nu-p'),name=v('nu-n'),role=v('nu-r');if(!email||!pass){toast('أدخلي البريد وكلمة المرور');return;}if(pass.length<8){toast('كلمة المرور يجب أن تكون ٨ أحرف');return;}var{data:sd,error}=await sb.auth.signUp({email,password:pass});if(error){toast('خطأ: '+error.message);return;}if(sd&&sd.user){await sb.from('profiles').upsert({id:sd.user.id,email,name,role});}toast('تم إنشاء الحساب!');loadUsers();toggleIF('add-user');['nu-n','nu-e','nu-p'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';}); }
+var _myRole=null;
+async function isAdmin(){if(!me)return false;if(_myRole)return _myRole==='admin';var pr=await sb.from('profiles').select('role').eq('id',me.id).single();_myRole=pr.data?pr.data.role:null;return _myRole==='admin';}
+function clearRoleCache(){_myRole=null;}
+async function toggleRole(id,cur){if(!await isAdmin()){toast('غير مصرح');return;}await sb.from('profiles').update({role:cur==='admin'?'writer':'admin'}).eq('id',id);toast('تم تغيير الصلاحية');loadUsers();}
+async function delUser(id){if(!await isAdmin()){toast('غير مصرح');return;}if(!confirm('حذف هذا المستخدم؟'))return;await sb.from('profiles').delete().eq('id',id);toast('تم الحذف');loadUsers();}
 
-// ── SAVE SETTINGS ──
-async function saveGeneral(){
-  var cur=await getCurSettings('general')||{};
-  await sb.from('settings').upsert({key:'general',value:{...cur,name:v('s-name'),tagline:v('s-tag'),topbar:v('s-topbar')}});
-  _settingsCache=null;
-  toast('تم حفظ معلومات الجريدة!');syncPv();
-}
-async function saveIssue(){
-  await sb.from('settings').upsert({key:'issue',value:{num:v('s-inum'),date:v('s-idate'),hero_title:v('s-htitle'),hero_body:v('s-hbody'),hero_badge:v('s-hbadge'),hero_by:v('s-hby'),quote:v('s-quote')}});
-  _settingsCache=null;
-  toast('تم حفظ الخبر الرئيسي!');syncHero();
-}
-async function saveSideItems(){
-  var rows=document.querySelectorAll('#side-list .irow');
-  var items=Array.from(rows).map(r=>{
-    var inputs=r.querySelectorAll('input[type=text]');
-    return {title:(inputs[0]?inputs[0].value:'')||'',meta:(inputs[1]?inputs[1].value:'')||''};
-  }).filter(i=>i.title && i.title.trim());
-  await sb.from('settings').upsert({key:'side_items',value:items});
-  _settingsCache=null;
-  toast('تم حفظ الشريط الجانبي!');
-}
-async function saveDesign(){
-  // Read from whichever color section is active
-  var secHP = document.getElementById('sec-homepage');
-  var isHomepage = secHP && secHP.classList.contains('on');
-  var prefix = isHomepage ? 'hp-' : '';
-  var teal = ((document.getElementById(prefix+'c-teal')||document.getElementById('c-teal')||{}).value||'').trim() || '#1A7A7A';
-  var orange = ((document.getElementById(prefix+'c-orange')||document.getElementById('c-orange')||{}).value||'').trim() || '#C94B1E';
-  var gold = ((document.getElementById(prefix+'c-gold')||document.getElementById('c-gold')||{}).value||'').trim() || '#D4A843';
-  await sb.from('settings').upsert({key:'design',value:{teal:teal,orange:orange,gold:gold}});
-  pvc('teal',teal);pvc('orange',orange);pvc('gold',gold);
-  // Sync both sections
-  ['','hp-'].forEach(function(pfx){
-    sv(pfx+'c-teal',teal);sv(pfx+'ct-teal',teal);
-    sv(pfx+'c-orange',orange);sv(pfx+'ct-orange',orange);
-    sv(pfx+'c-gold',gold);sv(pfx+'ct-gold',gold);
-  });
-  _settingsCache=null;
-  toast('تم حفظ التصميم!');
-}
-async function saveSocial(){
-  await sb.from('settings').upsert({key:'social',value:{ig:v('s-ig'),tt:v('s-tt'),store:v('s-store'),wa:v('s-wa'),email:v('s-email'),brevo:v('s-brevo')}});
-  _settingsCache=null;
-  toast('تم حفظ الروابط!');
-}
-async function saveFooter(){
-  var cur=await getCurSettings('general')||{};
-  await sb.from('settings').upsert({key:'general',value:{...cur,nl_title:v('s-nltitle'),nl_desc:v('s-nldesc'),footer_tag:v('s-ftag'),copyright:v('s-fcopy')}});
-  _settingsCache=null;
-  toast('تم الحفظ!');
-}
-async function saveTicker(){
-  var items=Array.from(document.querySelectorAll('#tick-list input[type=text]')).map(i=>i.value.trim()).filter(x=>x);
-  await sb.from('settings').upsert({key:'ticker',value:items});
-  se('lpv-ticker',items.map(t=>'◄ '+t).join('   '));
-  _settingsCache=null;
-  toast('تم حفظ الشريط!');
-}
-async function getCurSettings(key){
-  var res=await sb.from('settings').select('value').eq('key',key).maybeSingle();
-  if (!res.data) return {};
-  return (res.data.value !== null && res.data.value !== undefined) ? res.data.value : {};
-}
+async function saveGeneral(){var cur=await getCurSettings('general')||{};await sb.from('settings').upsert({key:'general',value:{...cur,name:v('s-name'),tagline:v('s-tag'),topbar:v('s-topbar')}});_settingsCache=null;toast('تم الحفظ!');syncPv();}
+async function saveIssue(){await sb.from('settings').upsert({key:'issue',value:{num:v('s-inum'),date:v('s-idate'),hero_title:v('s-htitle'),hero_body:v('s-hbody'),hero_badge:v('s-hbadge'),hero_by:v('s-hby'),quote:v('s-quote')}});_settingsCache=null;toast('تم الحفظ!');}
+async function saveSideItems(){var rows=document.querySelectorAll('#side-list .irow');var items=Array.from(rows).map(r=>{var inputs=r.querySelectorAll('input[type=text]');return{title:(inputs[0]?inputs[0].value:'')||'',meta:(inputs[1]?inputs[1].value:'')||''};}).filter(i=>i.title&&i.title.trim());await sb.from('settings').upsert({key:'side_items',value:items});_settingsCache=null;toast('تم الحفظ!');}
+async function saveDesign(){var secHP=document.getElementById('sec-homepage');var isHP=secHP&&secHP.classList.contains('on');var pfx=isHP?'hp-':'';var teal=((document.getElementById(pfx+'c-teal')||document.getElementById('c-teal')||{}).value||'').trim()||'#1A7A7A';var orange=((document.getElementById(pfx+'c-orange')||document.getElementById('c-orange')||{}).value||'').trim()||'#C94B1E';var gold=((document.getElementById(pfx+'c-gold')||document.getElementById('c-gold')||{}).value||'').trim()||'#D4A843';await sb.from('settings').upsert({key:'design',value:{teal,orange,gold}});pvc('teal',teal);pvc('orange',orange);pvc('gold',gold);['','hp-'].forEach(function(p){sv(p+'c-teal',teal);sv(p+'ct-teal',teal);sv(p+'c-orange',orange);sv(p+'ct-orange',orange);sv(p+'c-gold',gold);sv(p+'ct-gold',gold);});_settingsCache=null;toast('تم الحفظ!');}
+async function saveSocial(){await sb.from('settings').upsert({key:'social',value:{ig:v('s-ig'),tt:v('s-tt'),store:v('s-store'),wa:v('s-wa'),email:v('s-email'),brevo:v('s-brevo')}});_settingsCache=null;toast('تم الحفظ!');}
+async function saveFooter(){var cur=await getCurSettings('general')||{};await sb.from('settings').upsert({key:'general',value:{...cur,nl_title:v('s-nltitle'),nl_desc:v('s-nldesc'),footer_tag:v('s-ftag'),copyright:v('s-fcopy')}});_settingsCache=null;toast('تم الحفظ!');}
+async function saveTicker(){var items=Array.from(document.querySelectorAll('#tick-list input[type=text]')).map(i=>i.value.trim()).filter(x=>x);await sb.from('settings').upsert({key:'ticker',value:items});se('lpv-ticker',items.map(t=>'◄ '+t).join('   '));_settingsCache=null;toast('تم الحفظ!');}
+async function getCurSettings(key){var res=await sb.from('settings').select('value').eq('key',key).maybeSingle();if(!res.data)return{};return(res.data.value!==null&&res.data.value!==undefined)?res.data.value:{};}
 
-// ── DESIGN ──
-function pvc(name,val){
-  document.documentElement.style.setProperty('--'+name,val);
-  var el=document.getElementById('cpv-'+name);if(el)el.style.background=val;
-}
-function applyTheme(t,o,g){
-  pvc('teal',t);pvc('orange',o);pvc('gold',g);
-  sv('c-teal',t);sv('ct-teal',t);sv('c-orange',o);sv('ct-orange',o);sv('c-gold',g);sv('ct-gold',g);
-  sv('hp-c-teal',t);sv('hp-ct-teal',t);sv('hp-c-orange',o);sv('hp-ct-orange',o);sv('hp-c-gold',g);sv('hp-ct-gold',g);
-  toast('تم تطبيق الثيم — لا تنسي حفظ التصميم');
-}
-
-// ── HELPERS ──
+function pvc(name,val){document.documentElement.style.setProperty('--'+name,val);var el=document.getElementById('cpv-'+name);if(el)el.style.background=val;}
+function applyTheme(t,o,g){pvc('teal',t);pvc('orange',o);pvc('gold',g);sv('c-teal',t);sv('ct-teal',t);sv('c-orange',o);sv('ct-orange',o);sv('c-gold',g);sv('ct-gold',g);sv('hp-c-teal',t);sv('hp-ct-teal',t);sv('hp-c-orange',o);sv('hp-ct-orange',o);sv('hp-c-gold',g);sv('hp-ct-gold',g);toast('تم تطبيق الثيم — لا تنسي الحفظ');}
 function toggleIF(id){document.getElementById(id).classList.toggle('on');}
-function addSideItem(){var el=document.getElementById('side-list');var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" placeholder="اسم الكتاب" style="margin-bottom:5px;" required><input type="text" placeholder="الكاتب · التصنيف"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);var inp=r.querySelector('input');if(inp)inp.focus();}
+function addSideItem(){var el=document.getElementById('side-list');var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" placeholder="اسم الكتاب" style="margin-bottom:5px;"><input type="text" placeholder="الكاتب · التصنيف"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);var inp=r.querySelector('input');if(inp)inp.focus();}
 function addTick(){var el=document.getElementById('tick-list');var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" placeholder="نص الخبر..." style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);var inp=r.querySelector('input');if(inp)inp.focus();}
 function v(id){var e=document.getElementById(id);return e?e.value:'';}
 function sv(id,val){if(val!==undefined&&val!==null){var e=document.getElementById(id);if(e)e.value=val;}}
 function se(id,txt){if(txt!==undefined&&txt!==null){var e=document.getElementById(id);if(e)e.textContent=txt;}}
-// ── COMMENTS ADMIN ──
-async function loadComments(){
-  var el=document.getElementById('comments-list');
-  if(el)el.innerHTML='<div class="empty">جاري التحميل...</div>';
-  var flt=document.getElementById('cmt-flt')&&document.getElementById('cmt-flt').value;
-  var q=sb.from('comments').select('*').order('created_at',{ascending:false});
-  if(flt&&flt!=='all') q=q.eq('status',flt);
-  var {data,error}=await q;
-  if(error){if(el)el.innerHTML='<div class="empty">تعذر تحميل التعليقات</div>';return;}
-  if(!data||!data.length){if(el)el.innerHTML='<div class="empty">لا توجد تعليقات</div>';return;}
-  // Update badge
-  // Badge: always fetch pending count regardless of current filter
-  sb.from('comments').select('id').eq('status','pending').then(function(pr){
-    var pending=(pr.data&&pr.data.length)||0;
-    var badge=document.getElementById('comments-badge');
-    if(badge){badge.textContent=pending;badge.style.display=pending?'inline':'none';}
-  });
-  if(!el)return;
-  el.innerHTML='';
-  data.forEach(function(c){
-    var d=document.createElement('div');
-    d.className='irow';
-    d.style.flexDirection='column';
-    d.style.alignItems='stretch';
-    var dateStr=new Date(c.created_at).toLocaleDateString('ar-SA');
-    var btns=c.status==='pending'
-      ?'<button class="bsm t" onclick="approveCmt(\''+c.id+'\')">موافقة</button><button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">رفض</button>'
-      :'<button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">حذف</button>';
-    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);margin-right:10px;">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+( c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px;">معرف المقالة: '+escH(String(c.article_id||'').substring(0,8))+'...</div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+escH(c.body)+'</div>';
-    el.appendChild(d);
-  });
+
+async function loadComments(){var el=document.getElementById('comments-list');if(el)el.innerHTML='<div class="empty">جاري التحميل...</div>';var flt=document.getElementById('cmt-flt')&&document.getElementById('cmt-flt').value;var q=sb.from('comments').select('*').order('created_at',{ascending:false});if(flt&&flt!=='all')q=q.eq('status',flt);var{data,error}=await q;if(error){if(el)el.innerHTML='<div class="empty">تعذر تحميل التعليقات</div>';return;}if(!data||!data.length){if(el)el.innerHTML='<div class="empty">لا توجد تعليقات</div>';return;}sb.from('comments').select('id').eq('status','pending').then(function(pr){var p=(pr.data&&pr.data.length)||0;var badge=document.getElementById('comments-badge');if(badge){badge.textContent=p;badge.style.display=p?'inline':'none';}});if(!el)return;el.innerHTML='';data.forEach(function(c){var d=document.createElement('div');d.className='irow';d.style.flexDirection='column';d.style.alignItems='stretch';var dateStr=new Date(c.created_at).toLocaleDateString('ar-SA');var btns=c.status==='pending'?'<button class="bsm t" onclick="approveCmt(\''+c.id+'\')">موافقة</button><button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">رفض</button>':'<button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">حذف</button>';d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);margin-right:10px;">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+(c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px;">معرف المقالة: '+escH(String(c.article_id||'').substring(0,8))+'...</div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+escH(c.body)+'</div>';el.appendChild(d);});}
+async function approveCmt(id){var res=await sb.from('comments').update({status:'approved'}).eq('id',id);if(res.error){toast('خطأ: '+res.error.message);return;}toast('تم الاعتماد ✓');loadComments();}
+async function rejectCmt(id){if(!confirm('حذف هذا التعليق؟'))return;var res=await sb.from('comments').delete().eq('id',id);if(res.error){toast('خطأ: '+res.error.message);return;}toast('تم الحذف ✓');loadComments();}
+
+function prevLogo(){var url=v('s-logo-url');var wrap=document.getElementById('logo-preview');if(!wrap)return;if(url&&url.startsWith('http')){var img=document.createElement('img');img.src=url;img.style.cssText='max-width:100%;max-height:100%;object-fit:contain;';img.onerror=function(){wrap.innerHTML='<span style="color:#C94B1E;font-size:11px;">رابط غير صالح</span>';};wrap.innerHTML='';wrap.appendChild(img);var lp=document.getElementById('lpv-name');if(lp)lp.innerHTML='<img src="'+url+'" alt="لوقو" style="max-height:28px;width:auto;object-fit:contain;">';}else{wrap.innerHTML='<span style="font-family:Felfel,serif;font-size:24px;color:#fff;">وَرَق</span>';var lp=document.getElementById('lpv-name');if(lp)lp.textContent=v('s-sitename')||'وَرَق';}}
+function prevBanner(){var url=v('s-banner-url');var wrap=document.getElementById('banner-preview-wrap');var img=document.getElementById('banner-preview-img');if(url&&wrap&&img){img.src=url;wrap.style.display='block';}else if(wrap)wrap.style.display='none';}
+function syncMpPreview(){var t=v('mp-title')||'الكتاب';var a=v('mp-author')||'';var c=v('mp-color')||'#412402';se('mp-prev-t',t);se('mp-prev-a',a);se('mp-prev-title',t);var cov=document.getElementById('mp-prev-cover');if(cov&&c)cov.style.background=c;}
+async function saveLogo(){var logoUrl=v('s-logo-url');var mastheadUrl=v('s-masthead-url');var footerUrl=v('s-footer-logo-url');if(logoUrl&&!logoUrl.startsWith('http')){toast('رابط لوقو الزاوية غير صالح');return;}if(mastheadUrl&&!mastheadUrl.startsWith('http')){toast('رابط صورة الاسم غير صالح');return;}if(footerUrl&&!footerUrl.startsWith('http')){toast('رابط لوقو الفوتر غير صالح');return;}var cur=await getCurSettings('general')||{};cur.logo_url=logoUrl||null;cur.masthead_logo_url=mastheadUrl||null;cur.footer_logo_url=footerUrl||null;cur.name=v('s-sitename');cur.tagline=v('s-sitetag');cur.header_bg=v('s-headerbg')||null;var res=await sb.from('settings').upsert({key:'general',value:cur});if(res.error){toast('خطأ في الحفظ');return;}_settingsCache=null;toast('تم الحفظ ✓');}
+async function saveBanner(){var url=v('s-banner-url');if(url&&!url.startsWith('http')){toast('رابط البانر غير صالح');return;}await sb.from('settings').upsert({key:'banner',value:{url:url||null,link:v('s-banner-link')||null}});_settingsCache=null;toast('تم الحفظ!');}
+async function saveMonthPick(){var title=v('mp-title');if(!title){toast('أدخلي عنوان الكتاب');return;}await sb.from('settings').upsert({key:'month_pick',value:{title,author:v('mp-author'),desc:v('mp-desc'),color:v('mp-color'),url:v('mp-url'),image:(v('mp-img')&&v('mp-img').trim())||null}});_settingsCache=null;toast('تم الحفظ!');}
+async function clearMonthPick(){await sb.from('settings').upsert({key:'month_pick',value:null});toast('تم إخفاء القسم');}
+async function saveSectionsOrder(){var items=document.querySelectorAll('.sec-order-item');var order=[];items.forEach(function(el){order.push(el.getAttribute('data-sec'));});await sb.from('settings').upsert({key:'sections_order',value:order});_settingsCache=null;toast('تم الحفظ!');}
+(function(){var dragged=null;document.addEventListener('dragstart',function(e){if(e.target.classList.contains('sec-order-item')){dragged=e.target;e.target.style.opacity='.5';}});document.addEventListener('dragend',function(e){if(e.target.classList.contains('sec-order-item'))e.target.style.opacity='1';});document.addEventListener('dragover',function(e){e.preventDefault();});document.addEventListener('drop',function(e){e.preventDefault();if(dragged&&e.target.closest&&e.target.closest('.sec-order-item')&&e.target.closest('.sec-order-item')!==dragged){var target=e.target.closest('.sec-order-item');var list=document.getElementById('sections-list');list.insertBefore(dragged,target);}});})();
+
+var _settingsCache2=null;
+async function loadHomepageSettings(){var data=_settingsCache;if(!data){var res=await sb.from('settings').select('*');if(!res.data)return;data=res.data;_settingsCache=data;}var s={};data.forEach(function(r){s[r.key]=r.value;});if(s.general){sv('s-logo-url',s.general.logo_url||'');sv('s-masthead-url',s.general.masthead_logo_url||'');sv('s-footer-logo-url',s.general.footer_logo_url||'');sv('s-sitename',s.general.name||'وَرَق');sv('s-sitetag',s.general.tagline||'');var snp=document.getElementById('s-sitename-preview');if(snp)snp.textContent=s.general.name||'وَرَق';sv('s-headerbg',s.general.header_bg||'');if(s.general.logo_url)prevLogo();}if(s.banner){sv('s-banner-url',s.banner.url||'');sv('s-banner-link',s.banner.link||'');if(s.banner.url)prevBanner();}if(s.month_pick&&s.month_pick.title){sv('mp-title',s.month_pick.title);sv('mp-author',s.month_pick.author||'');sv('mp-desc',s.month_pick.desc||'');sv('mp-color',s.month_pick.color||'#412402');sv('mp-url',s.month_pick.url||'https://adab-book.com/');sv('mp-img',s.month_pick.image||'');syncMpPreview();}if(s.sections_order&&Array.isArray(s.sections_order)){var list=document.getElementById('sections-list');if(list){var items=list.querySelectorAll('.sec-order-item');var map={};items.forEach(function(el){map[el.getAttribute('data-sec')]=el;});s.sections_order.forEach(function(sec){if(map[sec])list.appendChild(map[sec]);});}}if(s.design){if(s.design.teal){sv('hp-c-teal',s.design.teal);sv('hp-ct-teal',s.design.teal);}if(s.design.orange){sv('hp-c-orange',s.design.orange);sv('hp-ct-orange',s.design.orange);}if(s.design.gold){sv('hp-c-gold',s.design.gold);sv('hp-ct-gold',s.design.gold);}}}
+
+// ── ANALYTICS ──
+async function loadAnalytics() {
+  var now = new Date();
+  var todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+  var weekStart = new Date(now - 7*24*60*60*1000).toISOString();
+  var monthStart = new Date(now - 30*24*60*60*1000).toISOString();
+  var pageNames = {home:'🏠 الرئيسية',issue:'📰 العدد الحالي',books:'📚 الكتب',articles:'✍️ مقالات',archive:'🗂 الأرشيف',news:'📢 أخبار',article:'📝 مقالة',book:'📖 كتاب'};
+
+  try {
+    var [rToday,rWeek,rMonth,rTotal,rRecent,rAll30] = await Promise.all([
+      sb.from('page_views').select('id',{count:'exact',head:true}).gte('created_at',todayStart),
+      sb.from('page_views').select('id',{count:'exact',head:true}).gte('created_at',weekStart),
+      sb.from('page_views').select('id',{count:'exact',head:true}).gte('created_at',monthStart),
+      sb.from('page_views').select('id',{count:'exact',head:true}),
+      sb.from('page_views').select('*').order('created_at',{ascending:false}).limit(20),
+      sb.from('page_views').select('page,device,item_id').gte('created_at',monthStart)
+    ]);
+
+    se('an-today',(rToday.count||0).toLocaleString('ar-SA'));
+    se('an-week',(rWeek.count||0).toLocaleString('ar-SA'));
+    se('an-month',(rMonth.count||0).toLocaleString('ar-SA'));
+    se('an-total',(rTotal.count||0).toLocaleString('ar-SA'));
+
+    // الأجهزة
+    if(rAll30.data && rAll30.data.length) {
+      var total = rAll30.data.length;
+      var mobile = rAll30.data.filter(function(r){return r.device==='mobile';}).length;
+      var mPct = Math.round(mobile/total*100);
+      var dPct = 100-mPct;
+      se('an-mobile-pct',mPct+'%'); se('an-desktop-pct',dPct+'%');
+      setTimeout(function(){
+        var mb=document.getElementById('an-mobile-bar');var db=document.getElementById('an-desktop-bar');
+        if(mb)mb.style.width=mPct+'%'; if(db)db.style.width=dPct+'%';
+      },200);
+
+      // الصفحات
+      var pgCounts={};
+      rAll30.data.forEach(function(r){pgCounts[r.page]=(pgCounts[r.page]||0)+1;});
+      var sorted=Object.entries(pgCounts).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+      var pgEl=document.getElementById('an-pages');
+      if(pgEl) pgEl.innerHTML = sorted.map(function(p){
+        var pct=Math.round(p[1]/total*100);
+        return '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:12px;">'+(pageNames[p[0]]||p[0])+'</span><span style="font-size:12px;font-weight:700;color:var(--teal);">'+p[1]+'</span></div><div class="an-bar-wrap"><div class="an-bar" style="background:var(--teal);width:'+pct+'%;"></div></div></div>';
+      }).join('')||'<div class="empty">لا بيانات</div>';
+
+      // أكثر مقالة
+      var artCount={};
+      rAll30.data.filter(function(r){return r.page==='article'&&r.item_id;}).forEach(function(r){artCount[r.item_id]=(artCount[r.item_id]||0)+1;});
+      var topArts=Object.entries(artCount).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+      var artEl=document.getElementById('an-top-arts');
+      if(artEl&&topArts.length){
+        var ids=topArts.map(function(p){return p[0];});
+        var artData=await sb.from('articles').select('id,title').in('id',ids);
+        var artMap={};if(artData.data)artData.data.forEach(function(a){artMap[a.id]=a.title;});
+        artEl.innerHTML=topArts.map(function(p,i){return '<div class="an-row"><span class="an-rank">'+(i+1)+'</span><span class="an-name">'+(artMap[p[0]]||'مقالة')+'</span><span class="an-count" style="color:var(--teal);">'+p[1]+'</span></div>';}).join('');
+      } else if(artEl) artEl.innerHTML='<div class="empty">لا توجد مشاهدات بعد</div>';
+
+      // أكثر كتاب
+      var bookCount={};
+      rAll30.data.filter(function(r){return r.page==='book'&&r.item_id;}).forEach(function(r){bookCount[r.item_id]=(bookCount[r.item_id]||0)+1;});
+      var topBooks=Object.entries(bookCount).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+      var bookEl=document.getElementById('an-top-books');
+      if(bookEl&&topBooks.length){
+        var bids=topBooks.map(function(p){return p[0];});
+        var bookData=await sb.from('books').select('id,title').in('id',bids);
+        var bookMap={};if(bookData.data)bookData.data.forEach(function(b){bookMap[b.id]=b.title;});
+        bookEl.innerHTML=topBooks.map(function(p,i){return '<div class="an-row"><span class="an-rank">'+(i+1)+'</span><span class="an-name">'+(bookMap[p[0]]||'كتاب')+'</span><span class="an-count" style="color:var(--orange);">'+p[1]+'</span></div>';}).join('');
+      } else if(bookEl) bookEl.innerHTML='<div class="empty">لا توجد مشاهدات بعد</div>';
+    } else {
+      ['an-pages','an-top-arts','an-top-books'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML='<div class="empty">لا توجد بيانات بعد</div>';});
+      se('an-mobile-pct','—%'); se('an-desktop-pct','—%');
+    }
+
+    // آخر الزيارات
+    var recEl=document.getElementById('an-recent');
+    if(recEl&&rRecent.data&&rRecent.data.length){
+      recEl.innerHTML='<div style="display:grid;grid-template-columns:1fr auto auto;gap:8px;font-size:11px;color:var(--mid);padding-bottom:6px;border-bottom:1px solid var(--border);margin-bottom:6px;font-weight:600;"><span>الصفحة</span><span>الجهاز</span><span>الوقت</span></div>'
+        +rRecent.data.map(function(r){
+          var t=new Date(r.created_at);
+          var ts=t.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'})+' · '+t.toLocaleDateString('ar-SA');
+          return '<div style="display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);align-items:center;"><span style="font-size:12px;">'+(pageNames[r.page]||r.page)+'</span><span style="font-size:11px;padding:2px 8px;border-radius:10px;background:'+(r.device==='mobile'?'var(--tl)':'var(--cream)')+';">'+(r.device==='mobile'?'📱':'💻')+'</span><span style="font-size:11px;color:var(--mid);">'+ts+'</span></div>';
+        }).join('');
+    } else if(recEl) recEl.innerHTML='<div class="empty">لا توجد زيارات بعد — تأكدي من رفع index.html المحدث</div>';
+
+  } catch(e) { console.warn('Analytics error:',e); toast('خطأ في تحميل الإحصائيات'); }
 }
-async function approveCmt(id){
-  var res=await sb.from('comments').update({status:'approved'}).eq('id',id);
-  if(res.error){toast('خطأ: '+res.error.message);return;}
-  toast('تم اعتماد التعليق ✓');loadComments();
-}
-async function rejectCmt(id){
-  if(!confirm('حذف هذا التعليق نهائياً؟'))return;
-  var res=await sb.from('comments').delete().eq('id',id);
-  if(res.error){toast('خطأ: '+res.error.message);return;}
-  toast('تم الحذف ✓');loadComments();
-}
-async function archiveArt(id){
-  if(!confirm('أرشفة هذه المقالة؟ لن تظهر في الموقع لكن يمكن استعادتها.'))return;
-  var res=await sb.from('articles').update({status:'archived'}).eq('id',id);
-  if(res.error){
-    if(res.error.message&&res.error.message.indexOf('status_check')>-1){
-      toast('خطأ: شغّلي SQL في Supabase لإضافة حالة archived');
-    } else { toast('خطأ: '+res.error.message); }
-    return;
-  }
-  toast('تم الأرشفة ✓');invalidateCache();loadArts();
-}
-async function archiveBook(id){
-  if(!confirm('أرشفة هذا الكتاب؟ لن يظهر في الموقع لكن يمكن استعادته.'))return;
-  var res=await sb.from('books').update({archived:true}).eq('id',id);
-  if(res.error){toast('خطأ: '+res.error.message);return;}
-  toast('تم أرشفة الكتاب ✓');invalidateCache();loadBooks();
-}
-async function unarchiveBook(id){
-  var res=await sb.from('books').update({archived:false}).eq('id',id);
-  if(res.error){toast('خطأ: '+res.error.message);return;}
-  toast('تم إعادة عرض الكتاب ✓');invalidateCache();loadBooks();
-}
-async function unarchiveArt(id){
-  var res=await sb.from('articles').update({status:'published'}).eq('id',id);
-  if(res.error){toast('خطأ: '+res.error.message);return;}
-  toast('تم إعادة النشر ✓');loadArts();
-}
+
 async function logout(){clearRoleCache();await sb.auth.signOut();location.href='login.html';}
 var _toastTimer=null;function toast(msg){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('on');if(_toastTimer)clearTimeout(_toastTimer);_toastTimer=setTimeout(function(){t.classList.remove('on');_toastTimer=null;},3000);}
-
-// ── HOMEPAGE FUNCTIONS ──
-
-function prevLogo() {
-  var url = v('s-logo-url');
-  var wrap = document.getElementById('logo-preview');
-  if (!wrap) return;
-  if (url && url.startsWith('http')) {
-    var img = document.createElement('img');
-    img.src = url;
-    img.style.cssText = 'max-width:100%;max-height:100%;object-fit:contain;';
-    img.onerror = function() { wrap.innerHTML = '<span style="color:#C94B1E;font-size:11px;">رابط غير صالح</span>'; };
-    wrap.innerHTML = '';
-    wrap.appendChild(img);
-    // Update live preview in site preview panel
-    var lpvName = document.getElementById('lpv-name');
-    if (lpvName) lpvName.innerHTML = '<img src="'+url+'" alt="لوقو" style="max-height:28px;width:auto;object-fit:contain;">';
-  } else {
-    wrap.innerHTML = '<span style="font-family:Felfel,serif;font-size:24px;color:#fff;">وَرَق</span>';
-    var lpvName = document.getElementById('lpv-name');
-    if (lpvName) lpvName.textContent = v('s-sitename') || 'وَرَق';
-  }
-}
-
-function prevBanner() {
-  var url = v('s-banner-url');
-  var wrap = document.getElementById('banner-preview-wrap');
-  var img = document.getElementById('banner-preview-img');
-  if (url && wrap && img) { img.src = url; wrap.style.display = 'block'; }
-  else if (wrap) wrap.style.display = 'none';
-}
-
-function syncMpPreview() {
-  var t = v('mp-title') || 'الكتاب';
-  var a = v('mp-author') || '';
-  var c = v('mp-color') || '#412402';
-  se('mp-prev-t', t); se('mp-prev-a', a); se('mp-prev-title', t);
-  var cov = document.getElementById('mp-prev-cover');
-  if (cov && c) cov.style.background = c;
-}
-
-async function saveLogo() {
-  var logoUrl = v('s-logo-url');
-  var mastheadUrl = v('s-masthead-url');
-  var footerUrl = v('s-footer-logo-url');
-  if (logoUrl && !logoUrl.startsWith('http')) { toast('رابط لوقو الزاوية غير صالح'); return; }
-  if (mastheadUrl && !mastheadUrl.startsWith('http')) { toast('رابط صورة الاسم الكبير غير صالح'); return; }
-  if (footerUrl && !footerUrl.startsWith('http')) { toast('رابط لوقو الفوتر غير صالح'); return; }
-  var cur = await getCurSettings('general') || {};
-  cur.logo_url = logoUrl || null;
-  cur.masthead_logo_url = mastheadUrl || null;
-  cur.footer_logo_url = footerUrl || null;
-  cur.name = v('s-sitename');
-  cur.tagline = v('s-sitetag');
-  cur.header_bg = v('s-headerbg') || null;
-  var res = await sb.from('settings').upsert({key:'general', value:cur});
-  if (res.error) { toast('خطأ في الحفظ'); return; }
-  _settingsCache=null;
-  toast('تم الحفظ ✓');
-}
-
-async function saveBanner() {
-  var bannerUrl = v('s-banner-url');
-  if (bannerUrl && !bannerUrl.startsWith('http')) { toast('رابط البانر غير صالح'); return; }
-  var url = v('s-banner-url');
-  var link = v('s-banner-link');
-  await sb.from('settings').upsert({key:'banner', value:{url:url||null, link:link||null}});
-  _settingsCache=null;
-  toast('تم حفظ البانر!');
-}
-
-async function saveMonthPick() {
-  var title = v('mp-title');
-  if (!title) { toast('أدخلي عنوان الكتاب'); return; }
-  await sb.from('settings').upsert({key:'month_pick', value:{title:title, author:v('mp-author'), desc:v('mp-desc'), color:v('mp-color'), url:v('mp-url'), image:(v('mp-img')&&v('mp-img').trim())||null}});
-  _settingsCache=null;
-  toast('تم حفظ توصية الشهر!');
-}
-
-async function clearMonthPick() {
-  await sb.from('settings').upsert({key:'month_pick', value:null});
-  toast('تم إخفاء قسم التوصية');
-}
-
-async function saveSectionsOrder() {
-  var items = document.querySelectorAll('.sec-order-item');
-  var order = [];
-  items.forEach(function(el) { order.push(el.getAttribute('data-sec')); });
-  await sb.from('settings').upsert({key:'sections_order', value:order});
-  _settingsCache=null;
-  toast('تم حفظ الترتيب!');
-}
-
-// Drag and drop for sections
-(function() {
-  var dragged = null;
-  document.addEventListener('dragstart', function(e) {
-    if (e.target.classList.contains('sec-order-item')) { dragged = e.target; e.target.style.opacity = '.5'; }
-  });
-  document.addEventListener('dragend', function(e) {
-    if (e.target.classList.contains('sec-order-item')) e.target.style.opacity = '1';
-  });
-  document.addEventListener('dragover', function(e) { e.preventDefault(); });
-  document.addEventListener('drop', function(e) {
-    e.preventDefault();
-    if (dragged && e.target.closest && e.target.closest('.sec-order-item') && e.target.closest('.sec-order-item') !== dragged) {
-      var target = e.target.closest('.sec-order-item');
-      var list = document.getElementById('sections-list');
-      list.insertBefore(dragged, target);
-    }
-  });
-})();
-
-// Load homepage settings
-var _settingsCache = null;
-async function loadHomepageSettings() {
-  // Use cached settings if available
-  var data = _settingsCache;
-  if (!data) {
-    var res = await sb.from('settings').select('*');
-    if (!res.data) return;
-    data = res.data;
-    _settingsCache = data;
-  }
-  var s = {};
-  data.forEach(function(r) { s[r.key] = r.value; });
-  if (s.general) {
-    sv('s-logo-url', s.general.logo_url || '');
-    sv('s-masthead-url', s.general.masthead_logo_url || '');
-    sv('s-footer-logo-url', s.general.footer_logo_url || '');
-    sv('s-sitename', s.general.name || 'وَرَق');
-    sv('s-sitetag', s.general.tagline || '');
-    var snp = document.getElementById('s-sitename-preview');
-    if (snp) snp.textContent = s.general.name || 'وَرَق';
-    sv('s-headerbg', s.general.header_bg || '');
-    if (s.general.logo_url) prevLogo();
-  }
-  if (s.banner) {
-    sv('s-banner-url', s.banner.url || '');
-    sv('s-banner-link', s.banner.link || '');
-    if (s.banner.url) prevBanner();
-  }
-  if (s.month_pick && s.month_pick.title) {
-    sv('mp-title', s.month_pick.title);
-    sv('mp-author', s.month_pick.author || '');
-    sv('mp-desc', s.month_pick.desc || '');
-    sv('mp-color', s.month_pick.color || '#412402');
-    sv('mp-url', s.month_pick.url || 'https://adab-book.com/');
-    sv('mp-img', s.month_pick.image || '');
-    syncMpPreview();
-  }
-  if (s.sections_order && Array.isArray(s.sections_order)) {
-    var list = document.getElementById('sections-list');
-    if (list) {
-      var items = list.querySelectorAll('.sec-order-item');
-      var map = {};
-      items.forEach(function(el) { map[el.getAttribute('data-sec')] = el; });
-      s.sections_order.forEach(function(sec) {
-        if (map[sec]) list.appendChild(map[sec]);
-      });
-    }
-  }
-  if (s.design) {
-    if(s.design.teal){sv('hp-c-teal',s.design.teal);sv('hp-ct-teal',s.design.teal);}
-    if(s.design.orange){sv('hp-c-orange',s.design.orange);sv('hp-ct-orange',s.design.orange);}
-    if(s.design.gold){sv('hp-c-gold',s.design.gold);sv('hp-ct-gold',s.design.gold);}
-  }
-}
-
-// ── EDIT ARCHIVE ──
-async function editArchive(idx) {
-  var res = await sb.from('settings').select('value').eq('key','archive').maybeSingle();
-  var items = (res.data && res.data.value) || [];
-  var i = items[idx];
-  if (!i) return;
-  var newNum = prompt('رقم العدد:', i.num);
-  if (newNum === null) return;
-  var newDate = prompt('الشهر والسنة:', i.date);
-  if (newDate === null) return;
-  var newPdf = prompt('رابط PDF (اتركي فارغاً إذا لم يتغير):', i.pdf || '');
-  if (newPdf === null) return;
-  var newPubAt = prompt('تاريخ النشر المجدول (YYYY-MM-DDThh:mm أو فارغ):', i.publish_at ? new Date(i.publish_at).toISOString().slice(0,16) : '');
-  if (newPubAt === null) return;
-  items[idx] = {
-    num: newNum || i.num,
-    date: newDate || i.date,
-    pdf: newPdf || i.pdf || null,
-    color: i.color,
-    publish_at: newPubAt ? new Date(newPubAt).toISOString() : null
-  };
-  await sb.from('settings').upsert({key:'archive', value:items});
-  toast('تم التعديل ✓');
-  loadArchive();
-}
-
-// ── AUTO-PUBLISH SCHEDULER ──
-// Checks every 60 seconds and publishes scheduled content
-async function checkScheduled() {
-  var now = new Date().toISOString();
-
-  // Check scheduled articles
-  var artRes = await sb.from('articles').select('id').eq('status','scheduled').lte('published_at', now);
-  if (artRes.data && artRes.data.length) {
-    var ids = artRes.data.map(function(a) { return a.id; });
-    for (var i = 0; i < ids.length; i++) {
-      await sb.from('articles').update({status:'published'}).eq('id', ids[i]);
-    }
-    toast('تم نشر ' + ids.length + ' مقالة مجدولة تلقائياً ✓');
-    loadArts(); loadDash();
-  }
-
-  // Check scheduled books
-  var bookRes = await sb.from('books').select('id,publish_at').eq('archived', true).not('publish_at', 'is', null);
-  if (bookRes.data) {
-    var toPublish = bookRes.data.filter(function(b) { return b.publish_at && b.publish_at <= now; });
-    for (var j = 0; j < toPublish.length; j++) {
-      await sb.from('books').update({archived: false, publish_at: null}).eq('id', toPublish[j].id);
-    }
-    if (toPublish.length) { toast('تم نشر ' + toPublish.length + ' كتاب مجدول تلقائياً ✓'); loadBooks(); }
-  }
-
-  // Check scheduled archive issues
-  var archRes = await sb.from('settings').select('value').eq('key','archive').maybeSingle();
-  if (archRes.data && archRes.data.value) {
-    var archItems = archRes.data.value;
-    var changed = false;
-    archItems.forEach(function(item) {
-      if (item.publish_at && item.publish_at <= now) {
-        delete item.publish_at; // Mark as published (no longer scheduled)
-        changed = true;
-      }
-    });
-    if (changed) {
-      await sb.from('settings').upsert({key:'archive', value:archItems});
-      toast('تم نشر عدد مجدول تلقائياً ✓');
-      loadArchive();
-    }
-  }
-}
-
-// NOTE: Scheduled publishing is handled by GitHub Actions (auto-publish.yml)
-// checkScheduled() is available for manual use if needed
 </script>
 </body>
 </html>
