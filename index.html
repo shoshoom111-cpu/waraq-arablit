@@ -562,7 +562,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <div class="wrap" data-section="books">
   <div class="sec-header books-hd"><div class="sec-title">📚 إصدارات المركز</div><div class="sec-more" id="more-books">الكتب كلها ←</div></div>
   <div class="books-grid" id="home-books"></div>
-  <div class="sec-header arts-hd"><div class="sec-title">✍️ المقالات </div><div class="sec-more" id="more-arts">كل المقالات ←</div></div>
+  <div class="sec-header arts-hd"><div class="sec-title">✍️ مقالات أدبية</div><div class="sec-more" id="more-arts">كل المقالات ←</div></div>
   <div class="arts-grid" id="arts-grid-home">
     <div id="home-arts" style="display:none;"></div>
     <div id="home-arts-side" style="display:none;"></div>
@@ -570,7 +570,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 </div>
 
 <div class="wrap" data-section="news">
-  <div class="sec-header news-hd"><div class="sec-title">📰 الأخبار </div><div class="sec-more" id="more-news">كل الأخبار ←</div></div>
+  <div class="sec-header news-hd"><div class="sec-title">📰 أخبار المركز</div><div class="sec-more" id="more-news">كل الأخبار ←</div></div>
   <div class="news-grid" id="home-news"></div>
 </div>
 <div class="arch-strip" data-section="archive"><div style="max-width:1200px;margin:0 auto;">
@@ -796,7 +796,17 @@ function goView(name) {
         history.pushState({view:name}, '', name === 'home' ? window.location.pathname : '#' + name);
       }
     } catch(e) {}
+    // تسجيل الزيارة
+    trackView(name, null);
   } else if (!prevView) { prevView = 'home'; }
+}
+
+function trackView(page, itemId) {
+  if (!sb) return;
+  try {
+    var device = window.innerWidth < 768 ? 'mobile' : 'desktop';
+    sb.from('page_views').insert({ page: page, item_id: itemId || null, device: device });
+  } catch(e) {}
 }
 window.addEventListener('popstate', function(e) {
   if (e.state && e.state.view) {
@@ -931,6 +941,7 @@ function openBook(id) {
     });
   }
   _currentShareBookId = id;
+  trackView('book', String(id));
   loadBookComments(id);
   var bcErr=document.getElementById('bcf-error'); if(bcErr) bcErr.style.display='none';
   var bcSucc=document.getElementById('bcf-success'); if(bcSucc) bcSucc.style.display='none';
