@@ -699,7 +699,7 @@ function goSec(name,el){
   if(name==='homepage')loadHomepageSettings();
   if(name==='comments')loadComments();
   if(name==='news')loadNews();
-  if(name==='analytics')loadAnalytics();
+  if(name==='analytics'){loadAnalytics();startAnalyticsRefresh();}else if(_analyticsTimer&&name!=='analytics'){clearInterval(_analyticsTimer);_analyticsTimer=null;}
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
   document.getElementById('sec-'+name).classList.add('on');
@@ -815,6 +815,16 @@ var _settingsCache2=null;
 async function loadHomepageSettings(){var data=_settingsCache;if(!data){var res=await sb.from('settings').select('*');if(!res.data)return;data=res.data;_settingsCache=data;}var s={};data.forEach(function(r){s[r.key]=r.value;});if(s.general){sv('s-logo-url',s.general.logo_url||'');sv('s-masthead-url',s.general.masthead_logo_url||'');sv('s-footer-logo-url',s.general.footer_logo_url||'');sv('s-sitename',s.general.name||'وَرَق');sv('s-sitetag',s.general.tagline||'');var snp=document.getElementById('s-sitename-preview');if(snp)snp.textContent=s.general.name||'وَرَق';sv('s-headerbg',s.general.header_bg||'');if(s.general.logo_url)prevLogo();}if(s.banner){sv('s-banner-url',s.banner.url||'');sv('s-banner-link',s.banner.link||'');if(s.banner.url)prevBanner();}if(s.month_pick&&s.month_pick.title){sv('mp-title',s.month_pick.title);sv('mp-author',s.month_pick.author||'');sv('mp-desc',s.month_pick.desc||'');sv('mp-color',s.month_pick.color||'#412402');sv('mp-url',s.month_pick.url||'https://adab-book.com/');sv('mp-img',s.month_pick.image||'');syncMpPreview();}if(s.sections_order&&Array.isArray(s.sections_order)){var list=document.getElementById('sections-list');if(list){var items=list.querySelectorAll('.sec-order-item');var map={};items.forEach(function(el){map[el.getAttribute('data-sec')]=el;});s.sections_order.forEach(function(sec){if(map[sec])list.appendChild(map[sec]);});}}if(s.design){if(s.design.teal){sv('hp-c-teal',s.design.teal);sv('hp-ct-teal',s.design.teal);}if(s.design.orange){sv('hp-c-orange',s.design.orange);sv('hp-ct-orange',s.design.orange);}if(s.design.gold){sv('hp-c-gold',s.design.gold);sv('hp-ct-gold',s.design.gold);}}}
 
 // ── ANALYTICS ──
+// تحديث تلقائي كل 5 دقائق عند فتح الإحصائيات
+var _analyticsTimer = null;
+function startAnalyticsRefresh() {
+  if (_analyticsTimer) clearInterval(_analyticsTimer);
+  _analyticsTimer = setInterval(function() {
+    var sec = document.getElementById('sec-analytics');
+    if (sec && sec.classList.contains('on')) loadAnalytics();
+  }, 5 * 60 * 1000); // كل 5 دقائق
+}
+
 async function loadAnalytics() {
   var now = new Date();
   var todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
