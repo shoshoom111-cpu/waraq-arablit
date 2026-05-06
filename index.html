@@ -564,7 +564,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <div class="wrap" data-section="books">
   <div class="sec-header books-hd"><div class="sec-title">📚 إصدارات المركز</div><div class="sec-more" id="more-books">الكتب كلها ←</div></div>
   <div class="books-grid" id="home-books"></div>
-  <div class="sec-header arts-hd"><div class="sec-title">✍️ المقالات </div><div class="sec-more" id="more-arts">كل المقالات ←</div></div>
+  <div class="sec-header arts-hd"><div class="sec-title">✍️ مقالات أدبية</div><div class="sec-more" id="more-arts">كل المقالات ←</div></div>
   <div class="arts-grid" id="arts-grid-home">
     <div id="home-arts" style="display:none;"></div>
     <div id="home-arts-side" style="display:none;"></div>
@@ -572,7 +572,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 </div>
 
 <div class="wrap" data-section="news">
-  <div class="sec-header news-hd"><div class="sec-title">📰 الأخبار </div><div class="sec-more" id="more-news">كل الأخبار ←</div></div>
+  <div class="sec-header news-hd"><div class="sec-title">📰 أخبار المركز</div><div class="sec-more" id="more-news">كل الأخبار ←</div></div>
   <div class="news-grid" id="home-news"></div>
 </div>
 <div class="arch-strip" data-section="archive"><div style="max-width:1200px;margin:0 auto;">
@@ -615,9 +615,10 @@ body.dark .news-card-icon{background:#1a1a1a;}
   </div>
 </div>
 <footer class="footer" data-section="footer"><div class="ft">
-  <div><div class="ft-logo" id="ft-logo">وَرَق</div><div class="ft-tag" id="ft-tag">مجلة مركز الأدب العربي<br>شهرية · رقمية · مجانية</div></div>
+  <div><div class="ft-logo" id="ft-logo">وَرَق</div><div class="ft-tag" id="ft-tag">جريدة مركز الأدب العربي<br>شهرية · رقمية · مجانية</div></div>
   <div class="ft-col"><h4>أقسام الموقع</h4><a id="fl-home">الرئيسية</a><a id="fl-issue">العدد الحالي</a><a id="fl-books">الكتب</a><a id="fl-arts">مقالات</a><a id="fl-arch">الأرشيف</a></div>
   <div class="ft-col"><h4>تواصل معنا</h4><a id="ft-ig" href="https://www.instagram.com/servicesbook1" target="_blank" rel="noopener noreferrer">Instagram</a><a id="ft-tt" href="https://www.tiktok.com/@adab_book" target="_blank" rel="noopener noreferrer">TikTok</a><a id="ft-store" href="https://adab-book.com/" target="_blank" rel="noopener noreferrer">المتجر</a></div>
+  <div class="ft-col"><h4>المركز</h4><a href="login.html">لوحة التحكم</a></div>
 </div>
 <div class="ft-btm" style="max-width:1200px;margin:16px auto 0;"><span class="ft-copy" id="ft-copy">© ٢٠٢٥ مركز الأدب العربي للنشر والتوزيع</span><div style="display:flex;gap:6px;"><a class="ft-soc" style="background:#1A7A7A;" href="https://www.instagram.com/servicesbook1" target="_blank" rel="noopener noreferrer">Instagram</a><a class="ft-soc" style="background:#C94B1E;" href="https://www.tiktok.com/@adab_book" target="_blank" rel="noopener noreferrer">TikTok</a><a class="ft-soc" style="background:#412402;" href="https://adab-book.com/" target="_blank" rel="noopener noreferrer">المتجر</a></div></div>
 </footer>
@@ -658,7 +659,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 
 <!-- ARTICLES -->
 <div class="view" id="v-articles">
-<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arts-back">← الرئيسية</button><div class="ph-title">مقالات</div><div class="ph-sub">أحدث المقالات </div></div></div>
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arts-back">← الرئيسية</button><div class="ph-title">مقالات</div><div class="ph-sub">أحدث المقالات الأدبية</div></div></div>
 <div class="arts-page"><div class="apg-grid" id="arts-pg"></div></div>
 </div>
 
@@ -677,7 +678,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 
 <!-- NEWS PAGE -->
 <div class="view" id="v-news">
-<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="news-back">← الرئيسية</button><div class="ph-title">الأخبار </div><div class="ph-sub">آخر أخبار </div></div></div>
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="news-back">← الرئيسية</button><div class="ph-title">أخبار المركز</div><div class="ph-sub">آخر أخبار مركز الأدب العربي</div></div></div>
 <div class="arts-page"><div class="apg-grid" id="news-pg"></div></div>
 </div>
 
@@ -918,6 +919,7 @@ function openBook(id) {
   var rel = document.getElementById('rel-books');
   rel.innerHTML = '';
   if (sb) {
+    // من Supabase فقط — لا نضيف من lB عشان نمنع التكرار
     sb.from('books').select('id,title,author,color,url').neq('archived', true).neq('id', id).limit(3)
       .then(function(res) {
         if (!res.data || !res.data.length) return;
@@ -930,9 +932,9 @@ function openBook(id) {
         });
       });
   } else {
+    // بدون Supabase — من البيانات المحلية فقط
     var allBooks = [];
-    Object.keys(lB).forEach(function(k) { if (k !== id) allBooks.push([k, lB[k]]); });
-    Object.keys(SB).forEach(function(k) { if (k !== id && !lB[k]) allBooks.push([k, SB[k]]); });
+    Object.keys(lB).forEach(function(k) { if (String(k) !== String(id)) allBooks.push([k, lB[k]]); });
     allBooks.slice(0,3).forEach(function(pair) {
       var c = document.createElement('div');
       c.className = 'rel-card';
