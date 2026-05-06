@@ -542,7 +542,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 <div class="view active" id="v-home">
 <div class="masthead"><div class="mh-in">
   <div class="mh-left" id="mh-left">العدد الأول<br>أبريل ٢٠٢٥<br>مجانية</div>
-  <div><div class="mh-name" id="mh-name" data-text-logo="1">وَرَق</div><div class="mh-tag" id="mh-tag">مجلة مركز الأدب العربي الشهرية</div></div>
+  <div><div class="mh-name" id="mh-name" data-text-logo="1">وَرَق</div><div class="mh-tag" id="mh-tag">جريدة مركز الأدب العربي الشهرية</div></div>
   <div class="mh-right">رقمية<br>شهرية<br>مجانية</div>
 </div></div>
 <div class="ticker"><div class="ticker-track" id="ticker-track">
@@ -615,10 +615,10 @@ body.dark .news-card-icon{background:#1a1a1a;}
   </div>
 </div>
 <footer class="footer" data-section="footer"><div class="ft">
-  <div><div class="ft-logo" id="ft-logo">وَرَق</div><div class="ft-tag" id="ft-tag">مجلة مركز الأدب العربي<br>شهرية · رقمية · مجانية</div></div>
+  <div><div class="ft-logo" id="ft-logo">وَرَق</div><div class="ft-tag" id="ft-tag">جريدة مركز الأدب العربي<br>شهرية · رقمية · مجانية</div></div>
   <div class="ft-col"><h4>أقسام الموقع</h4><a id="fl-home">الرئيسية</a><a id="fl-issue">العدد الحالي</a><a id="fl-books">الكتب</a><a id="fl-arts">مقالات</a><a id="fl-arch">الأرشيف</a></div>
   <div class="ft-col"><h4>تواصل معنا</h4><a id="ft-ig" href="https://www.instagram.com/servicesbook1" target="_blank" rel="noopener noreferrer">Instagram</a><a id="ft-tt" href="https://www.tiktok.com/@adab_book" target="_blank" rel="noopener noreferrer">TikTok</a><a id="ft-store" href="https://adab-book.com/" target="_blank" rel="noopener noreferrer">المتجر</a></div>
-  <div class="ft-col"><h4>المركز</h4><a href="login.html">- </a></div>
+  <div class="ft-col"><h4>المركز</h4><a href="login.html">-</a></div>
 </div>
 <div class="ft-btm" style="max-width:1200px;margin:16px auto 0;"><span class="ft-copy" id="ft-copy">© ٢٠٢٦ مركز الأدب العربي للنشر والتوزيع</span><div style="display:flex;gap:6px;"><a class="ft-soc" style="background:#1A7A7A;" href="https://www.instagram.com/servicesbook1" target="_blank" rel="noopener noreferrer">Instagram</a><a class="ft-soc" style="background:#C94B1E;" href="https://www.tiktok.com/@adab_book" target="_blank" rel="noopener noreferrer">TikTok</a><a class="ft-soc" style="background:#412402;" href="https://adab-book.com/" target="_blank" rel="noopener noreferrer">المتجر</a></div></div>
 </footer>
@@ -665,7 +665,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 
 <!-- ARCHIVE -->
 <div class="view" id="v-archive">
-<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات مجلة وَرَق</div></div></div>
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="arch-back">← الرئيسية</button><div class="ph-title">أرشيف الأعداد</div><div class="ph-sub">كل إصدارات جريدة وَرَق</div></div></div>
 <div class="arch-page"><div class="arch-pg-grid" id="arch-pg">
   <div class="arch-pg-card" data-goissue="1" id="archpg1"><div class="arch-pg-cover" style="background:#1A7A7A;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الأول</div></div><div class="arch-pg-info"><span class="arch-pg-date">أبريل ٢٠٢٥</span><span class="arch-pg-dl">تصفح ←</span></div></div>
   <div class="arch-pg-card" data-goissue="2"><div class="arch-pg-cover" style="background:#C94B1E;"><div class="arch-pg-logo">وَرَق</div><div class="arch-pg-num">العدد الثاني</div></div><div class="arch-pg-info"><span class="arch-pg-date">مايو ٢٠٢٥</span><span style="font-size:12px;color:var(--light);">قريباً</span></div></div>
@@ -1452,8 +1452,7 @@ document.addEventListener('DOMContentLoaded', function() {
   else if (hash.indexOf('book/') === 0) { var bookId = hash.replace('book/', ''); if (bookId) setTimeout(function() { openBook(bookId); }, 500); }
   else if (hash && validViews.indexOf(hash) > -1) { goView(hash); }
   if (window._configMissing) { console.warn('config.js not loaded — static content only'); }
-  // تحميل البيانات — مرة واحدة فقط بـ flag لمنع التكرار
-  var _dataLoaded = false;
+  // تحميل البيانات — مرة واحدة فقط بـ flag لمنع التكرار (عام خارج DOMContentLoaded)
   function loadAllData() {
     if (_dataLoaded) return;
     if (!sb) return;
