@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
-<title>وَرَق | مجلة مركز الأدب العربي</title>
+<title>وَرَق | جريدة مركز الأدب العربي</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;500;700&family=Cairo:wght@300;400;500;600&family=Felfel&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.5/purify.min.js"></script>
 <style>
@@ -863,9 +863,13 @@ function openArt(id) {
   var rawBody = (a.body && a.body.trim()) ? a.body : '<p>لا يوجد محتوى</p>'; document.getElementById('sa-body').innerHTML = (typeof DOMPurify !== 'undefined') ? DOMPurify.sanitize(rawBody) : rawBody;
   var rel = document.getElementById('rel-arts');
   rel.innerHTML = '';
+  var _relArtsLoaded = false;
   if (sb) {
     sb.from('articles').select('id,title,author_name,category').eq('status','published').neq('id',id).limit(3)
       .then(function(res) {
+        if (_relArtsLoaded) return;
+        _relArtsLoaded = true;
+        rel.innerHTML = '';
         if (!res.data || !res.data.length) return;
         res.data.forEach(function(a) {
           var c = document.createElement('div');
@@ -888,7 +892,11 @@ function openArt(id) {
   goView('art-single');
 }
 
+var _openingBook = false;
 function openBook(id) {
+  if (_openingBook) return;
+  _openingBook = true;
+  setTimeout(function() { _openingBook = false; }, 300);
   var b = lB[id] || SB[id];
   if (!b) { console.warn('Book not found:', id); goView('books'); return; }
   document.getElementById('sb-badge').textContent = b.genre || 'كتاب';
@@ -918,10 +926,13 @@ function openBook(id) {
   buyBtn.onclick = function() { window.open(bUrl, '_blank'); };
   var rel = document.getElementById('rel-books');
   rel.innerHTML = '';
+  var _relLoaded = false;
   if (sb) {
-    // من Supabase فقط — لا نضيف من lB عشان نمنع التكرار
     sb.from('books').select('id,title,author,color,url').neq('archived', true).neq('id', id).limit(3)
       .then(function(res) {
+        if (_relLoaded) return; // منع التكرار
+        _relLoaded = true;
+        rel.innerHTML = ''; // امسح قبل الإضافة
         if (!res.data || !res.data.length) return;
         res.data.forEach(function(rb) {
           var c = document.createElement('div');
@@ -932,7 +943,6 @@ function openBook(id) {
         });
       });
   } else {
-    // بدون Supabase — من البيانات المحلية فقط
     var allBooks = [];
     Object.keys(lB).forEach(function(k) { if (String(k) !== String(id)) allBooks.push([k, lB[k]]); });
     allBooks.slice(0,3).forEach(function(pair) {
