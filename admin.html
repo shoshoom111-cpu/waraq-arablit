@@ -1545,9 +1545,9 @@ function makeCombo(inputId, listId, options) {
   if (!input || !list) return;
 
   function renderOpts(filter) {
-    var q = (filter||'').toLowerCase();
+    var q = (filter||'').toLowerCase().trim();
     list.innerHTML = '';
-    var filtered = options.filter(function(o){ return !q || o.toLowerCase().indexOf(q) > -1; });
+    var filtered = q ? options.filter(function(o){ return o.toLowerCase().indexOf(q) > -1; }) : options;
     // أضف خيار "جديد" إذا ما في تطابق
     if (q && !options.find(function(o){ return o.toLowerCase() === q; })) {
       var newOpt = document.createElement('div');
@@ -1577,11 +1577,14 @@ function makeCombo(inputId, listId, options) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+// تهيئة combo boxes — تُستدعى بعد تحميل الصفحة
+function initCombos() {
   makeCombo('aa-cat', 'aa-cat-list', ['نقد أدبي','مقالات أدبية','أخبار','حوار','ثقافة','توصية','تحقيق']);
   makeCombo('nb-g', 'nb-g-list', ['رعب','فانتازيا','رواية','شعر','قصص قصيرة','تاريخي','أدب','سيرة ذاتية']);
   makeCombo('eb-genre', 'eb-genre-list', ['رعب','فانتازيا','رواية','شعر','قصص قصيرة','تاريخي','أدب','سيرة ذاتية']);
-});
+}
+document.addEventListener('DOMContentLoaded', initCombos);
+setTimeout(initCombos, 1000);
 
 </script>
 </body>
