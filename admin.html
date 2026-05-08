@@ -211,6 +211,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
   <div class="ntab" id="nt-books" onclick="goSec('books',this)">الكتب</div>
   <div class="ntab" id="nt-archive" onclick="goSec('archive',this)">الأرشيف</div>
   <div class="ntab" id="nt-users" onclick="goSec('users',this)">المستخدمون</div>
+  <div class="ntab" id="nt-analytics" onclick="goSec('analytics',this)">📊 الإحصائيات</div>
 </div>
 
 <div class="layout">
@@ -229,6 +230,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
     <div class="sb-item" onclick="goSec('archive',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M1 4h14v1H1zM3 5v9h10V5"/><path d="M6 8h4"/></svg>الأرشيف</div>
     <div class="sb-sep">الإدارة</div>
     <div class="sb-item" onclick="goSec('users',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><path d="M1 14c0-2.8 2.2-5 5-5"/><circle cx="12" cy="9" r="2"/><path d="M10 14h4"/></svg>المستخدمون</div>
+    <div class="sb-item" onclick="goSec('analytics',null);setSb(this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 16 16"><path d="M1 12l4-4 3 3 4-5 3 2"/></svg>الإحصائيات</div>
     <div style="flex:1;"></div>
     <div class="sb-foot"><a href="index.html" target="_blank">← عرض الموقع</a></div>
   </aside>
@@ -640,6 +642,66 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           </div>
         </div>
       </div>
+
+      <!-- ══ ANALYTICS ══ -->
+      <div class="sec" id="sec-analytics">
+        <div class="pg-title">إحصائيات الزوار</div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:var(--mid);">الفترة:</span>
+          <button class="btn sm p" id="an-btn-today" onclick="anSetRange('today')">اليوم</button>
+          <button class="btn sm o" id="an-btn-week" onclick="anSetRange('week')">هذا الأسبوع</button>
+          <button class="btn sm o" id="an-btn-month" onclick="anSetRange('month')">هذا الشهر</button>
+          <button class="btn sm o" id="an-btn-all" onclick="anSetRange('all')">الكل</button>
+          <button class="btn sm o" style="margin-right:auto;" onclick="loadAnalytics()">🔄 تحديث</button>
+        </div>
+
+        <div class="stats" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));margin-bottom:18px;">
+          <div class="stat"><div class="stat-label">إجمالي الزيارات</div><div class="stat-val" id="an-total">—</div><div class="stat-note" style="color:var(--mid);" id="an-total-note">للفترة المحددة</div></div>
+          <div class="stat"><div class="stat-label">اليوم</div><div class="stat-val" id="an-today">—</div><div class="stat-note" style="color:var(--teal);">زيارة اليوم</div></div>
+          <div class="stat"><div class="stat-label">موبايل</div><div class="stat-val" id="an-mobile">—</div><div class="stat-note" style="color:var(--mid);" id="an-mobile-pct">—</div></div>
+          <div class="stat"><div class="stat-label">ديسكتوب</div><div class="stat-val" id="an-desktop">—</div><div class="stat-note" style="color:var(--mid);" id="an-desktop-pct">—</div></div>
+          <div class="stat"><div class="stat-label">أكثر صفحة</div><div class="stat-val" style="font-size:15px;margin-top:6px;" id="an-top-page">—</div><div class="stat-note" style="color:var(--mid);">الأكثر زيارة</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div class="card">
+            <div class="card-hd"><span class="card-title">الزيارات اليومية</span></div>
+            <div class="card-body" style="padding-top:10px;">
+              <div style="position:relative;width:100%;height:200px;"><canvas id="an-chart-daily" role="img" aria-label="مخطط الزيارات اليومية">بيانات الزيارات اليومية</canvas></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-hd"><span class="card-title">موبايل مقابل ديسكتوب</span></div>
+            <div class="card-body" style="padding-top:10px;">
+              <div style="display:flex;gap:12px;justify-content:center;margin-bottom:10px;font-size:11px;color:var(--mid);">
+                <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#1A7A7A;display:inline-block;"></span>موبايل</span>
+                <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#C94B1E;display:inline-block;"></span>ديسكتوب</span>
+              </div>
+              <div style="position:relative;width:100%;height:170px;"><canvas id="an-chart-device" role="img" aria-label="مخطط الأجهزة">بيانات الأجهزة</canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div class="card">
+            <div class="card-hd"><span class="card-title">الصفحات الأكثر زيارة</span></div>
+            <div class="card-body" id="an-pages-list"><div class="empty">جاري التحميل...</div></div>
+          </div>
+          <div class="card">
+            <div class="card-hd"><span class="card-title">الزيارات حسب الساعة</span></div>
+            <div class="card-body" style="padding-top:10px;">
+              <div style="position:relative;width:100%;height:200px;"><canvas id="an-chart-hour" role="img" aria-label="مخطط الزيارات حسب الساعة">بيانات الساعات</canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd"><span class="card-title">آخر الزيارات</span></div>
+          <div class="card-body" id="an-recent-list"><div class="empty">جاري التحميل...</div></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -992,7 +1054,177 @@ async function editArchive(idx){
   await sb.from('settings').upsert({key:'archive',value:items});toast('تم التعديل ✓');loadArchive();
 }
 
-// ── COMBO BOX ──
+// ── ANALYTICS ──
+var _anRange = 'today';
+var _anChartDaily = null, _anChartDevice = null, _anChartHour = null;
+
+function anSetRange(r) {
+  _anRange = r;
+  ['today','week','month','all'].forEach(function(x) {
+    var btn = document.getElementById('an-btn-'+x);
+    if (!btn) return;
+    if (x === r) { btn.className = 'btn sm p'; }
+    else { btn.className = 'btn sm o'; }
+  });
+  loadAnalytics();
+}
+
+async function loadAnalytics() {
+  if (!sb) return;
+  var now = new Date();
+  var from = null;
+  if (_anRange === 'today') { var t = new Date(now); t.setHours(0,0,0,0); from = t.toISOString(); }
+  else if (_anRange === 'week') { var t = new Date(now); t.setDate(t.getDate()-6); t.setHours(0,0,0,0); from = t.toISOString(); }
+  else if (_anRange === 'month') { var t = new Date(now); t.setDate(1); t.setHours(0,0,0,0); from = t.toISOString(); }
+
+  var q = sb.from('page_views').select('*').order('created_at', {ascending:false});
+  if (from) q = q.gte('created_at', from);
+  var { data, error } = await q;
+  if (error || !data) { toast('خطأ في تحميل الإحصائيات'); return; }
+
+  // اليوم
+  var todayStart = new Date(now); todayStart.setHours(0,0,0,0);
+  var todayCount = data.filter(function(r){ return new Date(r.created_at) >= todayStart; }).length;
+
+  // موبايل / ديسكتوب
+  var mobile = data.filter(function(r){ return r.device === 'mobile'; }).length;
+  var desktop = data.length - mobile;
+  var total = data.length;
+
+  // الصفحات
+  var pageCounts = {};
+  data.forEach(function(r){ pageCounts[r.page] = (pageCounts[r.page]||0)+1; });
+  var pagesArr = Object.keys(pageCounts).map(function(k){ return {name:k, count:pageCounts[k]}; }).sort(function(a,b){ return b.count-a.count; });
+
+  // الساعات
+  var hourCounts = new Array(24).fill(0);
+  data.forEach(function(r){ var h = new Date(r.created_at).getHours(); hourCounts[h]++; });
+
+  // الزيارات اليومية (آخر 14 يوم)
+  var dayMap = {};
+  data.forEach(function(r){
+    var d = new Date(r.created_at);
+    var key = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+    dayMap[key] = (dayMap[key]||0)+1;
+  });
+  var dayLabels = [], dayVals = [];
+  var days = _anRange==='today' ? 1 : _anRange==='week' ? 7 : _anRange==='month' ? 30 : 14;
+  for (var i=days-1; i>=0; i--) {
+    var d = new Date(now); d.setDate(d.getDate()-i);
+    var key = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+    dayLabels.push((d.getMonth()+1)+'/'+d.getDate());
+    dayVals.push(dayMap[key]||0);
+  }
+
+  // ── تحديث البطاقات ──
+  se('an-total', total.toLocaleString('ar-SA'));
+  se('an-total-note', _anRange==='today'?'اليوم':_anRange==='week'?'آخر ٧ أيام':_anRange==='month'?'هذا الشهر':'إجمالي');
+  se('an-today', todayCount);
+  se('an-mobile', mobile.toLocaleString('ar-SA'));
+  se('an-mobile-pct', total ? Math.round(mobile/total*100)+'% من الإجمالي' : '—');
+  se('an-desktop', desktop.toLocaleString('ar-SA'));
+  se('an-desktop-pct', total ? Math.round(desktop/total*100)+'% من الإجمالي' : '—');
+  se('an-top-page', pagesArr.length ? pagesArr[0].name : '—');
+
+  // ── الصفحات الأكثر زيارة ──
+  var pEl = document.getElementById('an-pages-list');
+  if (pEl) {
+    if (!pagesArr.length) { pEl.innerHTML = '<div class="empty">لا توجد بيانات</div>'; }
+    else {
+      pEl.innerHTML = '';
+      pagesArr.slice(0,8).forEach(function(p, i) {
+        var pct = total ? Math.round(p.count/total*100) : 0;
+        var d = document.createElement('div');
+        d.style.cssText = 'display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);';
+        if(i===Math.min(pagesArr.length,8)-1) d.style.borderBottom='none';
+        d.innerHTML = '<span style="font-size:11px;color:var(--mid);min-width:18px;">'+(i+1)+'</span>'
+          +'<span style="flex:1;font-size:13px;color:var(--ink);">'+escH(p.name)+'</span>'
+          +'<div style="flex:2;background:var(--cream);border-radius:4px;height:5px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:var(--teal);border-radius:4px;"></div></div>'
+          +'<span style="font-size:12px;color:var(--mid);min-width:36px;text-align:left;">'+p.count+'</span>'
+          +'<span style="font-size:11px;color:var(--light);min-width:28px;">'+pct+'%</span>';
+        pEl.appendChild(d);
+      });
+    }
+  }
+
+  // ── آخر الزيارات ──
+  var rEl = document.getElementById('an-recent-list');
+  if (rEl) {
+    if (!data.length) { rEl.innerHTML = '<div class="empty">لا توجد زيارات</div>'; }
+    else {
+      rEl.innerHTML = '<div style="overflow-x:auto;"><table style="width:100%;font-size:12px;border-collapse:collapse;">'
+        +'<thead><tr style="border-bottom:1px solid var(--border);text-align:right;">'
+        +'<th style="padding:7px 10px;color:var(--mid);font-weight:500;">الصفحة</th>'
+        +'<th style="padding:7px 10px;color:var(--mid);font-weight:500;">الجهاز</th>'
+        +'<th style="padding:7px 10px;color:var(--mid);font-weight:500;">الوقت</th>'
+        +'</tr></thead><tbody id="an-recent-tbody"></tbody></table></div>';
+      var tbody = document.getElementById('an-recent-tbody');
+      data.slice(0,20).forEach(function(r, i) {
+        var tr = document.createElement('tr');
+        tr.style.cssText = 'border-bottom:1px solid var(--border);'+(i%2===0?'background:var(--bg)':'');
+        var dt = new Date(r.created_at);
+        var timeStr = dt.toLocaleDateString('ar-SA')+' '+dt.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+        tr.innerHTML = '<td style="padding:7px 10px;">'+escH(r.page||'—')+'</td>'
+          +'<td style="padding:7px 10px;"><span style="font-size:10px;padding:2px 8px;border-radius:20px;background:'+(r.device==='mobile'?'var(--tl)':'var(--ol)')+';">'+(r.device==='mobile'?'موبايل':'ديسكتوب')+'</span></td>'
+          +'<td style="padding:7px 10px;color:var(--mid);">'+timeStr+'</td>';
+        tbody.appendChild(tr);
+      });
+    }
+  }
+
+  // ── الرسوم البيانية ──
+  if (!window.Chart) return;
+
+  if (_anChartDaily) _anChartDaily.destroy();
+  var ctxD = document.getElementById('an-chart-daily');
+  if (ctxD) {
+    _anChartDaily = new Chart(ctxD, {
+      type: 'line',
+      data: { labels: dayLabels, datasets: [{ label:'زيارات', data:dayVals, borderColor:'#1A7A7A', backgroundColor:'rgba(26,122,122,0.12)', fill:true, tension:0.4, pointRadius:dayLabels.length>14?0:3 }] },
+      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:10},maxTicksLimit:7,color:'#888'},grid:{display:false}}, y:{ticks:{font:{size:10},color:'#888'},grid:{color:'rgba(0,0,0,0.05)'}} } }
+    });
+  }
+
+  if (_anChartDevice) _anChartDevice.destroy();
+  var ctxDv = document.getElementById('an-chart-device');
+  if (ctxDv) {
+    _anChartDevice = new Chart(ctxDv, {
+      type: 'doughnut',
+      data: { labels:['موبايل','ديسكتوب'], datasets:[{ data:[mobile, desktop], backgroundColor:['#1A7A7A','#C94B1E'], borderWidth:0 }] },
+      options: { responsive:true, maintainAspectRatio:false, cutout:'68%', plugins:{legend:{display:false}}, layout:{padding:10} }
+    });
+  }
+
+  if (_anChartHour) _anChartHour.destroy();
+  var ctxH = document.getElementById('an-chart-hour');
+  if (ctxH) {
+    var hLabels = []; for(var h=0;h<24;h++) hLabels.push(h+':00');
+    _anChartHour = new Chart(ctxH, {
+      type: 'bar',
+      data: { labels:hLabels, datasets:[{ label:'زيارات', data:hourCounts, backgroundColor:'rgba(26,122,122,0.7)', borderRadius:3 }] },
+      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:9},maxTicksLimit:12,color:'#888'},grid:{display:false}}, y:{ticks:{font:{size:10},color:'#888'},grid:{color:'rgba(0,0,0,0.05)'}} } }
+    });
+  }
+}
+
+// تحميل Chart.js عند فتح قسم الإحصائيات
+var _chartJsLoaded = false;
+var _origGoSec = goSec;
+goSec = function(name, el) {
+  _origGoSec(name, el);
+  if (name === 'analytics') {
+    if (!_chartJsLoaded) {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
+      script.onload = function() { _chartJsLoaded = true; loadAnalytics(); };
+      document.head.appendChild(script);
+    } else {
+      loadAnalytics();
+    }
+  }
+};
+
+
 function makeCombo(inputId, listId, options) {
   var input = document.getElementById(inputId);
   var list = document.getElementById(listId);
