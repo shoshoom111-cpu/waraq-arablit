@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -1231,6 +1230,14 @@ function makeCombo(inputId, listId, options) {
   var input = document.getElementById(inputId);
   var list = document.getElementById(listId);
   if (!input || !list) return;
+  var currentVal = input.value;
+  if (input._comboInit) {
+    var clone = input.cloneNode(true);
+    input.parentNode.replaceChild(clone, input);
+    input = clone;
+    input.value = currentVal;
+  }
+  input._comboInit = true;
   function renderOpts(filter) {
     var q = (filter||'').toLowerCase().trim();
     list.innerHTML = '';
