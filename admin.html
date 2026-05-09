@@ -806,7 +806,7 @@ if (_supabaseReady) { init(); } else { document.addEventListener('DOMContentLoad
 function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/`/g,'&#96;');}
 function goSec(name,el){
   if(name==='homepage')loadHomepageSettings();if(name==='comments')loadComments();if(name==='news')loadNews();
-  if(name==='add-art')setTimeout(initCombos,50);
+  if(name==='add-art'){var inp=document.getElementById('aa-cat');if(inp)inp._comboInit=false;setTimeout(initCombos,10);}
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
   document.getElementById('sec-'+name).classList.add('on');
@@ -998,7 +998,16 @@ async function getCurSettings(key){var res=await sb.from('settings').select('val
 function pvc(name,val){document.documentElement.style.setProperty('--'+name,val);var el=document.getElementById('cpv-'+name);if(el)el.style.background=val;}
 function applyTheme(t,o,g){pvc('teal',t);pvc('orange',o);pvc('gold',g);sv('c-teal',t);sv('ct-teal',t);sv('c-orange',o);sv('ct-orange',o);sv('c-gold',g);sv('ct-gold',g);sv('hp-c-teal',t);sv('hp-ct-teal',t);sv('hp-c-orange',o);sv('hp-ct-orange',o);sv('hp-c-gold',g);sv('hp-ct-gold',g);toast('تم تطبيق الثيم — لا تنسي حفظ التصميم');}
 
-function toggleIF(id){document.getElementById(id).classList.toggle('on');setTimeout(initCombos,50);}
+function toggleIF(id){
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('on');
+  // أعد تهيئة combos داخل النموذج عند الفتح
+  if (el.classList.contains('on')) {
+    el.querySelectorAll('.combo-input').forEach(function(inp){ inp._comboInit = false; });
+    setTimeout(initCombos, 10);
+  }
+}
 function addSideItem(){var el=document.getElementById('side-list');var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" placeholder="اسم الكتاب" style="margin-bottom:5px;" required><input type="text" placeholder="الكاتب · التصنيف"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);var inp=r.querySelector('input');if(inp)inp.focus();}
 function addTick(){var el=document.getElementById('tick-list');var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" placeholder="نص الخبر..." style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);var inp=r.querySelector('input');if(inp)inp.focus();}
 function v(id){var e=document.getElementById(id);return e?e.value:'';}
@@ -1230,13 +1239,7 @@ function makeCombo(inputId, listId, options) {
   var input = document.getElementById(inputId);
   var list = document.getElementById(listId);
   if (!input || !list) return;
-  var currentVal = input.value;
-  if (input._comboInit) {
-    var clone = input.cloneNode(true);
-    input.parentNode.replaceChild(clone, input);
-    input = clone;
-    input.value = currentVal;
-  }
+  if (input._comboInit) return;
   input._comboInit = true;
   function renderOpts(filter) {
     var q = (filter||'').toLowerCase().trim();
