@@ -1234,57 +1234,49 @@ goSec = function(name, el) {
 // ── COMBO BOX ──
 var ART_CATS  = ['نقد أدبي','مقالات أدبية','أخبار','حوار','ثقافة','توصية','تحقيق','رأي','ترجمة','مسابقة','إعلان','قصة قصيرة','شعر','مقابلة'];
 var BOOK_GENRES = ['رعب','فانتازيا','رواية','شعر','قصص قصيرة','تاريخي','أدب عام','سيرة ذاتية','أطفال','خيال علمي','جريمة وغموض','تشويق','رومانسي','واقعي','فلسفي','اجتماعي'];
+var COMBO_OPTS = {'aa-cat':ART_CATS,'nb-g':BOOK_GENRES,'eb-genre':BOOK_GENRES};
 
-document.addEventListener('click', function(e) {
-  document.querySelectorAll('.combo-list').forEach(function(l) {
-    var wrap = l.closest('.combo-wrap');
-    if (wrap && !wrap.contains(e.target)) l.classList.remove('on');
+function showCombo(inputId) {
+  var input = document.getElementById(inputId);
+  var list  = document.getElementById(inputId+'-list');
+  var opts  = COMBO_OPTS[inputId];
+  if (!input||!list||!opts) return;
+  var q = (input.value||'').toLowerCase().trim();
+  var filtered = q ? opts.filter(function(o){return o.toLowerCase().indexOf(q)>-1;}) : opts.slice();
+  list.innerHTML='';
+  if(q && !opts.find(function(o){return o.toLowerCase()===q;})){
+    var d=document.createElement('div');d.className='combo-opt';
+    d.style.cssText='color:var(--teal);font-weight:600;';
+    d.textContent='+ إضافة: '+input.value;
+    d.onmousedown=function(e){e.preventDefault();list.classList.remove('on');};
+    list.appendChild(d);
+  }
+  filtered.forEach(function(o){
+    var d=document.createElement('div');d.className='combo-opt';d.textContent=o;
+    d.onmousedown=function(e){e.preventDefault();input.value=o;list.classList.remove('on');};
+    list.appendChild(d);
+  });
+  list.classList.toggle('on',list.children.length>0);
+}
+
+document.addEventListener('click',function(e){
+  document.querySelectorAll('.combo-list').forEach(function(l){
+    if(!l.closest('.combo-wrap').contains(e.target))l.classList.remove('on');
   });
 });
 
-function bindCombo(inputId, options) {
-  var input = document.getElementById(inputId);
-  if (!input || input._comboBound) return;
-  input._comboBound = true;
-
-  function show() {
-    var list = document.getElementById(inputId + '-list');
-    if (!list) return;
-    var q = input.value.toLowerCase().trim();
-    var filtered = q ? options.filter(function(o){ return o.toLowerCase().indexOf(q) > -1; }) : options;
-    list.innerHTML = '';
-    if (q && !options.find(function(o){ return o.toLowerCase() === q; })) {
-      var newOpt = document.createElement('div');
-      newOpt.className = 'combo-opt';
-      newOpt.style.cssText = 'color:var(--teal);font-weight:600;';
-      newOpt.textContent = '+ إضافة: ' + input.value;
-      newOpt.onmousedown = function(e){ e.preventDefault(); input.value = input.value; list.classList.remove('on'); };
-      list.appendChild(newOpt);
-    }
-    filtered.forEach(function(o) {
-      var d = document.createElement('div');
-      d.className = 'combo-opt';
-      d.textContent = o;
-      d.onmousedown = function(e){ e.preventDefault(); input.value = o; list.classList.remove('on'); };
-      list.appendChild(d);
-    });
-    list.classList.toggle('on', list.children.length > 0);
-  }
-
-  input.addEventListener('focus', show);
-  input.addEventListener('input', show);
-  input.addEventListener('keydown', function(e){
-    if(e.key==='Escape'){ var l=document.getElementById(inputId+'-list'); if(l)l.classList.remove('on'); }
+function initCombos(){
+  Object.keys(COMBO_OPTS).forEach(function(id){
+    var input=document.getElementById(id);
+    if(!input||input._cb)return;
+    input._cb=true;
+    input.addEventListener('focus',function(){showCombo(id);});
+    input.addEventListener('input',function(){showCombo(id);});
+    input.addEventListener('keydown',function(e){if(e.key==='Escape'){var l=document.getElementById(id+'-list');if(l)l.classList.remove('on');}});
   });
 }
-
-function initCombos() {
-  bindCombo('aa-cat', ART_CATS);
-  bindCombo('nb-g', BOOK_GENRES);
-  bindCombo('eb-genre', BOOK_GENRES);
-}
-document.addEventListener('DOMContentLoaded', initCombos);
-setTimeout(initCombos, 800);
+document.addEventListener('DOMContentLoaded',initCombos);
+setTimeout(initCombos,500);
 </script>
 </body>
 </html>
