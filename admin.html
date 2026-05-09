@@ -395,7 +395,27 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         <div class="art-editor">
           <div class="two">
             <div class="fg"><label>عنوان المقالة *</label><input type="text" id="aa-title" placeholder="عنوان المقالة"></div>
-            <div class="fg"><label>التصنيف</label><div class="combo-wrap"><input type="text" class="combo-input" id="aa-cat" placeholder="اختري أو اكتبي تصنيفاً..." value="نقد أدبي" autocomplete="off"><div class="combo-list" id="aa-cat-list"></div></div></div>
+            <div class="fg"><label>التصنيف</label>
+              <select id="aa-cat-sel" onchange="handleGenreSel('aa-cat-sel','aa-cat-custom','aa-cat')" style="margin-bottom:6px;">
+                <option value="نقد أدبي">نقد أدبي</option>
+                <option value="مقالات أدبية">مقالات أدبية</option>
+                <option value="أخبار">أخبار</option>
+                <option value="حوار">حوار</option>
+                <option value="ثقافة">ثقافة</option>
+                <option value="توصية">توصية</option>
+                <option value="تحقيق">تحقيق</option>
+                <option value="رأي">رأي</option>
+                <option value="ترجمة">ترجمة</option>
+                <option value="مسابقة">مسابقة</option>
+                <option value="إعلان">إعلان</option>
+                <option value="قصة قصيرة">قصة قصيرة</option>
+                <option value="شعر">شعر</option>
+                <option value="مقابلة">مقابلة</option>
+                <option value="__other__">✏️ أكتب تصنيفاً...</option>
+              </select>
+              <input type="text" id="aa-cat-custom" placeholder="اكتبي التصنيف هنا..." style="display:none;">
+              <input type="hidden" id="aa-cat" value="نقد أدبي">
+            </div>
             <div class="fg"><label>اسم القلم / الكاتب</label><input type="text" id="aa-author" placeholder="اسم الكاتب أو القلم"></div>
             <div class="fg"><label>الحالة</label><select id="aa-status"><option value="published">نشر مباشر</option><option value="pending">إرسال للمراجعة</option><option value="draft">مسودة</option></select></div>
           </div>
@@ -462,7 +482,29 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
           <div class="two">
             <div class="fg"><label>عنوان الكتاب *</label><input type="text" id="nb-t"></div>
             <div class="fg"><label>اسم الكاتب *</label><input type="text" id="nb-a"></div>
-            <div class="fg"><label>التصنيف</label><div class="combo-wrap"><input type="text" class="combo-input" id="nb-g" placeholder="اختري أو اكتبي تصنيفاً..." value="رعب" autocomplete="off"><div class="combo-list" id="nb-g-list"></div></div></div>
+            <div class="fg"><label>التصنيف</label>
+              <select id="nb-g-sel" onchange="handleGenreSel('nb-g-sel','nb-g-custom','nb-g')" style="margin-bottom:6px;">
+                <option value="رعب">رعب</option>
+                <option value="فانتازيا">فانتازيا</option>
+                <option value="رواية">رواية</option>
+                <option value="شعر">شعر</option>
+                <option value="قصص قصيرة">قصص قصيرة</option>
+                <option value="تاريخي">تاريخي</option>
+                <option value="أدب عام">أدب عام</option>
+                <option value="سيرة ذاتية">سيرة ذاتية</option>
+                <option value="أطفال">أطفال</option>
+                <option value="خيال علمي">خيال علمي</option>
+                <option value="جريمة وغموض">جريمة وغموض</option>
+                <option value="تشويق">تشويق</option>
+                <option value="رومانسي">رومانسي</option>
+                <option value="واقعي">واقعي</option>
+                <option value="فلسفي">فلسفي</option>
+                <option value="اجتماعي">اجتماعي</option>
+                <option value="__other__">✏️ أكتب تصنيفاً...</option>
+              </select>
+              <input type="text" id="nb-g-custom" placeholder="اكتبي التصنيف هنا..." style="display:none;">
+              <input type="hidden" id="nb-g" value="رعب">
+            </div>
             <div class="fg"><label>التقييم</label><select id="nb-s"><option value="★★★★★">★★★★★</option><option value="★★★★☆">★★★★☆</option><option value="★★★☆☆">★★★☆☆</option><option value="★★☆☆☆">★★☆☆☆</option></select></div>
             <div class="fg"><label>رابط الشراء</label><input type="url" id="nb-u" value="https://adab-book.com/"></div>
             <div class="fg"><label>لون البطاقة</label><select id="nb-c"><option value="#1A7A7A">فيروزي</option><option value="#C94B1E">برتقالي</option><option value="#412402">بني</option><option value="#26215C">بنفسجي</option><option value="#633806">ذهبي داكن</option><option value="#085041">أخضر</option><option value="#0E0E0E">أسود</option><option value="#7B2D8B">أرجواني</option></select></div>
@@ -1231,52 +1273,30 @@ goSec = function(name, el) {
 };
 
 
-// ── COMBO BOX ──
-var ART_CATS  = ['نقد أدبي','مقالات أدبية','أخبار','حوار','ثقافة','توصية','تحقيق','رأي','ترجمة','مسابقة','إعلان','قصة قصيرة','شعر','مقابلة'];
-var BOOK_GENRES = ['رعب','فانتازيا','رواية','شعر','قصص قصيرة','تاريخي','أدب عام','سيرة ذاتية','أطفال','خيال علمي','جريمة وغموض','تشويق','رومانسي','واقعي','فلسفي','اجتماعي'];
-var COMBO_OPTS = {'aa-cat':ART_CATS,'nb-g':BOOK_GENRES,'eb-genre':BOOK_GENRES};
-
-function showCombo(inputId) {
-  var input = document.getElementById(inputId);
-  var list  = document.getElementById(inputId+'-list');
-  var opts  = COMBO_OPTS[inputId];
-  if (!input||!list||!opts) return;
-  var q = (input.value||'').toLowerCase().trim();
-  var filtered = q ? opts.filter(function(o){return o.toLowerCase().indexOf(q)>-1;}) : opts.slice();
-  list.innerHTML='';
-  if(q && !opts.find(function(o){return o.toLowerCase()===q;})){
-    var d=document.createElement('div');d.className='combo-opt';
-    d.style.cssText='color:var(--teal);font-weight:600;';
-    d.textContent='+ إضافة: '+input.value;
-    d.onmousedown=function(e){e.preventDefault();list.classList.remove('on');};
-    list.appendChild(d);
+// ── SELECT + CUSTOM INPUT ──
+function handleGenreSel(selId, customId, hiddenId) {
+  var sel = document.getElementById(selId);
+  var custom = document.getElementById(customId);
+  var hidden = document.getElementById(hiddenId);
+  if (!sel || !custom || !hidden) return;
+  if (sel.value === '__other__') {
+    custom.style.display = 'block';
+    custom.focus();
+    custom.oninput = function() { hidden.value = custom.value; };
+  } else {
+    custom.style.display = 'none';
+    hidden.value = sel.value;
   }
-  filtered.forEach(function(o){
-    var d=document.createElement('div');d.className='combo-opt';d.textContent=o;
-    d.onmousedown=function(e){e.preventDefault();input.value=o;list.classList.remove('on');};
-    list.appendChild(d);
-  });
-  list.classList.toggle('on',list.children.length>0);
 }
-
-document.addEventListener('click',function(e){
-  document.querySelectorAll('.combo-list').forEach(function(l){
-    if(!l.closest('.combo-wrap').contains(e.target))l.classList.remove('on');
-  });
+// تهيئة القيم الافتراضية
+document.addEventListener('DOMContentLoaded', function() {
+  var nbg = document.getElementById('nb-g');
+  if (nbg) nbg.value = 'رعب';
+  var aacat = document.getElementById('aa-cat');
+  if (aacat) aacat.value = 'نقد أدبي';
 });
 
-function initCombos(){
-  Object.keys(COMBO_OPTS).forEach(function(id){
-    var input=document.getElementById(id);
-    if(!input||input._cb)return;
-    input._cb=true;
-    input.addEventListener('focus',function(){showCombo(id);});
-    input.addEventListener('input',function(){showCombo(id);});
-    input.addEventListener('keydown',function(e){if(e.key==='Escape'){var l=document.getElementById(id+'-list');if(l)l.classList.remove('on');}});
-  });
-}
-document.addEventListener('DOMContentLoaded',initCombos);
-setTimeout(initCombos,500);
+function initCombos(){} // تم استبدالها بـ select
 </script>
 </body>
 </html>
