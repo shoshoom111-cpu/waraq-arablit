@@ -806,7 +806,7 @@ if (_supabaseReady) { init(); } else { document.addEventListener('DOMContentLoad
 function escH(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/`/g,'&#96;');}
 function goSec(name,el){
   if(name==='homepage')loadHomepageSettings();if(name==='comments')loadComments();if(name==='news')loadNews();
-  if(name==='add-art'){var inp=document.getElementById('aa-cat');if(inp)inp._comboInit=false;setTimeout(initCombos,10);}
+  if(name==='add-art' || name==='books') setTimeout(initCombos, 10);
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
   document.getElementById('sec-'+name).classList.add('on');
@@ -1002,11 +1002,7 @@ function toggleIF(id){
   var el = document.getElementById(id);
   if (!el) return;
   el.classList.toggle('on');
-  // أعد تهيئة combos داخل النموذج عند الفتح
-  if (el.classList.contains('on')) {
-    el.querySelectorAll('.combo-input').forEach(function(inp){ inp._comboInit = false; });
-    setTimeout(initCombos, 10);
-  }
+  if (el.classList.contains('on')) { setTimeout(initCombos, 10); }
 }
 function addSideItem(){var el=document.getElementById('side-list');var r=document.createElement('div');r.className='irow';r.innerHTML='<div class="iinfo"><input type="text" placeholder="اسم الكتاب" style="margin-bottom:5px;" required><input type="text" placeholder="الكاتب · التصنيف"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);var inp=r.querySelector('input');if(inp)inp.focus();}
 function addTick(){var el=document.getElementById('tick-list');var r=document.createElement('div');r.className='irow';r.style.flexWrap='nowrap';r.innerHTML='<div style="flex:1;"><input type="text" placeholder="نص الخبر..." style="width:100%;"></div><button class="bsm r" onclick="this.closest(\'.irow\').remove()">حذف</button>';el.appendChild(r);var inp=r.querySelector('input');if(inp)inp.focus();}
@@ -1235,51 +1231,60 @@ goSec = function(name, el) {
 };
 
 
-function makeCombo(inputId, listId, options) {
+// ── COMBO BOX ──
+var ART_CATS  = ['نقد أدبي','مقالات أدبية','أخبار','حوار','ثقافة','توصية','تحقيق','رأي','ترجمة','مسابقة','إعلان','قصة قصيرة','شعر','مقابلة'];
+var BOOK_GENRES = ['رعب','فانتازيا','رواية','شعر','قصص قصيرة','تاريخي','أدب عام','سيرة ذاتية','أطفال','خيال علمي','جريمة وغموض','تشويق','رومانسي','واقعي','فلسفي','اجتماعي'];
+
+document.addEventListener('click', function(e) {
+  document.querySelectorAll('.combo-list').forEach(function(l) {
+    var wrap = l.closest('.combo-wrap');
+    if (wrap && !wrap.contains(e.target)) l.classList.remove('on');
+  });
+});
+
+function bindCombo(inputId, options) {
   var input = document.getElementById(inputId);
-  var list = document.getElementById(listId);
-  if (!input || !list) return;
-  if (input._comboInit) return;
-  input._comboInit = true;
-  function renderOpts(filter) {
-    var q = (filter||'').toLowerCase().trim();
-    list.innerHTML = '';
+  if (!input || input._comboBound) return;
+  input._comboBound = true;
+
+  function show() {
+    var list = document.getElementById(inputId + '-list');
+    if (!list) return;
+    var q = input.value.toLowerCase().trim();
     var filtered = q ? options.filter(function(o){ return o.toLowerCase().indexOf(q) > -1; }) : options;
-    // خيار إضافة تصنيف جديد إذا ما في تطابق
+    list.innerHTML = '';
     if (q && !options.find(function(o){ return o.toLowerCase() === q; })) {
       var newOpt = document.createElement('div');
       newOpt.className = 'combo-opt';
-      newOpt.style.color = 'var(--teal)';
-      newOpt.style.fontWeight = '600';
-      newOpt.textContent = '+ إضافة: ' + filter;
-      newOpt.onclick = function() { input.value = filter; list.classList.remove('on'); };
+      newOpt.style.cssText = 'color:var(--teal);font-weight:600;';
+      newOpt.textContent = '+ إضافة: ' + input.value;
+      newOpt.onmousedown = function(e){ e.preventDefault(); input.value = input.value; list.classList.remove('on'); };
       list.appendChild(newOpt);
     }
     filtered.forEach(function(o) {
       var d = document.createElement('div');
       d.className = 'combo-opt';
       d.textContent = o;
-      d.onclick = function() { input.value = o; list.classList.remove('on'); };
+      d.onmousedown = function(e){ e.preventDefault(); input.value = o; list.classList.remove('on'); };
       list.appendChild(d);
     });
     list.classList.toggle('on', list.children.length > 0);
   }
-  input.addEventListener('focus', function() { renderOpts(input.value); });
-  input.addEventListener('input', function() { renderOpts(input.value); });
-  input.addEventListener('keydown', function(e) { if (e.key === 'Escape') list.classList.remove('on'); });
-  document.addEventListener('click', function(e) { if (!input.contains(e.target) && !list.contains(e.target)) list.classList.remove('on'); });
+
+  input.addEventListener('focus', show);
+  input.addEventListener('input', show);
+  input.addEventListener('keydown', function(e){
+    if(e.key==='Escape'){ var l=document.getElementById(inputId+'-list'); if(l)l.classList.remove('on'); }
+  });
 }
 
-// ✅ تعديل 3: تصنيفات موسّعة للمقالات والكتب
 function initCombos() {
-  var ART_CATS = ['نقد أدبي','مقالات أدبية','أخبار','حوار','ثقافة','توصية','تحقيق','رأي','ترجمة','مسابقة','إعلان','قصة قصيرة','شعر','مقابلة'];
-  var BOOK_GENRES = ['رعب','فانتازيا','رواية','شعر','قصص قصيرة','تاريخي','أدب عام','سيرة ذاتية','أطفال','خيال علمي','جريمة وغموض','تشويق','رومانسي','واقعي','فلسفي','اجتماعي'];
-  makeCombo('aa-cat', 'aa-cat-list', ART_CATS);
-  makeCombo('nb-g', 'nb-g-list', BOOK_GENRES);
-  makeCombo('eb-genre', 'eb-genre-list', BOOK_GENRES);
+  bindCombo('aa-cat', ART_CATS);
+  bindCombo('nb-g', BOOK_GENRES);
+  bindCombo('eb-genre', BOOK_GENRES);
 }
 document.addEventListener('DOMContentLoaded', initCombos);
-setTimeout(initCombos, 1000);
+setTimeout(initCombos, 800);
 </script>
 </body>
 </html>
