@@ -678,7 +678,7 @@ body.dark .news-card-icon{background:#1a1a1a;}
 
 <!-- NEWS PAGE -->
 <div class="view" id="v-news">
-<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="news-back">← الرئيسية</button><div class="ph-title">أخبار المركز</div><div class="ph-sub">آخر أخبار مركز الأدب العربي</div></div></div>
+<div class="page-header"><div class="ph-in"><button type="button" class="ph-back" id="news-back">← الرئيسية</button><div class="ph-title">الأخبار </div><div class="ph-sub">آخر الأخبار </div></div></div>
 <div class="arts-page"><div class="apg-grid" id="news-pg"></div></div>
 </div>
 
@@ -1458,18 +1458,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (_dataLoaded) return;
     if (!sb) return;
     _dataLoaded = true;
-    Promise.all([
-      sb.from('articles').select('*').eq('status','published').neq('category','أخبار').order('published_at',{ascending:false}),
-      sb.from('articles').select('*').eq('status','published').eq('category','أخبار').order('published_at',{ascending:false}),
-      sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false}),
-      sb.from('settings').select('*')
-    ]).then(function(results) {
-      var ar=results[0], nw=results[1], bk=results[2], st=results[3];
-      if (ar.data && ar.data.length) { ar.data.forEach(function(a){lA[a.id]=a;}); renderArts(ar.data); }
-      if (nw && nw.data && nw.data.length) { nw.data.forEach(function(n){lA[n.id]=n;}); renderNews(nw.data); }
-      if (bk.data && bk.data.length) { bk.data.forEach(function(b){lB[b.id]=b;}); renderBooks(bk.data); }
+    sb.from('settings').select('*').then(function(st) {
       if (st.data && st.data.length) applySettings(st.data);
-    }).catch(function(e){ _dataLoaded=false; console.warn('Data load failed:', e.message||e); }); // أعد تعيينه عند الفشل للسماح بإعادة المحاولة
+      sb.from('articles').select('*').eq('status','published').neq('category','أخبار').order('published_at',{ascending:false})
+        .then(function(ar) { if (ar.data && ar.data.length) { ar.data.forEach(function(a){lA[a.id]=a;}); renderArts(ar.data); } });
+      sb.from('articles').select('*').eq('status','published').eq('category','أخبار').order('published_at',{ascending:false})
+        .then(function(nw) { if (nw.data && nw.data.length) { nw.data.forEach(function(n){lA[n.id]=n;}); renderNews(nw.data); } });
+      sb.from('books').select('*').neq('archived',true).order('created_at',{ascending:false})
+        .then(function(bk) { if (bk.data && bk.data.length) { bk.data.forEach(function(b){lB[b.id]=b;}); renderBooks(bk.data); } });
+    }).catch(function(e){ _dataLoaded=false; console.warn('Data load failed:', e.message||e); });
   }
   try {
     if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL && SUPABASE_URL.indexOf('YOUR_PROJECT') < 0) {
