@@ -5,13 +5,18 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '0 3 * * *'  # كل يوم الساعة 3 صباحاً
+    - cron: '0 3 * * *'
 
 jobs:
   generate:
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -22,9 +27,6 @@ jobs:
         run: npm install @supabase/supabase-js
 
       - name: Generate pages
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: node generate-pages.js
 
       - name: Commit and push
