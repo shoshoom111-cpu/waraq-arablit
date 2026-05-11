@@ -988,10 +988,7 @@ function renderBooks(books) {
     }).join('');
     pg.querySelectorAll('.bpg-card').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); });
   }
-  if (si && books.length) {
-    si.innerHTML = books.slice(0,4).map(function(b) { return '<div class="side-item" data-bid="' + b.id + '"><div class="si-badge">' + (b.genre||'') + '</div><div class="si-title">' + b.title + '</div><div class="si-meta">' + (b.author||'') + '</div></div>'; }).join('');
-    si.querySelectorAll('.side-item').forEach(function(c) { var bid = c.getAttribute('data-bid'); c.addEventListener('click', function() { openBook(bid); }); });
-  }
+  // side-items يُعبَّأ فقط من لوحة التحكم
 }
 
 function renderArts(arts) {
