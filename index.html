@@ -807,7 +807,7 @@ function goView(name) {
 function trackView(page, itemId) {
   if (!sb) return;
   try {
-    var device = window.innerWidth < 768 ? 'mobile' : 'desktop';
+    var device = window.innerWidth < 1024 ? 'mobile' : 'desktop';
     sb.from('page_views').insert({ page: page, item_id: itemId || null, device: device });
   } catch(e) {}
 }
