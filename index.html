@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
+<link rel="canonical" href="https://waraq-adab.com/">
 <title>وَرَق | مجلة مركز الأدب العربي</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;500;700&family=Cairo:wght@300;400;500;600&family=Felfel&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.5/purify.min.js"></script>
@@ -1437,7 +1438,6 @@ function copyShareUrl() {
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeShare(); });
 
 document.addEventListener('DOMContentLoaded', function() {
-  if (window.location.pathname.indexOf('index.html') > -1) { window.history.replaceState({}, '', window.location.pathname.replace(/\/index\.html$/, '/') || '/'); }
   if (window.location.hash === '#home') { window.history.replaceState({}, '', window.location.pathname); }
   if (!_supabaseReady) {
     setTimeout(function() { if (!_supabaseReady && initSupabase()) { var evt = new Event('supabase-ready'); document.dispatchEvent(evt); } }, 600);
