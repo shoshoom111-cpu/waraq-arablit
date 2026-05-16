@@ -542,13 +542,15 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         <button class="btn p" style="margin-bottom:14px;" onclick="toggleIF('add-user')">إضافة مستخدم جديد +</button>
         <div class="iform" id="add-user">
           <div class="iform-title">👤 مستخدم جديد</div>
+          <form onsubmit="return false;" autocomplete="off">
           <div class="two">
             <div class="fg"><label>الاسم الكامل</label><input type="text" id="nu-n"></div>
-            <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="nu-e"></div>
+            <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="nu-e" autocomplete="email"></div>
             <div class="fg"><label>كلمة المرور</label><input type="password" id="nu-p" placeholder="٨ أحرف على الأقل" autocomplete="new-password"></div>
             <div class="fg"><label>الصلاحية</label><select id="nu-r"><option value="writer">كاتب</option><option value="admin">مدير</option></select></div>
           </div>
-          <div style="display:flex;gap:8px;margin-top:8px;"><button class="btn p" onclick="createUser()">إنشاء الحساب</button><button class="btn o" onclick="toggleIF('add-user')">إلغاء</button></div>
+          <div style="display:flex;gap:8px;margin-top:8px;"><button class="btn p" type="button" onclick="createUser()">إنشاء الحساب</button><button class="btn o" type="button" onclick="toggleIF('add-user')">إلغاء</button></div>
+          </form>
         </div>
         <div id="users-list"><div class="empty">جاري التحميل...</div></div>
       </div>
