@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>وَرَق | لوحة التحكم</title>
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&family=Noto+Serif+Arabic:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -687,7 +688,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         <div class="fg"><label>رابط صورة</label><input type="url" id="ea-img"></div>
       </div>
       <div class="fg" style="margin-bottom:10px;"><label>مقتطف</label><input type="text" id="ea-excerpt"></div>
-      <div class="fg" style="margin-bottom:14px;"><label>المحتوى *</label><textarea id="ea-body" rows="8" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;font-family:Cairo,sans-serif;font-size:13px;resize:vertical;direction:rtl;"></textarea></div>
+      <div class="fg" style="margin-bottom:14px;"><label>المحتوى *</label><div id="ea-quill-editor" style="min-height:200px;font-family:Cairo,sans-serif;font-size:14px;direction:rtl;"></div><textarea id="ea-body" style="display:none;"></textarea></div>
       <div style="display:flex;gap:8px;">
         <button class="btn p" onclick="saveEditArt()">حفظ التعديلات</button>
         <button class="btn o" onclick="closeModal()">إلغاء</button>
@@ -891,16 +892,7 @@ async function loadNews() {
 
 async function loadArts(){
   var f=v('art-flt');
-  var search=(document.getElementById('art-search')?document.getElementById('art-search').value.trim():'');
   var q=sb.from('articles').select('*').order('created_at',{ascending:false});
-  if(f)q=q.eq('status',f);
-  var {data}=await q;
-  var arts=data||[];
-  if(search){var sq=search.toLowerCase();arts=arts.filter(function(a){return (a.title||'').toLowerCase().indexOf(sq)>-1||(a.author_name||'').toLowerCase().indexOf(sq)>-1;});}
-  renderArtRows(arts,'arts-list',true);
-  var {data:pend}=await sb.from('articles').select('*').eq('status','pending').order('created_at',{ascending:false});
-  renderArtRows(pend||[],'pend-list',true);
-});
   if(f)q=q.eq('status',f);
   var {data}=await q;
   renderArtRows(data||[],'arts-list',true);
@@ -917,19 +909,7 @@ var sc2 = {scheduled:'sp-pend'};
   var sc={pending:'sp-pend',published:'sp-pub',rejected:'sp-rej',draft:'sp-draft',archived:'sp-arch',scheduled:'sp-pend'};
   el.innerHTML='';arts.forEach(function(a){var d=document.createElement('div');d.className='irow';var pend=a.status==='pending'?'<button class="bsm t" onclick="pubArt(\''+a.id+'\')">نشر</button><button class="bsm r" onclick="rejectArt(\''+a.id+'\')">رفض</button>':'';
     var archBtn=a.status==='archived'?'<button class="bsm t" onclick="unarchiveArt(\''+a.id+'\')">إعادة نشر</button>':'<button class="bsm" style="background:#888" onclick="archiveArt(\''+a.id+'\')">أرشفة</button>';
-    d.innerHTML='<span class="spill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="iinfo"><div class="ititle">'+escH(a.title)+'</div><div class="imeta">'+escH(a.author_name||'—')+' · '+escH(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div></div><div class="iacts"><button class="bsm g" onclick="previewArt(\''+a.id+'\')">معاينة</button><button class="bsm" style="background:var(--teal);color:#fff;" onclick="editArt(\''+a.id+'\')">تعديل</button>'+pend+archBtn+'<button class="bsm r" onclick="delArt(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);
-      // جلب اسم المقالة
-      (function(cmt,cardEl){
-        if(!sb||!cmt.article_id)return;
-        var aid=String(cmt.article_id);
-        var nameEl=document.getElementById('cmt-art-'+cmt.id);
-        if(!nameEl)return;
-        if(aid.startsWith('book_')){nameEl.textContent='كتاب';return;}
-        sb.from('articles').select('title').eq('id',aid).single().then(function(r){
-          if(r.data&&r.data.title)nameEl.textContent=r.data.title;
-          else nameEl.textContent='مقالة محذوفة';
-        }).catch(function(){nameEl.textContent='—';});
-      })(c,d);});
+    d.innerHTML='<span class="spill '+(sc[a.status]||'')+'">'+(sl[a.status]||a.status)+'</span><div class="iinfo"><div class="ititle">'+escH(a.title)+'</div><div class="imeta">'+escH(a.author_name||'—')+' · '+escH(a.category||'')+' · '+new Date(a.created_at).toLocaleDateString('ar-SA')+'</div></div><div class="iacts"><button class="bsm g" onclick="previewArt(\''+a.id+'\')">معاينة</button><button class="bsm" style="background:var(--teal);color:#fff;" onclick="editArt(\''+a.id+'\')">تعديل</button>'+pend+archBtn+'<button class="bsm r" onclick="delArt(\''+a.id+'\')">حذف</button></div>';el.appendChild(d);});
 }
 
 async function addArticle(){
@@ -1241,8 +1221,6 @@ function sv(id,val){if(val!==undefined&&val!==null){var e=document.getElementByI
 function se(id,txt){if(txt!==undefined&&txt!==null){var e=document.getElementById(id);if(e)e.textContent=txt;}}
 // ── COMMENTS ADMIN ──
 async function loadComments(){
-  // تحميل المقالات أولاً لعرض أسمائها
-  if(sb&&Object.keys(lA).length===0){var {data:artD}=await sb.from('articles').select('id,title');if(artD)artD.forEach(function(a){lA[a.id]=a;});}
   var el=document.getElementById('comments-list');
   if(el)el.innerHTML='<div class="empty">جاري التحميل...</div>';
   var flt=document.getElementById('cmt-flt')&&document.getElementById('cmt-flt').value;
@@ -1269,7 +1247,7 @@ async function loadComments(){
     var btns=c.status==='pending'
       ?'<button class="bsm t" onclick="approveCmt(\''+c.id+'\')">موافقة</button><button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">رفض</button>'
       :'<button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">حذف</button>';
-    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);margin-right:10px;">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+( c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px;">'+escH(String(c.article_id||''))+'</div><div style="font-size:12px;color:var(--teal);margin-bottom:8px;">📄 المقالة: <strong id="cmt-art-'+c.id+'">جاري التحميل...</strong></div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+escH(c.body)+'</div>';
+    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+(c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--teal);margin-bottom:8px;">📄 <strong id="cmt-art-'+c.id+'">جاري...</strong></div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+escH(c.body)+'</div>';
     el.appendChild(d);
   });
 }
@@ -1556,6 +1534,21 @@ async function checkScheduled() {
 // Start scheduler — check immediately and then every 60 seconds
 setTimeout(checkScheduled, 3000);
 setInterval(checkScheduled, 60000);
+</script>
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script>
+var _quillAdd=null,_quillEdit=null;
+var _qlStyle=document.createElement('style');
+_qlStyle.textContent='.ql-toolbar{border-radius:7px 7px 0 0;border-color:var(--border)!important;background:var(--cream);}.ql-container{border-color:var(--border)!important;border-radius:0 0 7px 7px;font-family:"Cairo",sans-serif;font-size:14px;}.ql-editor{direction:rtl;text-align:right;min-height:260px;line-height:1.9;}.ql-editor.ql-blank::before{right:15px;left:unset;font-style:normal;color:var(--light);}';
+document.head.appendChild(_qlStyle);
+function initQuillAdd(){if(_quillAdd||!document.getElementById('aa-quill-editor'))return;_quillAdd=new Quill('#aa-quill-editor',{theme:'snow',direction:'rtl',modules:{toolbar:[[{'header':[2,3,false]}],['bold','italic','underline'],[{'list':'ordered'},{'list':'bullet'}],['blockquote','link'],[{'align':[]}],['clean']]},placeholder:'اكتبي محتوى المقالة هنا...'});_quillAdd.on('text-change',function(){var ta=document.getElementById('aa-body');if(ta)ta.value=_quillAdd.root.innerHTML;});}
+function initQuillEdit(){if(_quillEdit||!document.getElementById('ea-quill-editor'))return;_quillEdit=new Quill('#ea-quill-editor',{theme:'snow',direction:'rtl',modules:{toolbar:[[{'header':[2,3,false]}],['bold','italic','underline'],[{'list':'ordered'},{'list':'bullet'}],['blockquote','link'],[{'align':[]}],['clean']]}});_quillEdit.on('text-change',function(){var ta=document.getElementById('ea-body');if(ta)ta.value=_quillEdit.root.innerHTML;});}
+var _origGoSecQ=goSec;
+goSec=function(name,el){_origGoSecQ(name,el);if(name==='add-art')setTimeout(initQuillAdd,150);};
+var _origEditArtQ=editArt;
+editArt=async function(id){await _origEditArtQ(id);setTimeout(function(){initQuillEdit();var ta=document.getElementById('ea-body');if(_quillEdit&&ta)_quillEdit.root.innerHTML=ta.value||'';},250);};
+var _origClearQ=clearArtForm;
+clearArtForm=function(){_origClearQ();if(_quillAdd)_quillAdd.setText('');};
 </script>
 </body>
 </html>
