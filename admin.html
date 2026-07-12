@@ -437,12 +437,9 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         <div class="card">
           <div class="card-hd">
             <span class="card-title">كل المقالات</span>
-            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-              <input type="text" id="art-search" placeholder="🔍 ابحث..." style="width:160px;padding:5px 10px;font-size:12px;border-radius:6px;border:1px solid var(--border);font-family:Cairo,sans-serif;" oninput="loadArts()">
-              <select id="art-flt" onchange="loadArts()" style="width:auto;padding:5px 10px;font-size:12px;border-radius:6px;">
-                <option value="">الكل</option><option value="published">منشورة</option><option value="pending">قيد المراجعة</option><option value="rejected">مرفوضة</option><option value="archived">مؤرشفة</option><option value="draft">مسودة</option>
-              </select>
-            </div>
+            <select id="art-flt" onchange="loadArts()" style="width:auto;padding:5px 10px;font-size:12px;border-radius:6px;">
+              <option value="">الكل</option><option value="published">منشورة</option><option value="pending">قيد المراجعة</option><option value="rejected">مرفوضة</option><option value="archived">مؤرشفة</option><option value="draft">مسودة</option>
+            </select>
           </div>
           <div class="card-body" id="arts-list"><div class="empty">جاري التحميل...</div></div>
         </div>
@@ -688,7 +685,7 @@ input[type=color]{width:38px;height:34px;padding:2px;border-radius:6px;cursor:po
         <div class="fg"><label>رابط صورة</label><input type="url" id="ea-img"></div>
       </div>
       <div class="fg" style="margin-bottom:10px;"><label>مقتطف</label><input type="text" id="ea-excerpt"></div>
-      <div class="fg" style="margin-bottom:14px;"><label>المحتوى *</label><div id="ea-quill-editor" style="min-height:200px;font-family:Cairo,sans-serif;font-size:14px;direction:rtl;"></div><textarea id="ea-body" style="display:none;"></textarea></div>
+      <div class="fg" style="margin-bottom:14px;"><label>المحتوى *</label><textarea id="ea-body" rows="8" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;font-family:Cairo,sans-serif;font-size:13px;resize:vertical;direction:rtl;"></textarea></div>
       <div style="display:flex;gap:8px;">
         <button class="btn p" onclick="saveEditArt()">حفظ التعديلات</button>
         <button class="btn o" onclick="closeModal()">إلغاء</button>
@@ -892,10 +889,13 @@ async function loadNews() {
 
 async function loadArts(){
   var f=v('art-flt');
+  var search=document.getElementById('art-search')?document.getElementById('art-search').value.trim():'';
   var q=sb.from('articles').select('*').order('created_at',{ascending:false});
   if(f)q=q.eq('status',f);
   var {data}=await q;
-  renderArtRows(data||[],'arts-list',true);
+  var arts=data||[];
+  if(search){var sq=search.toLowerCase();arts=arts.filter(function(a){return(a.title||'').toLowerCase().indexOf(sq)>-1||(a.author_name||'').toLowerCase().indexOf(sq)>-1;});}
+  renderArtRows(arts,'arts-list',true);
   var {data:pend}=await sb.from('articles').select('*').eq('status','pending').order('created_at',{ascending:false});
   renderArtRows(pend||[],'pend-list',true);
 }
@@ -1247,8 +1247,19 @@ async function loadComments(){
     var btns=c.status==='pending'
       ?'<button class="bsm t" onclick="approveCmt(\''+c.id+'\')">موافقة</button><button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">رفض</button>'
       :'<button class="bsm r" onclick="rejectCmt(\''+c.id+'\')">حذف</button>';
-    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+(c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--teal);margin-bottom:8px;">📄 <strong id="cmt-art-'+c.id+'">جاري...</strong></div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+escH(c.body)+'</div>';
+    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><span style="font-weight:600;font-size:13px;">'+escH(c.name)+'</span><span style="font-size:11px;color:var(--mid);margin-right:10px;">'+dateStr+'</span><span class="spill '+(c.status==='approved'?'sp-pub':'sp-pend')+'">'+( c.status==='approved'?'معتمد':'قيد المراجعة')+'</span></div><div style="display:flex;gap:6px;">'+btns+'</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px;">معرف المقالة: '+escH(String(c.article_id||'').substring(0,8))+'...</div><div style="font-size:13px;color:#333;background:var(--bg);padding:10px 12px;border-radius:6px;">'+escH(c.body)+'</div>';
     el.appendChild(d);
+    // جلب اسم المقالة
+    (function(cmt){
+      if(!sb||!cmt.article_id)return;
+      var aid=String(cmt.article_id);
+      var nameEl=document.getElementById('cmt-art-'+cmt.id);
+      if(!nameEl)return;
+      if(aid.startsWith('book_')){nameEl.textContent='كتاب';return;}
+      sb.from('articles').select('title').eq('id',aid).single().then(function(r){
+        nameEl.textContent=(r.data&&r.data.title)||'—';
+      }).catch(function(){nameEl.textContent='—';});
+    })(c);
   });
 }
 async function approveCmt(id){
@@ -1502,15 +1513,7 @@ async function checkScheduled() {
     loadArts(); loadDash();
   }
 
-  // Check scheduled books
-  var bookRes = await sb.from('books').select('id,publish_at').eq('archived', true).not('publish_at', 'is', null);
-  if (bookRes.data) {
-    var toPublish = bookRes.data.filter(function(b) { return b.publish_at && b.publish_at <= now; });
-    for (var j = 0; j < toPublish.length; j++) {
-      await sb.from('books').update({archived: false, publish_at: null}).eq('id', toPublish[j].id);
-    }
-    if (toPublish.length) { toast('تم نشر ' + toPublish.length + ' كتاب مجدول تلقائياً ✓'); loadBooks(); }
-  }
+  // scheduled books: disabled (publish_at column not in books table)
 
   // Check scheduled archive issues
   var archRes = await sb.from('settings').select('value').eq('key','archive').maybeSingle();
