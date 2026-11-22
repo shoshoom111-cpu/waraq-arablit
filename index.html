@@ -1129,7 +1129,7 @@ body.dark #mob-search-results{background:#17120F;border-color:#352A23;}
 </script>
 <script>
 /* يتأكد أن الزائر يرى آخر نسخة مرفوعة (GitHub يحتفظ بالصفحة القديمة ١٠ دقائق) */
-var WARAQ_BUILD = '20261122075652';
+var WARAQ_BUILD = '20261122080116';
 (function(){
   if (WARAQ_BUILD === 'dev' || /[?&]preview=1/.test(location.search)) return;
   fetch('version.json?t=' + Date.now(), {cache: 'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
@@ -3401,11 +3401,13 @@ document.addEventListener('fullscreenchange', function() {
   }
   function enhance(root) {
     (root || document).querySelectorAll(CLICK).forEach(function(el) {
-      if (el.hasAttribute('data-a11y')) return;
+      if (el.hasAttribute('data-a11y') || el.hasAttribute('data-a11y-li')) return;
       if (el.tagName !== 'A' && NATIVE.test(el.tagName)) return;
       var outer = el.parentElement && el.parentElement.closest(CLICK + ',a[href],button');
       if (outer && outer !== el) return; // keep only the outermost clickable
       el.setAttribute('data-a11y', '1');
+      // a list item stays a list item: the link role goes on its title, and Enter on it clicks the item
+      if (el.tagName === 'LI') { var inner = el.querySelector('.most-title') || el.firstElementChild; if (!inner) return; el.removeAttribute('data-a11y'); el.setAttribute('data-a11y-li', '1'); el = inner; el.setAttribute('data-a11y', '1'); }
       if (!el.hasAttribute('role')) el.setAttribute('role', 'link');
       if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
       var n = nameOf(el); if (n && !el.hasAttribute('aria-label')) el.setAttribute('aria-label', n);
