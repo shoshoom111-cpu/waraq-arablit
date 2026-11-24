@@ -1,6 +1,4 @@
 User-agent: *
-Disallow: /admin.html
-Disallow: /login.html
-Disallow: /writer.html
+Allow: /
 
 Sitemap: https://waraq-adab.com/sitemap.xml
